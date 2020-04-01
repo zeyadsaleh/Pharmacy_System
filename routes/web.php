@@ -19,6 +19,7 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/doctors', 'DoctorController@index')->name('doctors.index');
+    Route::get('/pharmacy', 'PharmacyController@index')->name('pharmacy.index');
 });
 
 Auth::routes();
