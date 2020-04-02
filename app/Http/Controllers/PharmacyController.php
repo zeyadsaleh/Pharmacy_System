@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
-use App\User;
+use App\Pharmacy;
 
 class PharmacyController extends Controller
 {
     public function index() {
         return view('Pharmacy.index');
+    }
+
+    public function show() {
+        return view('Pharmacy.show');
     }
 
     /**
@@ -20,6 +24,6 @@ class PharmacyController extends Controller
      */
     public function anyData()
     {
-        return Datatables::of(User::query())->make(true);
+        return Datatables::of(Pharmacy::query())->make(true);
     }
 }
