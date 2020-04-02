@@ -24,9 +24,16 @@ Route::group(['middleware' => 'auth'], function(){
 
 // Main route for pharmacy with table of data
 Route::get('/pharmacies', 'PharmacyController@index')->name('pharmacies.index');
+Route::get('/pharmacies/doctors', 'PharmacyController@show')->name('pharmacies.show');
 // Route to fetch data in json format from user table
 Route::get('/pharmacies-dt', 'PharmacyController@anyData')->name('pharmacies:dt');
 
+#################################################################################
+
+Route::get('/orders', 'OrderController@index')->name('orders.index');
+
+#################################################################################
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -34,3 +41,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', function() {
+    return view('home');
+})->name('home')->middleware('auth');
+
+#######
+
