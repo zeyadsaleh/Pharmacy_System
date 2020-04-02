@@ -4,13 +4,38 @@
 
 @section('title', 'Dashboard')
 
+@section('sidebar')
+    <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Orders</p>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{route('pharmacies.doctors.show')}}" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Doctors</p>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="#" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Revenues</p>
+        </a>
+    </li>
+@stop
+
 @section('content_header')
+<div class="container">
     <h1>Doctors</h1>
+</div>
 @stop
 
 @section('content')
 
-<a href="#" class="btn btn-success mb-3">Create Doctor</a>
+<div class="container">
+
+<a href="{{route('pharmacies.doctors.create')}}" class="btn btn-success mb-3">Create Doctor</a>
 
 <table id="users-table" class="table table-striped table-bordered" style="width:100%">
         <thead>
@@ -28,6 +53,7 @@
             
         </tbody>
     </table>
+</div>
 @stop
 
 @section('css')
@@ -46,7 +72,7 @@
                 $('#users-table').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('pharmacies:dt') !!}',
+                    ajax: '{!! route('pharmacies:doctors:dt') !!}',
                     columns: [
                         { data: 'id', name: 'id' },
                         { data: 'name', name: 'name' },

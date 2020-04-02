@@ -10,11 +10,15 @@ use App\Doctor;
 class PharmacyController extends Controller
 {
     public function index() {
-        return view('Pharmacy.index');
+        return view('Pharmacy.Doctors.index');
     }
 
-    public function show() {
-        return view('Pharmacy.show');
+    public function showDoctors() {
+        return view('Pharmacy.Doctors.show');
+    }
+
+    public function createDoctors() {
+        return view('Pharmacy.Doctors.create');
     }
 
     /**
@@ -22,7 +26,7 @@ class PharmacyController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function anyData()
+    public function doctorsData()
     {
         return Datatables::of(Doctor::query())->make(true);
     }
