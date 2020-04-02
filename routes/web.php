@@ -27,6 +27,12 @@ Route::get('/pharmacies/doctors', 'PharmacyController@show')->name('pharmacies.s
 // Route to fetch data in json format from user table
 Route::get('/pharmacies-dt', 'PharmacyController@anyData')->name('pharmacies:dt');
 
+#################################################################################
+
+Route::get('/orders', 'OrderController@index')->name('orders.index');
+
+#################################################################################
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
