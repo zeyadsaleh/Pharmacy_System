@@ -49,4 +49,7 @@ Route::get('/home', function() {
 })->name('home')->middleware('auth');
 
 #######
+Route::get('/login', 'Auth\LoginController@showAdminLoginForm');
+Route::get('/admin', 'AdminController@index')->name('admin.index');
+Route::post('/admin', 'AdminController@index')->name('admin.index');
 
