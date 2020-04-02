@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
-use App\Pharmacy;
+use App\Doctor;
 
 class PharmacyController extends Controller
 {
@@ -24,6 +24,6 @@ class PharmacyController extends Controller
      */
     public function anyData()
     {
-        return Datatables::of(Pharmacy::query())->make(true);
+        return Datatables::of(Doctor::query())->make(true);
     }
 }

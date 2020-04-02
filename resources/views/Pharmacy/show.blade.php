@@ -20,7 +20,8 @@
                 <th>Email</th>
                 <th>Created At</th>
                 <th>National ID</th>
-                <th>Area ID</th>
+                <th>Avatar</th>
+                <th>Banned</th>
             </tr>
         </thead>
         <tbody>
@@ -52,7 +53,8 @@
                         { data: 'email', name: 'email' },
                         { data: 'created_at', name: 'created_at' },
                         { data: 'national_id', name: 'national_id' },
-                        { data: 'area_id', name: 'area_id' },
+                        { data: 'avatar', name: 'avatar' },
+                        { data: 'is_ban', name: 'is_ban' },
                     ]
                 });
             });
