@@ -20,9 +20,12 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/doctors', 'DoctorController@index')->name('doctors.index');
-    Route::get('/pharmacy', 'PharmacyController@index')->name('pharmacy.index');
 });
+
+// Main route for pharmacy with table of data
 Route::get('/pharmacies', 'PharmacyController@index')->name('pharmacies.index');
+// Route to fetch data in json format from user table
+Route::get('/pharmacies-dt', 'PharmacyController@anyData')->name('pharmacies:dt');
 
 Auth::routes();
 
