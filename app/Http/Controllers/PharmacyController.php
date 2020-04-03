@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
 use App\Doctor;
+use App\Http\Requests\DoctorRequest;
 
 class PharmacyController extends Controller
 {
@@ -21,18 +22,12 @@ class PharmacyController extends Controller
         return view('Pharmacy.Doctors.create');
     }
 
-    public function storeDoctors() {
+    public function storeDoctors(DoctorRequest $request) {
 
-        $request = request();
+        $validatedData = $request->validated();
+        $validatedData['pharmacy_id'] = 1;
 
-        Doctor::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-            'national_id' => $request->national_id,
-            'avatar' => $request->avatar,
-            'pharmacy_id' => 1
-        ]);
+        Doctor::create($validatedData);
 
         return redirect()->route('pharmacies.doctors.show');
     }

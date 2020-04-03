@@ -33,7 +33,16 @@
 
 @section('content')
 <div class="container">
-<form method="POST" action="{{route('pharmacies.doctors.store')}}">
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+<form method="POST" action="{{route('pharmacies.doctors.store')}}" enctype="multipart/form-data">
     @csrf
   <div class="form-row">
     <div class="form-group col-md-6">
