@@ -33,33 +33,34 @@
 
 @section('content')
 <div class="container">
-<form>
+<form method="POST" action="{{route('pharmacies.doctors.store')}}">
+    @csrf
   <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="inputEmail4">Name</label>
-      <input type="text" class="form-control" id="inputEmail4" placeholder="Name">
+      <label for="name">Name</label>
+      <input type="text" name="name" class="form-control" id="name" placeholder="Name">
     </div>
     <div class="form-group col-md-6">
-      <label for="inputEmail4">Email</label>
-      <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" name="email" id="email" placeholder="Email">
     </div>
   </div>
 
   <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="inputEmail4">Password</label>
-      <input type="password" class="form-control" id="inputEmail4" placeholder="Password">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" name="password" id="password" placeholder="Password">
     </div>
     <div class="form-group col-md-6">
-      <label for="inputEmail4">National ID</label>
-      <input type="text" class="form-control" id="inputEmail4" placeholder="National ID">
+      <label for="nationalID">National ID</label>
+      <input type="text" class="form-control" id="nationalID" name="national_id" placeholder="National ID">
     </div>
   </div>
 
   <div class="form-row">
     <div class="form-group col-md-12">
-      <label for="inputEmail4">Avatar</label>
-      <input type="file" class="d-block" id="inputEmail4" accept="image/*">
+      <label for="avatar">Avatar</label>
+      <input type="file" class="d-block" id="avatar" name="avatar" accept="image/*">
     </div>
   </div>
   <button type="submit" class="btn btn-primary">Create</button>

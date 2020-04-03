@@ -21,6 +21,22 @@ class PharmacyController extends Controller
         return view('Pharmacy.Doctors.create');
     }
 
+    public function storeDoctors() {
+
+        $request = request();
+
+        Doctor::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'national_id' => $request->national_id,
+            'avatar' => $request->avatar,
+            'pharmacy_id' => 1
+        ]);
+
+        return redirect()->route('pharmacies.doctors.show');
+    }
+
     /**
      * Process datatables ajax request.
      *
