@@ -79,7 +79,13 @@
                         { data: 'email', name: 'email' },
                         { data: 'created_at', name: 'created_at' },
                         { data: 'national_id', name: 'national_id' },
-                        { data: 'avatar', name: 'avatar' },
+                        { 
+                            data: 'avatar',
+                            name: 'avatar',
+                            render : function ( url, type, full) {
+                                return '<img src="{{url("uploads")}}'+url+'" width=100 height=100>'
+                            }
+                        },
                         { data: 'is_ban', name: 'is_ban' },
                     ]
                 });
