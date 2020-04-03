@@ -33,7 +33,6 @@ class PharmacyController extends Controller
         { 
             $file = $request->file('avatar');
             $extension = $file->getClientOriginalExtension(); // getting image extension
-            // dd($file, $extension);
             $filename =time().'.'.$extension;
             // $file->move('../../public/storage/avatars', $filename);
             // $file->store();
@@ -42,15 +41,12 @@ class PharmacyController extends Controller
             // dd($path );
             // dd($filename, $file);
             Storage::disk('public')->put('avatars/'.$filename, File::get($file));
-            // $url = Storage::url($filename);
-            // dd($url);
+        } else {
+            $filename = 'doctor.jpg';
         }
 
-        // $validatedData['avatar'] = 'uploads/avatars/'. $filename;
-        // $path = Storage::putFile('avatars', $request->file('avatar'));
-
+        // First slash is for concatenation with url of blade in ajax
         $validatedData['avatar'] = '/avatars/'.$filename;
-        // $validatedData['avatar'] = $url;
 
         Doctor::create($validatedData);
 
