@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +30,12 @@ Route::get('/pharmacies/doctors/create', 'PharmacyController@createDoctors')->na
 // Route to fetch data in json format from user table
 Route::get('/pharmacies-doctors-dt', 'PharmacyController@doctorsData')->name('pharmacies:doctors:dt');
 
+#################################################################################
+
+Route::get('/orders', 'OrderController@index')->name('orders.index');
+
+#################################################################################
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -42,3 +49,9 @@ Auth::routes();
 Route::get('/home', function() {
     return view('home');
 })->name('home')->middleware('auth');
+
+#######
+Route::get('/login', 'Auth\LoginController@showAdminLoginForm');
+Route::get('/admin', 'AdminController@index')->name('admin.index');
+Route::post('/admin', 'AdminController@index')->name('admin.index');
+
