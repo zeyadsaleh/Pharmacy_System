@@ -10,19 +10,23 @@ use App\Http\Requests\DoctorRequest;
 
 class PharmacyController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         return view('Pharmacy.Doctors.index');
     }
 
-    public function showDoctors() {
+    public function showDoctors()
+    {
         return view('Pharmacy.Doctors.show');
     }
 
-    public function createDoctors() {
+    public function createDoctors()
+    {
         return view('Pharmacy.Doctors.create');
     }
 
-    public function storeDoctors(DoctorRequest $request) {
+    public function storeDoctors(DoctorRequest $request)
+    {
 
         $validatedData = $request->validated();
         $validatedData['pharmacy_id'] = 1;

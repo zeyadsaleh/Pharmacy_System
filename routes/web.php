@@ -51,8 +51,10 @@ Route::get('/home', function() {
     return view('home');
 })->name('home')->middleware('auth');
 
-#######
-Route::get('/login', 'Auth\LoginController@showAdminLoginForm');
+####### Admin Route
+Route::get('/login', 'Auth\LoginController@showAdminLoginForm')->name('login');
 Route::get('/admin', 'AdminController@index')->name('admin.index');
 Route::post('/admin', 'AdminController@index')->name('admin.index');
-
+Route::get('/admin/doctors', 'AdminController@indexDoctors')->name('admin.doctors.index');
+Route::get('/admin/doctors/create', 'AdminController@createDoctor')->name('admin.doctors.create');
+Route::post('/admin/doctors/store', 'AdminController@storeDoctor')->name('admin.doctors.store');

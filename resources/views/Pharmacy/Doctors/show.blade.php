@@ -50,7 +50,7 @@
             </tr>
         </thead>
         <tbody>
-            
+
         </tbody>
     </table>
 </div>
@@ -72,7 +72,7 @@
                 $('#users-table').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('pharmacies:doctors:dt') !!}',
+                    ajax: '{!! route('admin:doctors:dt') !!}',
                     columns: [
                         { data: 'id', name: 'id' },
                         { data: 'name', name: 'name' },

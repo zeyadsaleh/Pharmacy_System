@@ -2,19 +2,49 @@
 
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Create Doc')
 
 @section('sidebar')
+    <li class="nav-item">
+        <a href="admin.pharmacies.index" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Pharmacies</p>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{route('admin.doctors.index')}}" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Doctors</p>
+        </a>
+    </li>
+    <li class="nav-item">
+                <a href="{{route('admin.doctors.index')}}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Areas</p>
+                </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{route('admin.doctors.index')}}" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Users</p>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{route('admin.doctors.index')}}" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>User Addresses</p>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="{{route('admin.doctors.index')}}" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Medicines</p>
+        </a>
+    </li>
     <li class="nav-item">
         <a href="#" class="nav-link">
             <i class="far fa-circle nav-icon"></i>
             <p>Orders</p>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="{{route('pharmacies.doctors.show')}}" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Doctors</p>
         </a>
     </li>
     <li class="nav-item">
@@ -42,7 +72,7 @@
         </ul>
     </div>
 @endif
-<form method="POST" action="{{route('pharmacies.doctors.store')}}" enctype="multipart/form-data">
+<form method="POST" action="{{route('admin.doctors.store')}}" enctype="multipart/form-data">
     @csrf
   <div class="form-row">
     <div class="form-group col-md-6">
@@ -72,7 +102,16 @@
       <input type="file" class="d-block" id="avatar" name="avatar" accept="image/*">
     </div>
   </div>
-  <button type="submit" class="btn btn-primary">Create</button>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Users</label>
+    <select name="pharmacy_id" class="form-control">
+      @foreach($pharmacies as $pharmacy)
+        <option value="{{$pharmacy->id}}">{{$pharmacy->name}}</option>
+      @endforeach
+      </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Add</button>
 </form>
 </div>
 @stop
