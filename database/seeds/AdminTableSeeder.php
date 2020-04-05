@@ -14,10 +14,12 @@ class AdminTableSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('admin')->insert([            
+        $admin = DB::table('admin')->insert([
             'name' => 'admin',
             'email' => 'admin@admin.com',
             'password' => Hash::make('123456'),
         ]);
+        //will assign roles here
+        // $admin->assignRole('admin');
     }
 }

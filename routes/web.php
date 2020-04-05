@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => 'auth'], function(){
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/doctors', 'DoctorController@index')->name('doctors.index');
 });
 
@@ -47,12 +47,26 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::get('/home', function() {
+Route::get('/home', function () {
     return view('home');
 })->name('home')->middleware('auth');
 
-#######
-Route::get('/login', 'Auth\LoginController@showAdminLoginForm');
-Route::get('/admin', 'AdminController@index')->name('admin.index');
-Route::post('/admin', 'AdminController@index')->name('admin.index');
+####### Admin Route
+Auth::routes();
 
+Route::prefix('admin')->group(function () {
+    Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
+    Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+    Route::get('logout/', 'Auth\AdminLoginController@logout')->name('admin.logout');
+    Route::get('/', 'AdminController@index')->name('admin.index');
+    Route::get('/doctors', 'AdminController@indexDoctors')->name('admin.doctors.index');
+    Route::get('/doctors/create', 'AdminController@createDoctor')->name('admin.doctors.create');
+    Route::post('/doctors/store', 'AdminController@storeDoctor')->name('admin.doctors.store');
+});
+#######
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
