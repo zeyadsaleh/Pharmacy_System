@@ -23,11 +23,12 @@ class DoctorRequest extends FormRequest
      */
     public function rules()
     {
+        // dd($this);
         return [
             'name' => 'required',
-            'email' => 'required|unique:doctors,email',
+            'email' => 'required|unique:doctors,email,'.$this->doctor,
             'password' => 'required|min:6',
-            'national_id' => 'required|unique:doctors,national_id',
+            'national_id' => 'required|unique:doctors,national_id,'.$this->doctor,
             'avatar' => 'image|mimes:jpg,jpeg'
         ];
     }

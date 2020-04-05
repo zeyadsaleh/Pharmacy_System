@@ -54,8 +54,27 @@ class PharmacyController extends Controller
         return redirect()->route('pharmacies.doctors.show');
     }
 
-    public function update() {
+    public function update(DoctorRequest $request) {
 
+        if($request->hasfile('avatar')) {
+            $file = $request->file('avatar');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename =time().'.'.$extension;
+            Storage::disk('public')->put('avatars/'.$filename, File::get($file));
+
+        } else {
+            $filename = 'doctor.jpeg';
+        }
+
+        Doctor::where('id', $request->doctor)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'national_id' => $request->national_id,
+            'avatar' => '/avatars/'.$filename,
+        ]);
+
+        return redirect()->route('pharmacies.doctors.show');
     }
 
     public function edit(Request $request) {
