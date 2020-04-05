@@ -1,34 +1,39 @@
-$(function () {
+// function loadScript(url){
+// var script = document.createElement('script');
+// script.src = url;
+// document.head.appendChild(script);}
+//
+// loadScript("https://code.jquery.com/jquery-3.3.1.js");
+// loadScript("https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js");
+// loadScript("https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js");
 
-  $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-  });
-
-  var table = $('.orders-table').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: "{{ route('orders.index') }}",
-      columns: [
-          {data: 'id', name: 'name'},
-          {data: 'username', name: 'username'},
-          {data: 'delivering_address', name: 'delivering_address'},
-          {data: 'created_at', name: 'created_at'},
-          {data: 'created_by', name: 'created_by'},
-          {data: 'status', name: 'status'},
-          {data: 'total_price', name: 'total_price'},
-          {data: 'action', name: 'action', orderable: false, searchable: false},
-      ]
-  });
-
-  $('#createNewProduct').click(function () {
-      $('#saveBtn').val("create-product");
-      $('#product_id').val('');
-      $('#productForm').trigger("reset");
-      $('#modelHeading').html("Create New Product");
-      $('#ajaxModel').modal('show');
-  });
+  // $.ajaxSetup({
+  //       headers: {
+  //           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  //       }
+  // });
+  //
+  // var table = $('.orders-table').DataTable({
+  //     ajax: "{{ route('orders.index') }}",
+  //     columns: [
+  //         {data: 'id', name: 'name'},
+  //         {data: 'username', name: 'username'},
+  //         {data: 'delivering_address', name: 'delivering_address'},
+  //         {data: 'created_at', name: 'created_at'},
+  //         {data: 'created_by', name: 'created_by'},
+  //         {data: 'status', name: 'status'},
+  //         {data: 'total_price', name: 'total_price'},
+  //         {data: 'action', name: 'action', orderable: false, searchable: false},
+  //     ]
+  // });
+  //
+  // $('#createNewProduct').click(function () {
+  //     $('#saveBtn').val("create-product");
+  //     $('#product_id').val('');
+  //     $('#productForm').trigger("reset");
+  //     $('#modelHeading').html("Create New Product");
+  //     $('#ajaxModel').modal('show');
+  // });
  //
  //  $('body').on('click', '.editProduct', function () {
  //    var product_id = $(this).data('id');
@@ -82,4 +87,4 @@ $(function () {
  //      });
  //  });
 
-});
+// });

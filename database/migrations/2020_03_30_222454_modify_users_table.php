@@ -13,12 +13,15 @@ class ModifyUsersTable extends Migration
      */
     public function up()
     {
+
+        DB::connection()->getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
+        
         Schema::table('users', function (Blueprint $table) {
             $table->enum('gender', ['Male', 'Female']);
-            $table->date('date_of_birth');	
-            $table->string('avatar');
-            $table->string('mobile_number');
-            $table->string('national_id')->unique();
+            $table->date('date_of_birth')->nullable()->change();
+            $table->string('avatar')->nullable()->change();
+            $table->string('mobile_number')->nullable()->change();
+            $table->string('national_id')->unique()->nullable()->change();
         });
     }
 

@@ -14,11 +14,11 @@ class CreateMedicinesTable extends Migration
     public function up()
     {
         Schema::create('medicines', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('type');
-            $table->unsignedBigInteger('price');
-            $table->timestamps();
+          $table->id();
+          $table->string('name');
+          $table->string('type');
+          $table->unsignedBigInteger('price');
+          $table->timestamps();
         });
     }
 

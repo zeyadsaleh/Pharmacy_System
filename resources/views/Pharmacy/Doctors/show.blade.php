@@ -92,10 +92,14 @@
                     ],
                 });
             });
+<<<<<<< Updated upstream
 
             function deleteDoctor() {
                 if(confirm('Do tou want to delete this doctor ?'))
                     document.querySelector('#deleteForm').submit();
             }
+=======
+            console.log(columns);
+>>>>>>> Stashed changes
     </script>
 @stop

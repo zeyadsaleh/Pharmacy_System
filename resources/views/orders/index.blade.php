@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Order')
+@section('title', 'Dashboard')
 
 @section('css')
   @include('layouts.ordercss')
@@ -13,21 +13,24 @@
 @section('content')
 
 <div class="container">
+
     <h1>Orders</h1>
     <hr>
-    <a class="btn btn-success" href="javascript:void(0)" id="createNewProduct"> New Order</a>
-    <table class="table table-bordered data-table">
+    <a class="btn btn-success" href="javascript:void(0)" id="createNeworder">New Order</a>
+    <table id="orders-table" class="table table-bordered data-table">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>UserName</th>
                 <th>Delivering Address</th>
                 <th>Creation Date</th>
-                <th>Creeated By</th>
-                <th>DoctorName</th>
+                <th>Doctor Name</th>
+                <th>is Insured</th>
                 <th>Status</th>
-                <th>Total Price</th>
+                <th>Creator</th>
+                <th>Pharmacy</th>
                 <th width="280px">Action</th>
+
             </tr>
         </thead>
         <tbody>
@@ -43,8 +46,8 @@
             </div>
             <div class="modal-body">
 
-                <form id="productForm" name="productForm" class="form-horizontal">
-                   <input type="hidden" name="product_id" id="product_id">
+                <form id="orderForm" name="orderForm" class="form-horizontal">
+                   <input type="hidden" name="order_id" id="order_id">
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">UserName</label>
                         <div class="col-sm-12">
@@ -55,7 +58,7 @@
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">Medicine</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="" maxlength="50" required="">
+                            <input type="text" class="form-control" id="medicine" name="medicine" placeholder="Enter Name" value="" maxlength="50" required="">
                         </div>
                     </div>
 
