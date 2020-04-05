@@ -17,8 +17,10 @@ class PharmacyController extends Controller
         return view('Pharmacy.Doctors.index');
     }
 
-    public function showDoctors()
+    public function showDoctors(Request $request)
     {
+        // dd($request);
+
         return view('Pharmacy.Doctors.show');
     }
 
@@ -38,15 +40,10 @@ class PharmacyController extends Controller
             $file = $request->file('avatar');
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename =time().'.'.$extension;
-            // $file->move('../../public/storage/avatars', $filename);
-            // $file->store();
-            // $path = $file->store('avatars', ['disk' => 'public']);
-            // $file->storeAs('../../public/storage/avatars', $filename);
-            // dd($path );
-            // dd($filename, $file);
+
             Storage::disk('public')->put('avatars/'.$filename, File::get($file));
         } else {
-            $filename = 'doctor.jpg';
+            $filename = 'doctor.jpeg';
         }
 
         // First slash is for concatenation with url of blade in ajax
@@ -57,6 +54,18 @@ class PharmacyController extends Controller
         return redirect()->route('pharmacies.doctors.show');
     }
 
+    public function update() {
+
+    }
+
+    public function edit(Request $request) {
+        $doctor = Doctor::find($request->doctor);
+
+        return view('Pharmacy.Doctors.edit', [
+            'doctor' => $doctor
+        ]);
+    }
+
     /**
      * Process datatables ajax request.
      *
@@ -64,6 +73,30 @@ class PharmacyController extends Controller
      */
     public function doctorsData()
     {
-        return Datatables::of(Doctor::query())->make(true);
+        // if ($request->ajax()) {
+            // dd(true);
+            // $data = Doctor::latest()->get();
+            // dd($data);
+            return Datatables::of(Doctor::query())
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row){
+   
+                           $btn = "<a href=".route('pharmacies.doctors.edit', ['doctor' => $row->id])." data-toggle='tooltip'  data-id='$row->id' data-original-title='Edit' class='edit mx-1 btn btn-primary btn-sm editProduct'>Edit</a>";
+   
+                           $btn = $btn."<a href='javascript:void(0)' data-toggle='tooltip'  data-id='$row->id' data-original-title='Edit' class='edit btn  mx-1 btn-danger btn-sm editProduct'>Delete</a>";
+   
+
+                           if($row->is_ban)
+                                $btn = $btn."<a href='javascript:void(0)' data-toggle='tooltip'  data-id='$row->id' data-original-title='Edit' class='edit mx-1  btn btn-dark btn-sm editProduct'>UnBan</a>";
+   
+                            else
+                                $btn = $btn."<a href='javascript:void(0)' data-toggle='tooltip'  data-id='$row->id' data-original-title='Edit' class='edit btn mx-1  btn-dark btn-sm editProduct'>Ban</a>";
+                            
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        // }
+        // return Datatables::of(Doctor::query())->make(true);
     }
 }

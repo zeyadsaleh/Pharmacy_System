@@ -28,6 +28,8 @@ Route::get('/pharmacies/doctors', 'PharmacyController@showDoctors')->name('pharm
 Route::get('/pharmacies/doctors/create', 'PharmacyController@createDoctors')->name('pharmacies.doctors.create');
 
 Route::post('/pharmacies/doctors', 'PharmacyController@storeDoctors')->name('pharmacies.doctors.store');
+Route::get('/pharmacies/doctors/{doctor}', 'PharmacyController@edit')->name('pharmacies.doctors.edit');
+Route::patch('/pharmacies/doctors/{doctor}', 'PharmacyController@update')->name('pharmacies.doctors.update');
 // Route to fetch data in json format from user table
 Route::get('/pharmacies-doctors-dt', 'PharmacyController@doctorsData')->name('pharmacies:doctors:dt');
 
@@ -37,15 +39,15 @@ Route::get('/orders', 'OrderController@index')->name('orders.index');
 
 #################################################################################
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
+// Auth::routes();
 
 Route::get('/home', function () {
     return view('home');
@@ -64,9 +66,9 @@ Route::prefix('admin')->group(function () {
     Route::post('/doctors/store', 'AdminController@storeDoctor')->name('admin.doctors.store');
 });
 #######
-Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
+// Auth::routes();
+// Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');

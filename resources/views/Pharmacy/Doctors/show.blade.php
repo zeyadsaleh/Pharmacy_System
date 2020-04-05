@@ -47,6 +47,7 @@
                 <th>National ID</th>
                 <th>Avatar</th>
                 <th>Banned</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -72,7 +73,7 @@
                 $('#users-table').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('admin:doctors:dt') !!}',
+                    ajax: '{!! route('pharmacies:doctors:dt') !!}',
                     columns: [
                         { data: 'id', name: 'id' },
                         { data: 'name', name: 'name' },
@@ -87,7 +88,19 @@
                             }
                         },
                         { data: 'is_ban', name: 'is_ban' },
-                    ]
+                        {data: 'action', name: 'action', orderable: false, searchable: false},
+                        // { 
+                        //     data: 'is_ban',
+                        //     render: function(data) {
+                        //     var banText = data ? 'Unban' : 'Ban';
+
+                        //     return `<button href="#" class="btn btn-primary btn-sm">Edit</button>
+                        //     <button href="#" class="btn btn-primary btn-sm">Delete</button>
+                        //     <form method="POST">
+                        //         <button href="#" class="btn btn-primary btn-sm">${banText}</button>
+                        //     </form>`;
+                        // }}
+                    ],
                 });
             });
     </script>
