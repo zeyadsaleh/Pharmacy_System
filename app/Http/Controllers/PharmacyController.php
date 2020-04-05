@@ -19,8 +19,6 @@ class PharmacyController extends Controller
 
     public function showDoctors(Request $request)
     {
-        // dd($request);
-
         return view('Pharmacy.Doctors.show');
     }
 
@@ -85,6 +83,14 @@ class PharmacyController extends Controller
         ]);
     }
 
+    public function delete() {
+        Doctor::where('id', request()->doctor)->delete();
+
+        return redirect()->route('pharmacies.doctors.show');
+    }
+
+    public function ban(Request $request) {}
+
     /**
      * Process datatables ajax request.
      *
@@ -100,16 +106,24 @@ class PharmacyController extends Controller
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
    
-                           $btn = "<a href=".route('pharmacies.doctors.edit', ['doctor' => $row->id])." data-toggle='tooltip'  data-id='$row->id' data-original-title='Edit' class='edit mx-1 btn btn-primary btn-sm editProduct'>Edit</a>";
+                           $btn = "<a href=".route('pharmacies.doctors.edit', ['doctor' => $row->id])." data-toggle='tooltip' data-id='$row->id' data-original-title='Edit' class='edit mx-1 btn btn-primary btn-sm editProduct'>Edit</a>";
+
+                           $btn = $btn."<form method='POST' class='d-inline' action=".route('pharmacies.doctors.delete', ['doctor' => $row->id])."><input type='hidden' name='_token' value='".csrf_token()."'><input type='hidden' name='_method' value='DELETE'>";
    
-                           $btn = $btn."<a href='javascript:void(0)' data-toggle='tooltip'  data-id='$row->id' data-original-title='Edit' class='edit btn  mx-1 btn-danger btn-sm editProduct'>Delete</a>";
+                           $btn = $btn."<button type='button' onclick='deleteDoctor()' data-id='$row->id' class='btn mx-1 btn-danger btn-sm'>Delete</button>";
+
+                           $btn = $btn."</form>";
+
+                           $btn = $btn."<form method='POST' class='d-inline' action=''><input type='hidden' name='_method' value='PATCH'>";
    
 
                            if($row->is_ban)
-                                $btn = $btn."<a href='javascript:void(0)' data-toggle='tooltip'  data-id='$row->id' data-original-title='Edit' class='edit mx-1  btn btn-dark btn-sm editProduct'>UnBan</a>";
+                                $btn = $btn."<a href='javascript:void(0)' data-id='$row->id' data-original-title='Edit' class='edit mx-1  btn btn-dark btn-sm editProduct'>UnBan</a>";
    
                             else
                                 $btn = $btn."<a href='javascript:void(0)' data-toggle='tooltip'  data-id='$row->id' data-original-title='Edit' class='edit btn mx-1  btn-dark btn-sm editProduct'>Ban</a>";
+
+                            $btn = $btn."</form>";
                             
                             return $btn;
                     })

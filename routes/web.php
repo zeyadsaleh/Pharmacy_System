@@ -30,6 +30,8 @@ Route::get('/pharmacies/doctors/create', 'PharmacyController@createDoctors')->na
 Route::post('/pharmacies/doctors', 'PharmacyController@storeDoctors')->name('pharmacies.doctors.store');
 Route::get('/pharmacies/doctors/{doctor}', 'PharmacyController@edit')->name('pharmacies.doctors.edit');
 Route::patch('/pharmacies/doctors/{doctor}', 'PharmacyController@update')->name('pharmacies.doctors.update');
+Route::delete('/pharmacies/doctors/{doctor}', 'PharmacyController@delete')->name('pharmacies.doctors.delete');
+// Route::get('/pharmacies/doctors/{doctor}', 'PharmacyController@ban')->name('pharmacies.doctors.ban');
 // Route to fetch data in json format from user table
 Route::get('/pharmacies-doctors-dt', 'PharmacyController@doctorsData')->name('pharmacies:doctors:dt');
 

@@ -89,19 +89,13 @@
                         },
                         { data: 'is_ban', name: 'is_ban' },
                         {data: 'action', name: 'action', orderable: false, searchable: false},
-                        // { 
-                        //     data: 'is_ban',
-                        //     render: function(data) {
-                        //     var banText = data ? 'Unban' : 'Ban';
-
-                        //     return `<button href="#" class="btn btn-primary btn-sm">Edit</button>
-                        //     <button href="#" class="btn btn-primary btn-sm">Delete</button>
-                        //     <form method="POST">
-                        //         <button href="#" class="btn btn-primary btn-sm">${banText}</button>
-                        //     </form>`;
-                        // }}
                     ],
                 });
             });
+
+            function deleteDoctor() {
+                if(confirm('Do tou want to delete this doctor ?'))
+                    document.querySelector('#deleteForm').submit();
+            }
     </script>
 @stop

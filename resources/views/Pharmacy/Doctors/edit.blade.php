@@ -73,6 +73,7 @@
       <input type="file" class="d-block" id="avatar" name="avatar" accept="image/*">
     </div>
   </div>
+  <!-- <input type="hidden" name="is_ban" value="false"> -->
   <button type="submit" class="btn btn-primary">Update</button>
 </form>
 </div>
