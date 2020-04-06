@@ -23,11 +23,10 @@ class OrderController extends Controller
     }
 
     public function create(Request $request){
-      if($request->ajax()) {
-        return $this->autoComp($request->medicine);
-      }
-
-      return view('orders.create', ['users' => User::all()]);
+      // if($request->ajax()) {
+      //   return $this->autoComp($request->medicine);
+      // }
+      return view('orders.create', ['users' => User::all(), 'medicines' => Medicine::all()]);
     }
 
     public function store(Request $request)
@@ -56,18 +55,18 @@ class OrderController extends Controller
     }
 
 
-    private function autoComp($name){
-      $data = Medicine::where('name', 'LIKE', $name.'%')->get();
-      $output = '';
-      $break = 0;
-      if (count($data)>0) {
-          foreach ($data as $row){
-              $output .= '<span class="d-inlne p-2 ml-2 border border-dark rounded bg-success">'.$row->name.'</span>';
-              $break++;
-              if($break >= 4){break;}}
-      }else {
-          $output .= '<span class="d-inlne p-2 ml-2 border border-dark rounded bg-danger">'.'No results'.'</span>';
-      }
-      return $output;
-    }
+    // private function autoComp($name){
+    //   $data = Medicine::where('name', 'LIKE', $name.'%')->get();
+    //   $output = '';
+    //   $break = 0;
+    //   if (count($data)>0) {
+    //       foreach ($data as $row){
+    //           $output .= '<span class="d-inlne p-2 ml-2 border border-dark rounded bg-success">'.$row->name.'</span>';
+    //           $break++;
+    //           if($break >= 4){break;}}
+    //   }else {
+    //       $output .= '<span class="d-inlne p-2 ml-2 border border-dark rounded bg-danger">'.'No results'.'</span>';
+    //   }
+    //   return $output;
+    // }
 }

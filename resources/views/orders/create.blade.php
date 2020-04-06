@@ -23,10 +23,13 @@
                          @csrf
                            <p><b>Medicine_Name</b></p>
                            <div style="margin-bottom: 25px" class="input-group">
-                                       <input id="medicine" type="text" class="form-control" name="medicine">
-                           </div>
+                                       <select class="medicine-search form-control" name="states[]" multiple="multiple">
+                                         @foreach($medicines as $medicine)
+                                           <option value="{{$medicine->id}}">{{$medicine->name}}</option>
+                                          @endforeach
+                                       </select>
 
-                          <p class="list-group text-center" id="medicine_list" style="display: block; position: relative; z-index: 1; opacity: 0.7;"></p>
+                           </div>
 
                           <hr>
                            <p><b>Quantity</b></p>
@@ -63,7 +66,6 @@
                                     @endforeach
                                </select>
                            </div>
-p
                          <div style="margin-top:10px" class="form-group">
                              <!-- Button -->
                              <div class="col-sm-12 controls">
