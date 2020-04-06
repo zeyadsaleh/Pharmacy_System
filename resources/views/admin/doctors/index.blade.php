@@ -7,7 +7,7 @@
 
 @section('sidebar')
     <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a href="route('admin.pharmacies.index')" class="nav-link">
             <i class="far fa-circle nav-icon"></i>
             <p>Pharmacies</p>
         </a>
@@ -19,7 +19,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a href="{{route('admin.doctors.index')}}" class="nav-link">
+        <a href="{{route('admin.areas.index')}}" class="nav-link">
             <i class="far fa-circle nav-icon"></i>
             <p>Areas</p>
         </a>
@@ -67,7 +67,7 @@
         <h1>Doctors</h1>
 
 
-    <a href="{{route('admin.doctors.create')}}" class="btn btn-success mb-3">Add Doctor</a>
+    {{-- <a href="{{route('admin.doctors.create')}}" class="btn btn-success mb-3">Add Doctor</a> --}}
 
     <table id="users-table" class="table table-striped table-bordered" style="width:100%">
             <thead>

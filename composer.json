@@ -18,7 +18,8 @@
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
-        "yajra/laravel-datatables-oracle": "^9.9"
+        "yajra/laravel-datatables-oracle": "^9.9",
+        "webpatser/laravel-countries" : "dev-master"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

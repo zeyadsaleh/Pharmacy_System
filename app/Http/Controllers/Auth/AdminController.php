@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Route;
 use Auth;
 
-class AdminLoginController extends Controller
+class AdminController extends Controller
 {
 
     public function __construct()

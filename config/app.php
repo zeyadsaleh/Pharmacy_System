@@ -164,9 +164,12 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         Cog\Laravel\Ban\Providers\BanServiceProvider::class,
 
+
         /*
          * Package Service Providers...
          */
+        'Webpatser\Countries\CountriesServiceProvider',
+
 
         /*
          * Application Service Providers...
@@ -229,6 +232,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
+        'Countries' => 'Webpatser\Countries\CountriesFacade',
 
     ],
 
