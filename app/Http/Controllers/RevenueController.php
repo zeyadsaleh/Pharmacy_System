@@ -27,10 +27,10 @@ class RevenueController extends Controller
         $user = Auth::User();
         // if the user is pharamcy
         // if ($user->hasRole('pharmacy')) {
-        //$revenue = $this->calculatePharmacyRevene();
+        $revenue = $this->calculatePharmacyRevene();
         //if the user is admin
         // } elseif ($user->hasRole('admin')) {
-            $revenue = $this->calculateAdminRevene($request);
+        //    $revenue = $this->calculateAdminRevene();
         // }
 
         return view('Revenue.index', $revenue);
