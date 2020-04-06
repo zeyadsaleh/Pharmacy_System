@@ -27,24 +27,27 @@ class OrderController extends Controller
     }
 
 
-    public function edit($id)
+    public function edit(Request $request)
     {
-      $order = Order::find($id);
-      return response()->json($order);
+      return view('orders.edit',[
+          'order' => Order::find($request->order),
+      ]);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-      Order::find($id)->delete();
-      return view('orders.index');
+      Order::find($request->order)->delete();
+      return redirect()->back()->with('warning','Order Deleted successfully!');;
     }
 
     public function show(){
 
     }
 
-    public function update(){
-
+    public function update(Request $request){
+      $order = Order::find($request->order);
+      $order->fill($request->all())->save();
+      return redirect()->route('orders.index')->with('success','Order Updated successfully!');
     }
 
   }

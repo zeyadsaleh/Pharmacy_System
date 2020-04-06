@@ -24,7 +24,9 @@ class OrderResource extends JsonResource
            'doctor_id' => $this->doctor_id ? "Dr. ".$this->user->name: "",
            'is_insured' => $this->is_insured ? "Yes" : "No",
            'status' => $this->status,
-           'action' => '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$this->user_id.'"   data-original-title="Edit" class="edit btn btn-primary btn-sm editorder">Edit</a>',
+
+           'action' => '<form method="GET" class="d-inline p-2" action="'.url("orders", [ $this->id, "edit"]).'"><input type="hidden" name="_token" value="'.csrf_token().'"><button type="submit" class="d-inline p-2 edit btn btn-primary">Edit</button></form>'.'<form method="POST" class="d-inline p-2" action="'.url("orders", $this->id).'"><input type="hidden" name="_method" value="DELETE"><input type="hidden" name="_token" value="'.csrf_token().'"><button type="submit" class="d-inline p-2 del btn btn-danger">Delete</button></form>',
+
            'created_by' => $this->created_by,
            'pharmacy_id' => $this->pharmacy_id ? $this->pharmacy_id->name : "",
          ];

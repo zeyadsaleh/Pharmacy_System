@@ -41,7 +41,9 @@ Route::get('/pharmacies-doctors-dt', 'PharmacyController@doctorsData')->name('ph
 #################################################################################
 
 Route::get('/orders', 'OrderController@index')->name('orders.index');
+Route::get('/orders/{order}/edit', 'OrderController@edit')->name('orders.edit');
 Route::delete('/orders/{order}', 'OrderController@destroy')->name('orders.destroy');
+Route::put('/orders/{order}', 'OrderController@update')->name('orders.update');
 
 #################################################################################
 

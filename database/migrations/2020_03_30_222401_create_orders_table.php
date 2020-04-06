@@ -17,9 +17,8 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->string('delivering_address')->nullable();
             $table->boolean('is_insured');
-            $table->enum('created_by', ['Pharmacy', 'Doctor','User']);
+            $table->enum('created_by', ['Pharmacy', 'Doctor', 'User']);
             $table->enum('status', ['New', 'Processing','WaitingForUserConfirmation','Canceled','Confirmed','Delivered']);
-            $table->unsignedBigInteger('total_price')->nullable();
             $table->timestamps();
             $table->unsignedBigInteger('pharmacy_id')->nullable();
             $table->foreign('pharmacy_id')->references('id')->on('pharmacies');

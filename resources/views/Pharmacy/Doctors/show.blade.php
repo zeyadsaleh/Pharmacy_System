@@ -80,7 +80,7 @@
                         { data: 'email', name: 'email' },
                         { data: 'created_at', name: 'created_at' },
                         { data: 'national_id', name: 'national_id' },
-                        { 
+                        {
                             data: 'avatar',
                             name: 'avatar',
                             render : function ( url, type, full) {
@@ -92,14 +92,10 @@
                     ],
                 });
             });
-<<<<<<< Updated upstream
 
             function deleteDoctor() {
                 if(confirm('Do tou want to delete this doctor ?'))
                     document.querySelector('#deleteForm').submit();
             }
-=======
-            console.log(columns);
->>>>>>> Stashed changes
     </script>
 @stop
