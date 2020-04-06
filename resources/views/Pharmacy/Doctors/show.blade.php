@@ -99,9 +99,9 @@
                 });
             });
 
-            function deleteDoctor() {
+            function deleteDoctor(id) {
                 if(confirm('Do tou want to delete this doctor ?'))
-                    document.querySelector('#deleteForm').submit();
+                    document.querySelector(`#delete-${id}`).submit();
             }
     </script>
 @stop

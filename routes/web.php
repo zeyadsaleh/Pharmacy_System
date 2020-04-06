@@ -34,7 +34,8 @@ Route::post('/pharmacies/doctors', 'PharmacyController@storeDoctors')->name('pha
 Route::get('/pharmacies/doctors/{doctor}', 'PharmacyController@edit')->name('pharmacies.doctors.edit');
 Route::patch('/pharmacies/doctors/{doctor}', 'PharmacyController@update')->name('pharmacies.doctors.update');
 Route::delete('/pharmacies/doctors/{doctor}', 'PharmacyController@delete')->name('pharmacies.doctors.delete');
-// Route::get('/pharmacies/doctors/{doctor}', 'PharmacyController@ban')->name('pharmacies.doctors.ban');
+Route::get('/unban/{doctor}', 'PharmacyController@unban')->name('pharmacies.doctors.unban');
+Route::get('/ban/{doctor}', 'PharmacyController@ban')->name('pharmacies.doctors.ban');
 // Route to fetch data in json format from user table
 Route::get('/pharmacies-doctors-dt', 'PharmacyController@doctorsData')->name('pharmacies:doctors:dt');
 
@@ -46,16 +47,6 @@ Route::delete('/orders/{order}', 'OrderController@destroy')->name('orders.destro
 Route::put('/orders/{order}', 'OrderController@update')->name('orders.update');
 
 #################################################################################
-
-// Auth::routes();
-
-// Route::get('/home', 'HomeController@index')->name('home');
-
-// Auth::routes();
-
-// Route::get('/home', 'HomeController@index')->name('home');
-
-// Auth::routes();
 
 Route::get('/home', function () {
     return view('home');

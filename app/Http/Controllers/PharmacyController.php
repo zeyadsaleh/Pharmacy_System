@@ -89,7 +89,48 @@ class PharmacyController extends Controller
         return redirect()->route('pharmacies.doctors.show');
     }
 
-    public function ban(Request $request) {}
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function ban(Request $request)
+    {
+
+        if(!empty($request->doctor)){
+            $doctor = Doctor::find($request->doctor);
+            $doctor->bans()->create([
+                'comment'=>$request->baninfo
+            ]);
+
+            $doctor->update([
+                'is_ban' => true
+            ]);
+        }
+
+        return redirect()->route('pharmacies.doctors.show')->with('success','Ban Successfully..');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function unban(Request $request)
+    {
+        if(!empty($request->doctor)){
+            $doctor = Doctor::find($request->doctor);
+            $doctor->unban();
+
+            $doctor->update([
+                'is_ban' => false
+            ]);
+        }
+
+
+        return redirect()->route('pharmacies.doctors.show')
+        				->with('success','User Unbanned Successfully.');
+    }
 
     /**
      * Process datatables ajax request.
@@ -108,9 +149,9 @@ class PharmacyController extends Controller
    
                            $btn = "<a href=".route('pharmacies.doctors.edit', ['doctor' => $row->id])." data-toggle='tooltip' data-id='$row->id' data-original-title='Edit' class='edit mx-1 btn btn-primary btn-sm editProduct'>Edit</a>";
 
-                           $btn = $btn."<form method='POST' class='d-inline' action=".route('pharmacies.doctors.delete', ['doctor' => $row->id])."><input type='hidden' name='_token' value='".csrf_token()."'><input type='hidden' name='_method' value='DELETE'>";
+                           $btn = $btn."<form method='POST' id='delete-$row->id' class='d-inline' action=".route('pharmacies.doctors.delete', ['doctor' => $row->id])."><input type='hidden' name='_token' value='".csrf_token()."'><input type='hidden' name='_method' value='DELETE'>";
    
-                           $btn = $btn."<button type='button' onclick='deleteDoctor()' data-id='$row->id' class='btn mx-1 btn-danger btn-sm'>Delete</button>";
+                           $btn = $btn."<button type='button' onclick='deleteDoctor($row->id)' data-id='$row->id' class='btn mx-1 btn-danger btn-sm'>Delete</button>";
 
                            $btn = $btn."</form>";
 
@@ -118,10 +159,9 @@ class PharmacyController extends Controller
    
 
                            if($row->is_ban)
-                                $btn = $btn."<a href='javascript:void(0)' data-id='$row->id' data-original-title='Edit' class='edit mx-1  btn btn-dark btn-sm editProduct'>UnBan</a>";
-   
+                           $btn = $btn."<a class='btn btn-success ban btn-sm' data-id='$row->id' href=".route('pharmacies.doctors.unban', ['doctor' => $row->id])."> Unban</a>";
                             else
-                                $btn = $btn."<a href='javascript:void(0)' data-toggle='tooltip'  data-id='$row->id' data-original-title='Edit' class='edit btn mx-1  btn-dark btn-sm editProduct'>Ban</a>";
+                                $btn = $btn."<a class='btn btn-success ban btn-sm' data-id='$row->id' href=".route('pharmacies.doctors.ban', ['doctor' => $row->id])."> Ban</a>";
 
                             $btn = $btn."</form>";
                             

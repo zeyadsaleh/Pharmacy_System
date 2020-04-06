@@ -51,6 +51,6 @@ class Doctor extends Authenticatable implements BannableContract
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'national_id', 'avatar', 'pharmacy_id', 'is_ban'
+        'name', 'email', 'password', 'national_id', 'avatar', 'pharmacy_id', 'is_ban', 'banned_at'
     ];
 }
