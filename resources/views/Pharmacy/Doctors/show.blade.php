@@ -87,7 +87,13 @@
                                 return '<img src="{{url("uploads")}}'+url+'" width=100 height=100>'
                             }
                         },
-                        { data: 'is_ban', name: 'is_ban' },
+                        { 
+                            data: 'is_ban', 
+                            name: 'is_ban', 
+                            render: function(data) {
+                                return data ? 'True' : 'False';
+                            }    
+                        },
                         {data: 'action', name: 'action', orderable: false, searchable: false},
                     ],
                 });
