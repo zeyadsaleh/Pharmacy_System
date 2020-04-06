@@ -33,8 +33,8 @@ class PharmacyController extends Controller
         $validatedData = $request->validated();
         $validatedData['pharmacy_id'] = 1;
 
-        if($request->hasfile('avatar')) 
-        { 
+        if($request->hasfile('avatar'))
+        {
             $file = $request->file('avatar');
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename =time().'.'.$extension;
@@ -105,26 +105,26 @@ class PharmacyController extends Controller
             return Datatables::of(Doctor::query())
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-   
+
                            $btn = "<a href=".route('pharmacies.doctors.edit', ['doctor' => $row->id])." data-toggle='tooltip' data-id='$row->id' data-original-title='Edit' class='edit mx-1 btn btn-primary btn-sm editProduct'>Edit</a>";
 
                            $btn = $btn."<form method='POST' class='d-inline' action=".route('pharmacies.doctors.delete', ['doctor' => $row->id])."><input type='hidden' name='_token' value='".csrf_token()."'><input type='hidden' name='_method' value='DELETE'>";
-   
+
                            $btn = $btn."<button type='button' onclick='deleteDoctor()' data-id='$row->id' class='btn mx-1 btn-danger btn-sm'>Delete</button>";
 
                            $btn = $btn."</form>";
 
                            $btn = $btn."<form method='POST' class='d-inline' action=''><input type='hidden' name='_method' value='PATCH'>";
-   
+
 
                            if($row->is_ban)
                                 $btn = $btn."<a href='javascript:void(0)' data-id='$row->id' data-original-title='Edit' class='edit mx-1  btn btn-dark btn-sm editProduct'>UnBan</a>";
-   
+
                             else
                                 $btn = $btn."<a href='javascript:void(0)' data-toggle='tooltip'  data-id='$row->id' data-original-title='Edit' class='edit btn mx-1  btn-dark btn-sm editProduct'>Ban</a>";
 
                             $btn = $btn."</form>";
-                            
+
                             return $btn;
                     })
                     ->rawColumns(['action'])

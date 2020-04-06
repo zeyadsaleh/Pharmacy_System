@@ -1,71 +1,88 @@
-@extends('layouts.app')
+@extends('adminlte::page')
 
-@section('title')
-<title>Edit Post</title>
-@endsection
+@section('title', 'Dashboard')
 
-@section('head')
-@include('layouts.header')
-@endsection
+@section('css')
+  @include('layouts.ordercss')
+@stop
 
-@section('body')
+@section('content_header')
 
-<div class="container m-5 bg-dark text-white p-5">
-<form method="POST" action="{{route('posts.update',['post' => $post->id])}}" enctype="multipart/form-data">
-    @method('PUT')
-    @csrf
-    <div class="form-group m-3">
-      <h3 >Title</h3>
-      <input name="title" type="text" class="form-control" aria-describedby="emailHelp" value="{{$post->title}}">
-    </div>
-    <div class="form-group m-3">
-      <h3 for="exampleInputPassword1">Description</h3>
-      <textarea name="description" class="form-control">{{$post->description}}</textarea>
-    </div>
+@stop
 
-    <div class="form-group m-3">
-      <h3 for="exampleInputPassword1">Category: <span class="h6"> {{$post->category}}</span></h3>
-      <br>
-          <input type="radio" name="category" value="art"> Art
-          <input type="radio" name="category" value="social"> Social
-          <input type="radio" name="category" value="sport"> Sport
-    </div>
+@section('content')
+<div class="container d-flex justify-content-center">
+       <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+           <div class="panel panel-info" >
+                   <div class="panel-heading">
+                       <h2 class="panel-title">Order Info</h2>
+                   </div>
+                   <div style="padding-top:30px" class="panel-body" >
 
-    <div class="form-group m-3">
-      <h3 for="exampleInputPassword1">Users</h3>
-      <select name="user_id" class="form-control">
-          <option value="{{$post->user_id}}">{{$post->user->name}}</option>
-        @foreach($users as $user)
-        @if($post->user_id != $user->id)
-          <option value="{{$user->id}}">{{$user->name}}</option>
-        @endif
-        @endforeach
-        </select>
-    </div>
+                       <form id="order" method="POST" action="{{route('orders.update',['order' => $order->id])}}" enctype="multipart/form-data" class="form-horizontal" role="form">
+                         @method('PUT')
+                         @csrf
+                           <p><b>Order Username</b></p>
+                           <div style="margin-bottom: 25px" class="input-group">
+                                       <input type="text" class="form-control" name="username" value="{{$order->user->name}}" disabled>
+                                   </div>
 
-    <div class="form-group m-3">
-      <h3 for="exampleInputPassword1">Image</h3>
-      @if ($post->image)
-      <div class="d-flex justify-content-center m-3">
-      <img src ="{{url('uploads/'.$post->image->filename)}}" width="300"/></div>
-      @endif
-      <input type="file" class="form-control" name="image"/>
-    </div>
+                          <hr>
 
-    <button type="submit" class="btn btn-primary">Update</button>
-  </form>
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-</div>
-@endsection
+                           <p><b>Deliverying Address</b></p>
+                           <div style="margin-bottom: 25px" class="input-group">
+                                       <input type="text" class="form-control" name="addres" value="{{$order->delivering_address}}" disabled>
+                           </div>
 
-@section('foot')
-@include('layouts.footer')
-@endsection
+                           <hr>
+
+                            <p><b>Creation Data</b></p>
+                            <div style="margin-bottom: 25px" class="input-group">
+                                        <input type="text" class="form-control" name="creation_data" value="{{$order->created_at}}" disabled>
+                            </div>
+
+                            <hr>
+
+                             <p><b>Current Order Status: </b><span style="color: green;"><u>{{$order->status}}</u></span></p>
+
+                            <div style="margin-bottom: 25px" class="input-group">
+                                 <select name="status" class="form-control">
+                                     <option value="{{$order->status}}">{{$order->status}}</option>
+                                   @if($order->status != 'New')
+                                     <option value="New">New</option>
+                                   @endif
+                                   @if($order->status != 'Processing')
+                                     <option value="Processing">Processing</option>
+                                   @endif
+                                   @if($order->status != 'WaitingForUserConfirmation')
+                                     <option value="WaitingForUserConfirmation">WaitingForUserConfirmation</option>
+                                   @endif
+                                   @if($order->status != 'Canceled')
+                                     <option value="Canceled">Canceled</option>
+                                   @endif
+                                   @if($order->status != 'Confirmed')
+                                     <option value="Confirmed">Confirmed</option>
+                                   @endif
+                                   @if($order->status != 'Delivered')
+                                     <option value="Delivered">Delivered</option>
+                                   @endif
+                                </select>
+                            </div>
+
+                         <div style="margin-top:10px" class="form-group">
+                             <!-- Button -->
+                             <div class="col-sm-12 controls">
+                               <button type="submit" class="btn btn-success">Edit</button>
+                             </div>
+                         </div>
+
+                   </div>
+          </div>
+       </div>
+   </div>
+
+@stop
+
+@section('js')
+  @include('layouts.orderjs')
+@stop
