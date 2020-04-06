@@ -18,11 +18,11 @@
         </a>
     </li>
     <li class="nav-item">
-        <a href="#" class="nav-link">
+        <a href="{{route('pharmacies.revenues.index')}}" class="nav-link">
             <i class="far fa-circle nav-icon"></i>
             <p>Revenues</p>
         </a>
-    </li>
+    </li> 
 @stop
 
 @section('content_header')

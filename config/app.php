@@ -163,6 +163,8 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         Cog\Laravel\Ban\Providers\BanServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
+
 
 
         /*

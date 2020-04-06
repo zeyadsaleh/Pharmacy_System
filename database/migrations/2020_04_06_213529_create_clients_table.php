@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ModifyUsersTable extends Migration
+class CreateClientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class ModifyUsersTable extends Migration
      */
     public function up()
     {
-
-        DB::connection()->getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
-
-        Schema::table('users', function (Blueprint $table) {
-            $table->enum('gender', ['Male', 'Female']);
+        Schema::create('clients', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->enum('gender', ['Male', 'Female'])->nullable();
             $table->date('date_of_birth')->nullable();
             $table->string('avatar')->nullable();
             $table->string('mobile_number')->nullable();
             $table->string('national_id')->unique()->nullable();
+            $table->timestamps();
         });
     }
 
@@ -32,6 +32,6 @@ class ModifyUsersTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('clients');
     }
 }

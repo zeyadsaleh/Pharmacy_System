@@ -16,8 +16,6 @@ class CreatePharmaciesTable extends Migration
         Schema::create('pharmacies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
             $table->string('national_id')->unique();
             $table->string('avatar')->nullable();
             $table->enum('priority', ['Low', 'Middle','High']);
