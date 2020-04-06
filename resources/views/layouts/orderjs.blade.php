@@ -5,10 +5,13 @@
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
 
 <script>
-$(function () {
-    var table = $('#orders-table').DataTable({
+
+$(document).ready(function () {
+    $('#orders-table').DataTable({
           processing: true,
           serverSide: true,
           ajax: '{!! route('orders.index') !!}',
@@ -23,12 +26,29 @@ $(function () {
               {data: 'created_by', name: 'created_by'},
               {data: 'pharmacy_id', name: 'pharmacy_id'},
               {data: 'action', name: 'action'},
-          ]
+          ],
       });
 
-    console.log(table.ajax.data);
-  });
-</script>
+      // $('#medicine').on('keyup',function() {
+      //       var query = $(this).val();
+      //       $.ajax({
+      //           url:'{!! route('orders.create') !!}',
+      //           type: "GET",
+      //           data: {'medicine':query},
+      //           success: function (data) { $('#medicine_list').html(data)},
+      //       });
+      //   });
+      //
+      //   $(document).on('click', 'span', function(){
+      //       var value = $(this).text();
+      //       $('#medicine').val(value);
+      //       $('#medicine_list').html("");
+      //   });
 
+        $('.medicine-search').select2();
+
+    });
+
+ </script>
 
 <script src="js/order.js"></script>

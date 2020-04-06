@@ -20,4 +20,12 @@ class Order extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function doctor(){
+        return $this->belongsTo('App\Doctor');
+    }
+
+    public function pharmacy(){
+        return $this->belongsTo('App\Pharmacy');
+    }
+
 }

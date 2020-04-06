@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,9 +42,12 @@ Route::get('/pharmacies-doctors-dt', 'PharmacyController@doctorsData')->name('ph
 #################################################################################
 
 Route::get('/orders', 'OrderController@index')->name('orders.index');
+Route::get('/orders/create', 'OrderController@create')->name('orders.create');
+Route::post('/orders', 'OrderController@store')->name('orders.store');
 Route::get('/orders/{order}/edit', 'OrderController@edit')->name('orders.edit');
-Route::delete('/orders/{order}', 'OrderController@destroy')->name('orders.destroy');
 Route::put('/orders/{order}', 'OrderController@update')->name('orders.update');
+Route::delete('/orders/{order}', 'OrderController@destroy')->name('orders.destroy');
+// Route::get('/orders', 'SearchController@search')->name('search');
 
 #################################################################################
 

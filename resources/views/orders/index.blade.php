@@ -29,7 +29,7 @@
       </div>
     @endif
 
-    <a class="btn btn-success" href="javascript:void(0)" id="createNeworder">New Order</a>
+    <a class="btn btn-success" href="{{route('orders.create')}}" id="createNeworder">New Order</a>
     <table id="orders-table" class="table table-bordered data-table">
         <thead>
             <tr>
