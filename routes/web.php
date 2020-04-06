@@ -24,11 +24,16 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/doctors', 'DoctorController@index')->name('doctors.index');
+    // Main route for pharmacy with table of data
 });
 
-// Main route for pharmacy with table of data
+################## // @TOBECHANGED
+// Route::get('/pharmacies/login', 'Auth\DoctorLoginController@showLoginForm')->name('pharmacies.login');
+// Route::post('/pharmacies/login', 'Auth\DoctorLoginController@login')->name('pharmacies.login.submit');
+// Route::get('/pharmacies/logout/', 'Auth\DoctorLoginController@logout')->name('pharmacies.logout');
+// #############
 Route::get('/pharmacies', 'PharmacyController@index')->name('pharmacies.index');
-Route::get('/pharmacies/doctors', 'PharmacyController@showDoctors')->name('pharmacies.doctors.show');
+Route::get('/pharmacies/doctors', 'PharmacyController@indexDoctors')->name('pharmacies.doctors.index');
 Route::get('/pharmacies/doctors/create', 'PharmacyController@createDoctors')->name('pharmacies.doctors.create');
 Route::get('/pharmacies/revenues', 'PharmacyController@indexRevenues')->name('pharmacies.revenues.index');
 

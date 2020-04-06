@@ -15,12 +15,12 @@ class PharmacyController extends Controller
 {
     public function index()
     {
-        return view('Pharmacy.Doctors.index');
+        return view('Pharmacy.index');
     }
 
-    public function showDoctors(Request $request)
+    public function indexDoctors(Request $request)
     {
-        return view('Pharmacy.Doctors.show');
+        return view('Pharmacy.Doctors.index');
     }
 
     
@@ -50,8 +50,8 @@ class PharmacyController extends Controller
         $validatedData['avatar'] = '/avatars/'.$filename;
         
         Doctor::create($validatedData);
-        
-        return redirect()->route('pharmacies.doctors.show');
+
+        return redirect()->route('pharmacies.doctors.index');
     }
     
     public function indexRevenues()
@@ -80,7 +80,7 @@ class PharmacyController extends Controller
             'avatar' => '/avatars/'.$filename,
         ]);
 
-        return redirect()->route('pharmacies.doctors.show');
+        return redirect()->route('pharmacies.doctors.index');
     }
 
     public function edit(Request $request) {
@@ -94,7 +94,7 @@ class PharmacyController extends Controller
     public function delete() {
         Doctor::where('id', request()->doctor)->delete();
 
-        return redirect()->route('pharmacies.doctors.show');
+        return redirect()->route('pharmacies.doctors.index');
     }
 
     /**
@@ -116,7 +116,7 @@ class PharmacyController extends Controller
             ]);
         }
 
-        return redirect()->route('pharmacies.doctors.show')->with('success','Ban Successfully..');
+        return redirect()->route('pharmacies.doctors.index')->with('success','Ban Successfully..');
     }
 
     /**
@@ -136,7 +136,7 @@ class PharmacyController extends Controller
         }
 
 
-        return redirect()->route('pharmacies.doctors.show')
+        return redirect()->route('pharmacies.doctors.index')
         				->with('success','User Unbanned Successfully.');
     }
 

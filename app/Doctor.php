@@ -46,6 +46,7 @@ class Doctor extends Authenticatable implements BannableContract
         'is_ban' => 'boolean',
     ];
 
+    protected $guard = 'doctor';
 
     /**
      * The attributes that are mass assignable.
