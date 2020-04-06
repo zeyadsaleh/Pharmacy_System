@@ -11,6 +11,13 @@
 <script>
 
 $(document).ready(function () {
+
+  $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+
     $('#orders-table').DataTable({
           processing: true,
           serverSide: true,
@@ -29,26 +36,21 @@ $(document).ready(function () {
           ],
       });
 
-      // $('#medicine').on('keyup',function() {
-      //       var query = $(this).val();
-      //       $.ajax({
-      //           url:'{!! route('orders.create') !!}',
-      //           type: "GET",
-      //           data: {'medicine':query},
-      //           success: function (data) { $('#medicine_list').html(data)},
-      //       });
-      //   });
-      //
-      //   $(document).on('click', 'span', function(){
-      //       var value = $(this).text();
-      //       $('#medicine').val(value);
-      //       $('#medicine_list').html("");
-      //   });
+      $('.medicine').select2({
+          tags: true,
+          theme: "classic",
+      })
 
-        $('.medicine-search').select2();
+      $('.user').select2({
+          tags: true,
+          theme: "classic",
+      })
 
-    });
+      $('.type').select2({
+          tags: true,
+          theme: "classic",
+      })
+
+});
 
  </script>
-
-<script src="js/order.js"></script>
