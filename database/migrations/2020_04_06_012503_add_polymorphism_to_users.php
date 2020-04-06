@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RenamingAdminTable extends Migration
+class AddPolymorphismToUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,10 @@ class RenamingAdminTable extends Migration
      */
     public function up()
     {
-        Schema::rename('admin', 'admins');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('profile_type')->nullable();
+            $table->unsignedInteger('profile_id')->nullable();         
+        });
     }
 
     /**
@@ -23,6 +26,8 @@ class RenamingAdminTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 }

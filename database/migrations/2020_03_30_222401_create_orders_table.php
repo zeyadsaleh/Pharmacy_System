@@ -16,9 +16,9 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('delivering_address')->nullable();
-            $table->boolean('is_insured');
             $table->enum('created_by', ['Pharmacy', 'Doctor', 'User']);
-            $table->enum('status', ['New', 'Processing','WaitingForUserConfirmation','Canceled','Confirmed','Delivered']);
+            $table->enum('status', ['New', 'Processing', 'WaitingForUserConfirmation', 'Canceled', 'Confirmed', 'Delivered']);
+            $table->float('total_price', 8, 2)->nullable();
             $table->timestamps();
             $table->unsignedBigInteger('pharmacy_id')->nullable();
             $table->foreign('pharmacy_id')->references('id')->on('pharmacies');
@@ -26,7 +26,6 @@ class CreateOrdersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('doctor_id')->nullable();
             $table->foreign('doctor_id')->references('id')->on('doctors');
-
         });
     }
 

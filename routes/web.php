@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
 Route::get('/pharmacies', 'PharmacyController@index')->name('pharmacies.index');
 Route::get('/pharmacies/doctors', 'PharmacyController@showDoctors')->name('pharmacies.doctors.show');
 Route::get('/pharmacies/doctors/create', 'PharmacyController@createDoctors')->name('pharmacies.doctors.create');
+Route::get('/pharmacies/revenues', 'PharmacyController@indexRevenues')->name('pharmacies.revenues.index');
 
 Route::post('/pharmacies/doctors', 'PharmacyController@storeDoctors')->name('pharmacies.doctors.store');
 Route::get('/pharmacies/doctors/{doctor}', 'PharmacyController@edit')->name('pharmacies.doctors.edit');
@@ -50,11 +51,18 @@ Route::put('/orders/{order}', 'OrderController@update')->name('orders.update');
 Route::delete('/orders/{order}', 'OrderController@destroy')->name('orders.destroy');
 // Route::get('/orders', 'SearchController@search')->name('search');
 
+##################################Revenue############################################
+
+Route::get('/revenues', 'RevenueController@index')->name('revenues.index');
+
 #################################################################################
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home')->middleware('auth');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
 
 ####### Admin Route
 // Auth::routes();
@@ -101,9 +109,3 @@ Route::prefix('admin')->group(function () {
 
 });
 #######
-// Auth::routes();
-// Route::get('/home', 'HomeController@index')->name('home');
-
-// Auth::routes();
-
-// Route::get('/home', 'HomeController@index')->name('home');

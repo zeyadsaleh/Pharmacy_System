@@ -21,4 +21,9 @@ class Admin extends Authenticatable
             'password','remember_token',
         ];
 
+        public function user() 
+        { 
+          return $this->morphOne('App\User', 'profile');
+        }
+
 }
