@@ -23,7 +23,7 @@ class DoctorResource extends JsonResource
             'national_id' => $this->national_id,
             //    'avatar' => "<img src=".url("uploads").$this->avatar." width=100 height=100 >",
             'avatar' => $this->avatar,
-            'is_ban' => $this->is_ban,
+            'is_ban' => $this->is_ban ? 'True' : 'False',
             
            'action' => "<div class='row px-1'><a href=".route('pharmacies.doctors.edit', ['doctor' => $this->id])." data-toggle='tooltip' data-original-title='Edit' class='edit mr-1 btn btn-primary btn-sm editProduct'>Edit</a>
 
@@ -38,7 +38,7 @@ class DoctorResource extends JsonResource
 
         ];
 
-        if(auth()->user()->hasrole('admin')) {
+        if(auth()->user() && auth()->user()->hasrole('admin')) {
 
             // add pharmacy_name in the correct index
             $data = array_slice($data, 0, 6, true) +

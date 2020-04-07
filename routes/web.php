@@ -22,7 +22,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth','is-ban']], function () {
     Route::get('/doctors', 'DoctorController@index')->name('doctors.index');
     // Main route for pharmacy with table of data
     Route::get('/pharmacies', 'PharmacyController@index')->name('pharmacies.index');
