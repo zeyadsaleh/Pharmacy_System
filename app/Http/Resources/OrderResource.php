@@ -19,7 +19,7 @@ class OrderResource extends JsonResource
            'id' => $this->id,
            'user_id' => $this->user_id ? $this->user->name : "Not exist",
            'delivering_address' => $this->delivering_address,
-           'created_at' => $this->created_at,
+           'created_at' => $this->created_at ? $this->created_at->format('d/m/Y || H:i') : "",
            'doctor_id' => $this->doctor_id ? "Dr. ".$this->doctor->name: "",
            'is_insured' => $this->is_insured ? "Yes" : "No",
            'status' => $this->status,

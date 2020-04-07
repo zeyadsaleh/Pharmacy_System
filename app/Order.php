@@ -8,8 +8,7 @@ class Order extends Model
 {
 
   protected $fillable = [
-    'status',
-  ];
+    'delivering_address', 'is_insured', 'created_by', 'status', 'pharmacy_id', 'user_id', 'doctor_id'];
 
     public function medicines()
     {
