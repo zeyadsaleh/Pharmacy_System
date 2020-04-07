@@ -12,7 +12,6 @@ class User extends Authenticatable
     use Notifiable,HasRoles;
     // protected $with = ['profile'];
 
-
     /**
      * The attributes that are mass assignable.
      *
