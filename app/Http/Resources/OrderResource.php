@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use App\Order;
 
 class OrderResource extends JsonResource
 {
