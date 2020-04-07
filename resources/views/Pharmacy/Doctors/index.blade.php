@@ -46,6 +46,9 @@
                 <th>Created At</th>
                 <th>National ID</th>
                 <th>Avatar</th>
+                @hasrole('admin')
+                <th>Pharmacy</th>
+                @endhasrole
                 <th>Banned</th>
                 <th>Actions</th>
             </tr>
@@ -68,42 +71,40 @@
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
     <script>
-            // Create table and fetch data using ajax
-            $(function() {
-                $('#users-table').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: '{!! route('pharmacies:doctors:dt') !!}',
-                    columns: [
-                        { data: 'id', name: 'id' },
-                        { data: 'name', name: 'name' },
-                        { data: 'email', name: 'email' },
-                        { data: 'created_at', name: 'created_at' },
-                        { data: 'national_id', name: 'national_id' },
-                        {
-                            data: 'avatar',
-                            name: 'avatar',
-                            render : function ( url, type, full) {
+        // Create table and fetch data using ajax
+        $(function() {
 
-                                // Hello, @{{ name }}. 
-                                return '<img src="{{url("uploads")}}'+url+'" width=100 height=100>'
-                            }
-                        },
-                        { 
-                            data: 'is_ban', 
-                            name: 'is_ban', 
-                            render: function(data) {
-                                return data ? 'True' : 'False';
-                            }    
-                        },
-                        {data: 'action', name: 'action', orderable: false, searchable: false},
-                    ],
-                });
+            $.ajax({
+                url: '{!! route('pharmacies:doctors:dt') !!}',
+                success: function (data) {
+                    columnNames = Object.keys(data.data[0]);
+                    let columns = [];
+                    for (var i in columnNames) {
+                        if(columnNames[i] == 'avatar') {
+                            columns.push({
+                                data: columnNames[i],
+                                name: columnNames[i],
+                                render: function(url) {
+                                    return '<img src="{{url("uploads")}}'+url+'" width=100 height=100>';
+                                }
+                            });
+                        } else 
+                            columns.push({data: columnNames[i], name: columnNames[i]});
+                    }
+
+                    $('#users-table').DataTable({
+                        ajax: '{!! route('pharmacies:doctors:dt') !!}',
+                        processing: true,
+                        serverSide: true,
+                        columns: columns
+                    } );
+                }
             });
+        });
 
-            function deleteDoctor(id) {
-                if(confirm('Do tou want to delete this doctor ?'))
-                    document.querySelector(`#delete-${id}`).submit();
-            }
+        function deleteDoctor(id) {
+            if(confirm('Do you want to delete this doctor ?'))
+                document.querySelector(`#delete-${id}`).submit();
+        }
     </script>
 @stop
