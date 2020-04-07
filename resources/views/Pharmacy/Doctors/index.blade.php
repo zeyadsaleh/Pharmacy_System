@@ -84,6 +84,8 @@
                             data: 'avatar',
                             name: 'avatar',
                             render : function ( url, type, full) {
+
+                                // Hello, @{{ name }}. 
                                 return '<img src="{{url("uploads")}}'+url+'" width=100 height=100>'
                             }
                         },

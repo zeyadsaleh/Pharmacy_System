@@ -23,10 +23,9 @@ class DoctorRequest extends FormRequest
      */
     public function rules()
     {
-        // dd($this);
         return [
             'name' => 'required',
-            'email' => 'required|unique:doctors,email,'.$this->doctor,
+            'email' => 'required|unique:users,email,'.$this->doctor,
             'password' => 'required|min:6',
             'national_id' => 'required|unique:doctors,national_id,'.$this->doctor,
             'avatar' => 'image|mimes:jpg,jpeg'
@@ -34,17 +33,6 @@ class DoctorRequest extends FormRequest
     }
 
     public function messages() {
-        return [
-            // 'title.unique' => 'Title should be unique',
-            // 'description.required' => 'Please Enter the description field',
-            // 'title.required' => 'Please Enter the title field',
-            // 'title.min' => 'Please the title has minimum of 3 characters',
-            // 'description.min' => 'Please the description has minimum of 10 characters',
-            // 'name.required' => 'Name is required',
-            // 'email.required' => 'Email is required',
-            // 'email.unique' => 'Email must be unique',
-            // 'password.required' => 'Password is required',
-            // 'national'
-        ];
+        return [];
     }
 }

@@ -15,10 +15,11 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('delivering_address')->nullable();
+            $table->unsignedBigInteger('delivering_address');
+            $table->foreign('delivering_address')->references('id')->on('addresses');
             $table->enum('created_by', ['Pharmacy', 'Doctor', 'User']);
             $table->enum('status', ['New', 'Processing', 'WaitingForUserConfirmation', 'Canceled', 'Confirmed', 'Delivered']);
-            $table->float('total_price', 8, 2)->nullable();
+            $table->float('total_price', 10, 2)->nullable();
             $table->timestamps();
             $table->unsignedBigInteger('pharmacy_id')->nullable();
             $table->foreign('pharmacy_id')->references('id')->on('pharmacies');

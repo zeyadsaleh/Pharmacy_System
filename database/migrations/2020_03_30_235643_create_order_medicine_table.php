@@ -19,7 +19,7 @@ class CreateOrderMedicineTable extends Migration
             $table->foreign('order_id')->references('id')->on('orders');
             $table->unsignedBigInteger('medicine_id');
             $table->foreign('medicine_id')->references('id')->on('medicines');
-            $table->float('price', 8, 2)->nullable();
+            $table->float('price', 10, 2);
             $table->unsignedBigInteger('quantity');
             $table->timestamps();
         });

@@ -29,14 +29,19 @@ class OrderRequest extends FormRequest
           'type' => 'required|exists:App\Medicine,type',
           'user_id' => 'required|exists:App\User,id',
           'status' => 'exists:App\Order,status',
-
+          'pharmacy_id' => 'exists:App\Pharmacy,id',
+          // 'price' => '',
+          // 'quantity' => '',
+          'delivering_address' => 'exists:App\Address,id',
+          // 'is_insured' => '',
+          // 'created_by' => '',
       ];
     }
 
     public function messages(){
     $messages = [
-    'user_id' => 'The UserName field is not valide',
-    // 'delivering_address' => 'This user has'nt main address to Deliver the order',
+        'user_id' => 'The UserName field is not valide',
+        // 'delivering_address' => 'This user has'nt main address to Deliver the order',
       ];
     }
 }

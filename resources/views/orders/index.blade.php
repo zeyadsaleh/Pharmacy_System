@@ -9,6 +9,10 @@
 @section('content_header')
 @stop
 
+@section('sidebar')
+  @include('layouts.sidebar')
+@stop
+
 @section('content')
 
 <div class="container">

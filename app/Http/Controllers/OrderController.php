@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
-use App\Http\Requests\MedicineRequest;
 use Yajra\Datatables\Datatables;
 use App\Order;
 use App\User;
@@ -14,7 +13,7 @@ use App\OrderMedicine;
 use App\Http\Resources\OrderResource;
 
 class OrderController extends Controller
-{ 
+{
 
 
     public function index(Request $request)
@@ -22,40 +21,30 @@ class OrderController extends Controller
       if ($request->ajax()) {
           return Datatables::of(OrderResource::collection(Order::all()))->make(true);
         }
-        // dd(Datatables::of(OrderResource::collection(Order::all()))->make(true));
-
         return view('orders.index');
     }
 
     public function create(Request $request){
-
       return view('orders.create', ['users' => User::all(), 'medicines' => Medicine::all()]);
     }
 
-#########################################################
-    public function store(Request $request)
+    public function store(OrderRequest $request)
     {
+        $order = $this->storeOrder($request);
+        for($i=1; $i<=$request->items ; $i++){
+          $medicine = $this->storeMedicine($request, $i);
 
-      $order = $this->storeOrder($request);
-
-      for($i=1; $i<=$request->items ; $i++){
-
-        $medicine = $this->storeMedicine($request, $i);
-
-        // dd(($request->input('price'.$i)/100));
-
-        OrderMedicine::create([
-          'order_id' => $order->id,
-          'medicine_id' => $medicine->id,
-          'pharmacy_id' => null,
-          'price' => ($request->input('price'.$i)/100),
-          'quantity' => $request->input('quantity'.$i),
-        ]);
+          // dd(($request->input('price'.$i)/100));
+          OrderMedicine::create([
+            'order_id' => $order->id,
+            'medicine_id' => $medicine->id,
+            'pharmacy_id' => null,
+            'price' => ($request->input('price'.$i)/100),
+            'quantity' => $request->input('quantity'.$i),
+          ]);
+        }
+        return view('orders.index');
     }
-
-      return view('orders.index');
-    }
-####################################################
 
     public function edit(Request $request)
     {
@@ -74,6 +63,7 @@ class OrderController extends Controller
       Order::find($request->order)->delete();
       return redirect()->back()->with('warning','Order Deleted successfully!');;
     }
+
 
     private function storeOrder($request){
 
@@ -101,7 +91,6 @@ class OrderController extends Controller
         return Medicine::create([
           'name' => $request->input('medicine'.$i),
           'type' => $request->input('type'.$i),
-          'price' => 100,
           ]);
         }else{
           return $medicine;

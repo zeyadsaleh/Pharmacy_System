@@ -16,12 +16,13 @@
       <form id="order" method="POST" action="{{route('orders.store')}}" enctype="multipart/form-data" class="form-horizontal" role="form">
           @csrf
           <div class="panel-body p-auto">
-              <h3 class="shadow-lg rounded panel-title text-center bg-primary p-auto mb-5">Order Info</h3>
+              <h2 class="shadow-lg rounded panel-title text-center bg-primary p-2 mb-5">Order Info</h2>
 
               <div class="panel-heading p-3 border border-dark rounded">
                   <div class="d-flex justify-content-center">
-                      <h4 class="shadow rounded panel-title text-center bg-primary mb-3 p-auto col-9">User Info</h4>
+                      <h3 class="shadow rounded panel-title text-center bg-primary mb-3 p-auto col-7">User Info</h3>
                   </div>
+                  <br>
                   <p><b>UserName</b></p>
                   <div class="input-group">
                       <select class="user form-control" name="user">
@@ -37,16 +38,16 @@
                   <div class="input-group">
                       <input type="password" class="form-control" name="visa" value="">
                   </div>
-                  {!! $errors->first('user_id', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
+                  {!! $errors->first('visa', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
 
               </div>
 
               <div class="d-none" id="actions-buttons">
               <div id="order-medicine" class="panel-heading p-3 mt-5 border border-dark rounded">
                   <div class="d-flex justify-content-center">
-                      <h4 class="shadow rounded info-title panel-title text-center bg-primary mb-3 p-auto col-9">Medicines in Order</h4>
+                      <h3 class="shadow rounded info-title panel-title text-center bg-primary mb-3 p-auto col-7">Medicines in Order</h3>
                   </div>
-
+                  <br>
                   <table class="table table-sm text-center p-auto">
                       <thead class="thead-dark">
                           <tr>
@@ -62,8 +63,8 @@
                   </table>
                   <input type="number" class="form-control text-center d-none" name="items" value="0" id="items" readonly >
                     <div class="d-flex justify-content-center mt-3">
-                    <p id="rm-medicine" class="text-left d-inline"><u>Remove Last Medicines in Order</u> <span class="bg-danger p-1"> <b> -</b></span></p>
-                    <p id="rs-medicine" class="text-right d-inline ml-5"><u>Reset Medicines in Order</u> <span class="bg-danger p-1"> <b> --</b></span></p>
+                    <button id="rm-medicine" class="shadow btn border border-danger text-left d-inline">Remove Last Medicines <span class="bg-danger p-1"> <b> --</b></span></button>
+                    <button id="rs-medicine" class="shadow btn border border-danger text-right d-inline ml-5">Reset Order list <span class="bg-danger p-1"> <b> --</b></span></button>
                   </div>
                 </div>
               </div>
@@ -77,8 +78,7 @@
 
     <div style="margin-top:50px;" class="mainbox p-3 col-md-4 col-md-offset-4 col-sm-9 col-sm-offset-2  border rounded m-1">
         <div class="panel-body p-auto">
-            <h3 class="shadow-lg rounded panel-title text-center bg-dark p-auto mb-3">Add to Order</h3>
-
+            <h2 class="shadow-lg rounded panel-title text-center bg-dark p-2 mb-3">Add to Order</h2>
             <p><b>Medicine_Name</b></p>
             <div class="input-group">
                 <select class="medicine form-control" name="medicine" id="medicine">
