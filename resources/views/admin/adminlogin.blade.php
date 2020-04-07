@@ -1,11 +1,12 @@
  @extends('adminlte::master')
 
  @section('adminlte_css_pre')
-     <link rel="stylesheet" href="{{ asset('vendor/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+
  @stop
 
  @section('adminlte_css')
      @stack('css')
+     <link rel="icon" href="https://www.flaticon.com/free-icon/pharmacy_216311"/>
      @yield('css')
  @stop
 

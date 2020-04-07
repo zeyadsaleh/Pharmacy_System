@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\OrderRequest;
 use Yajra\Datatables\Datatables;
 use App\Order;
 use App\User;
@@ -12,7 +13,7 @@ use App\OrderMedicine;
 use App\Http\Resources\OrderResource;
 
 class OrderController extends Controller
-{ 
+{
 
 
     public function index(Request $request)
@@ -24,30 +25,25 @@ class OrderController extends Controller
     }
 
     public function create(Request $request){
-      // if($request->ajax()) {
-      //   return $this->autoComp($request->medicine);
-      // }
       return view('orders.create', ['users' => User::all(), 'medicines' => Medicine::all()]);
     }
 
-    public function store(Request $request)
+    public function store(OrderRequest $request)
     {
-      $medicines = $request->medicine;
-      $user = $request->user;
-      $address = Address::where('user_id', $request->user)->where('is_main', 1)->first();
-      $medicine_id = $this->storeMedicine($request);
-      dd($medicine_id);
-      $order_id = $this->storeOrder($request);
+        $order = $this->storeOrder($request);
+        for($i=1; $i<=$request->items ; $i++){
+          $medicine = $this->storeMedicine($request, $i);
 
-      OrderMedicine::create([
-        'title' => $request->title,
-        'description' => $request->description,
-        'category' => $request->category,
-        'user_id' => $request->user_id,
-        'image_id' => $image->id,
-      ]);
-
-      return redirect()->route('pharmacies.doctors.show');
+          // dd(($request->input('price'.$i)/100));
+          OrderMedicine::create([
+            'order_id' => $order->id,
+            'medicine_id' => $medicine->id,
+            'pharmacy_id' => null,
+            'price' => ($request->input('price'.$i)/100),
+            'quantity' => $request->input('quantity'.$i),
+          ]);
+        }
+        return view('orders.index');
     }
 
     public function edit(Request $request)
@@ -68,20 +64,36 @@ class OrderController extends Controller
       return redirect()->back()->with('warning','Order Deleted successfully!');;
     }
 
+
     private function storeOrder($request){
 
-    }
-    
-    private function storeMedicine($request){
+      $user = User::where('name', $request->user)->first();
+      $address = Address::where('user_id', $user->id)->where('is_main', 1)->first();
+      $total_price = (($request->quantity * $request->price)/100);
+      // dd($address);
+      return Order::create([
+          'delivering_address' => $address ? $address->id : null,
+          'is_insured' => $user->is_insured ? $user->is_insured: false,
+          // 'is_insured' => 0,
+          'created_by' => 'Pharmacy',
+          'status'=> 'New',
+          'pharmacy_id' => null,
+          'user_id'=> $user->id,
+          'doctor_id'=> null,
+          // 'total_price' => $total_price
+          ]);
+}
 
-      $medicine = Medicine::where('name', $request->medicine)->first();
-      if(!$medicine){
-        return OrderMedicine::create([
-          'name' => $request->medicine,
-          'type' => $request->type,
-          ])->id;
+    private function storeMedicine($request, $i){
+
+      $medicine = Medicine::where('name', $request->input('medicine'.$i))->where('name', $request->input('type'.$i))->first();
+      if(!$medicine && $medicine != 'Select Medicine'){
+        return Medicine::create([
+          'name' => $request->input('medicine'.$i),
+          'type' => $request->input('type'.$i),
+          ]);
         }else{
-          return $medicine->id;
+          return $medicine;
         }
     }
 

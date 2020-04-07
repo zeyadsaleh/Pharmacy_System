@@ -16,7 +16,7 @@ class CreateMedicinesTable extends Migration
         Schema::create('medicines', function (Blueprint $table) {
           $table->id();
           $table->string('name');
-          $table->string('type');
+          $table->enum('type', ['Injections', 'Drops', 'Capsules', 'Tablet', 'Liquid', 'Cream', 'Suppositories', 'Inhalers']);
           $table->timestamps();
         });
     }

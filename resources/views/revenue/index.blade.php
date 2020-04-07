@@ -6,10 +6,11 @@
 
 @section('content_header')
 <h1>Revenue</h1>
+<hr>
 @stop
 
 @hasrole('pharmacy')
-
+@include('layout.sidebar')
 @section('content')
 <div class="card m-3">
   <div class="card-body">
@@ -22,6 +23,28 @@
 </div>
 @stop
 @endhasrole
-@hasrole('admin')
 
+@hasrole('admin')
+@include('layout.sidebar')
+
+@section('content')
+
+<div class="container">
+  <table id="revenues-table" class="table table-bordered data-table">
+    <thead>
+      <tr>
+        <th>Pharmacy Avatar</th>
+        <th>Pharmacy Name</th>
+        <th>Total Orders</th>
+        <th>Total Price</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
+@stop
+@section('js')
+@include('layouts.revenuesjs')
+@stop
 @endhasrole

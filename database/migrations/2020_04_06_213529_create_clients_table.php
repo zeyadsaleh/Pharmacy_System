@@ -16,11 +16,11 @@ class CreateClientsTable extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('gender', ['Male', 'Female'])->nullable();
+            $table->enum('gender', ['Male', 'Female']);
             $table->date('date_of_birth')->nullable();
             $table->string('avatar')->nullable();
             $table->string('mobile_number')->nullable();
-            $table->string('national_id')->unique()->nullable();
+            $table->string('national_id')->unique();
             $table->boolean('is_insured');
             $table->timestamps();
         });

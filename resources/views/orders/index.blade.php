@@ -1,21 +1,32 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Order')
 
 @section('css')
   @include('layouts.ordercss')
 @stop
 
 @section('content_header')
+@stop
 
+@section('sidebar')
+  @include('layouts.sidebar')
 @stop
 
 @section('content')
 
 <div class="container">
 
-    <h1>Orders</h1>
+  <div class="d-flex justify-content-center mb-3">
+    <h1 class="text-left d-inline h1">Orders</h1>
     <hr>
+    <div class="text-right d-inline">
+      <a class="btn btn-success btn-lg" href="{{route('orders.create')}}" id="createNeworder">New Order</a>
+    </div>
+  </div>
+
+  <hr>
+
 
     @if ($message = Session::get('success'))
       <div class="alert alert-success alert-block">
@@ -29,7 +40,6 @@
       </div>
     @endif
 
-    <a class="btn btn-success" href="{{route('orders.create')}}" id="createNeworder">New Order</a>
     <table id="orders-table" class="table table-bordered data-table">
         <thead>
             <tr>
