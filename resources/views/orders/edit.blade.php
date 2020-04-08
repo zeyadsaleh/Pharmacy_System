@@ -30,7 +30,7 @@
 
                            <p><b>Deliverying Address</b></p>
                            <div class="input-group">
-                                       <input type="text" class="form-control" name="addres" value="{{$order->delivering_address}}" readonly>
+                                       <input type="text" class="form-control" name="addres" value="{{$order->address->street_name}}" readonly>
                            </div>
 
                            <hr>
