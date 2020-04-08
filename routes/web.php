@@ -22,9 +22,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth','is-ban']], function () {
     Route::get('/doctors', 'DoctorController@index')->name('doctors.index');
     // Main route for pharmacy with table of data
+    Route::get('/pharmacies', 'PharmacyController@index')->name('pharmacies.index');
+    Route::get('/pharmacies/doctors', 'PharmacyController@indexDoctors')->name('pharmacies.doctors.index');
+    Route::get('/pharmacies/doctors/create', 'PharmacyController@createDoctors')->name('pharmacies.doctors.create');
+    Route::get('/pharmacies/revenues', 'PharmacyController@indexRevenues')->name('pharmacies.revenues.index');
+    
+    Route::post('/pharmacies/doctors', 'PharmacyController@storeDoctors')->name('pharmacies.doctors.store');
+    Route::get('/pharmacies/doctors/{doctor}', 'PharmacyController@edit')->name('pharmacies.doctors.edit');
+    Route::patch('/pharmacies/doctors/{doctor}', 'PharmacyController@update')->name('pharmacies.doctors.update');
+    Route::delete('/pharmacies/doctors/{doctor}', 'PharmacyController@delete')->name('pharmacies.doctors.delete');
+    Route::get('/unban/{doctor}', 'PharmacyController@unban')->name('pharmacies.doctors.unban');
+    Route::get('/ban/{doctor}', 'PharmacyController@ban')->name('pharmacies.doctors.ban');
+    // Route to fetch data in json format from user table
+    Route::get('/pharmacies-doctors-dt', 'PharmacyController@doctorsData')->name('pharmacies:doctors:dt');
 });
 
 ################## // @TOBECHANGED
@@ -32,19 +45,6 @@ Route::group(['middleware' => 'auth'], function () {
 // Route::post('/pharmacies/login', 'Auth\DoctorLoginController@login')->name('pharmacies.login.submit');
 // Route::get('/pharmacies/logout/', 'Auth\DoctorLoginController@logout')->name('pharmacies.logout');
 // #############
-Route::get('/pharmacies', 'PharmacyController@index')->name('pharmacies.index');
-Route::get('/pharmacies/doctors', 'PharmacyController@indexDoctors')->name('pharmacies.doctors.index');
-Route::get('/pharmacies/doctors/create', 'PharmacyController@createDoctors')->name('pharmacies.doctors.create');
-Route::get('/pharmacies/revenues', 'PharmacyController@indexRevenues')->name('pharmacies.revenues.index');
-
-Route::post('/pharmacies/doctors', 'PharmacyController@storeDoctors')->name('pharmacies.doctors.store');
-Route::get('/pharmacies/doctors/{doctor}', 'PharmacyController@edit')->name('pharmacies.doctors.edit');
-Route::patch('/pharmacies/doctors/{doctor}', 'PharmacyController@update')->name('pharmacies.doctors.update');
-Route::delete('/pharmacies/doctors/{doctor}', 'PharmacyController@delete')->name('pharmacies.doctors.delete');
-Route::get('/unban/{doctor}', 'PharmacyController@unban')->name('pharmacies.doctors.unban');
-Route::get('/ban/{doctor}', 'PharmacyController@ban')->name('pharmacies.doctors.ban');
-// Route to fetch data in json format from user table
-Route::get('/pharmacies-doctors-dt', 'PharmacyController@doctorsData')->name('pharmacies:doctors:dt');
 
 #################################################################################
 

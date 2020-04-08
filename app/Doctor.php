@@ -33,8 +33,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Doctor extends Authenticatable implements BannableContract
 {
     use Bannable;
-    protected $guarded = [];
-
 
     /**
      * The attributes that should be cast to native types.
@@ -60,5 +58,9 @@ class Doctor extends Authenticatable implements BannableContract
     public function user() 
     { 
       return $this->morphOne('App\User', 'profile');
+    }
+
+    public function pharmacy() {
+        return $this->belongsTo('App\Pharmacy');
     }
 }

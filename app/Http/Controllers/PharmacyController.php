@@ -66,9 +66,9 @@ class PharmacyController extends Controller
             'pharmacy_id' => $validatedData['pharmacy_id']
         ]);
 
-        $role = Role::create(['name' => 'doctor']);
+        // $role = Role::create(['name' => 'doctor']);
 
-        $user->assignRole($role);
+        $user->assignRole('doctor');
 
         $doctor->user()->save($user);
 
