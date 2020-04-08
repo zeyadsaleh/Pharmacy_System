@@ -25,7 +25,7 @@ if (String(window.location.href).includes("orders/create")) {
             box.id = `row-${items}`;
             box.style.opacity = "0.8";
 
-            let html = `<td colspan="2"><input type="text" class="form-control text-center" value="${medicine}" name="medicine${items}" id="medicine${items}" readonly ></td><td><input type="text" class="form-control text-center" value="${type}" name="type${items}" id="type${items}" readonly ></td><td><input type="number" class="form-control text-center" value="${quantity}" name="quantity${items}" id="quantity${items}" readonly ></td><td><input type="number" class="form-control text-center" value="${price*quantity}" name="price${items}" id="price${items}" readonly ></td>`
+            let html = `<td colspan="2"><input type="text" class="form-control text-center" value="${medicine}" name="medicine${items}" id="medicine${items}" readonly ></td><td><input type="text" class="form-control text-center" value="${type}" name="type${items}" id="type${items}" readonly ></td><td><input type="number" class="form-control text-center" value="${quantity}" name="quantity${items}" id="quantity${items}" readonly></td><td><input type="number" class="form-control text-center" value="${price*quantity}" name="price${items}" id="price${items}" readonly ></td>`
 
             box.innerHTML = html;
             addHtml.append(box);
@@ -71,15 +71,8 @@ if (String(window.location.href).includes("orders/create")) {
 
 if (String(window.location.href).includes("/orders")) {
 
-let delBtn = document.querySelectorAll(".del");
-
-for (let value of delBtn) {
-  value.addEventListener("click", deleteEle);
+function deleteOrder(id) {
+    if(confirm('Do you want to delete this order ?'))
+        document.querySelector(`#delete${id}`).submit();
 }
-
-function deleteEle() {
-  let ans = confirm("Do you want to Delete it?");
-  if(ans){
-    document.getElementById("delete").submit();
-}}
 }
