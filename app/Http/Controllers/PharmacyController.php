@@ -54,7 +54,7 @@ class PharmacyController extends Controller
         $validatedData['avatar'] = '/avatars/'.$filename;
 
         $user = User::create([
-            'name' => $validatedData['name'],
+            // 'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password'])
         ]);
@@ -102,7 +102,7 @@ class PharmacyController extends Controller
         ]);
 
         $doctor->user()->update([
-            'name' => $request->name,
+            // 'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);

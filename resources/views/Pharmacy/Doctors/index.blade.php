@@ -4,7 +4,7 @@
 
 @section('title', 'Dashboard')
 
-@section('sidebar')
+<!-- @section('sidebar')
     <li class="nav-item">
         <a href="{{route('orders.index')}}" class="nav-link">
             <i class="far fa-circle nav-icon"></i>
@@ -23,7 +23,8 @@
             <p>Revenues</p>
         </a>
     </li>
-@stop
+@stop -->
+@include('layouts.sidebar')
 
 @section('content_header')
 <div class="container">
