@@ -90,12 +90,12 @@ Route::group([
     Route::put('/clients/{client}', 'ClientController@update')->name('admin.clients.update');
     Route::delete('/clients/{client}', 'ClientController@destroy')->name('admin.clients.destroy');
     ## Pharmacy
-    Route::get('/pharmacies', 'PharmacyController@index')->name('admin.pharmacies.index');
-    Route::get('/pharmacies/create', 'PharmacyController@create')->name('admin.pharmacies.create');
-    Route::post('/pharmacies/store', 'PharmacyController@store')->name('admin.pharmacies.store');
-    Route::get('/pharmacies/{user}/edit', 'PharmacyController@edit')->name('admin.pharmacies.edit');
-    Route::put('/pharmacies/{user}', 'PharmacyController@update')->name('admin.pharmacies.update');
-    Route::delete('/pharmacies/{user}', 'PharmacyController@destroy')->name('admin.pharmacies.destroy');
+    Route::get('/medicines', 'MedicineController@index')->name('medicines.index');
+    Route::get('/medicines/create', 'MedicineController@create')->name('medicines.create');
+    Route::post('/medicines/store', 'MedicineController@store')->name('medicines.store');
+    Route::get('/medicines/{medicine}/edit', 'MedicineController@edit')->name('medicines.edit');
+    Route::put('/medicines/{medicine}', 'MedicineController@update')->name('medicines.update');
+    Route::delete('/medicines/{medicine}', 'MedicineController@destroy')->name('medicines.destroy');
     ## User Addresses
     Route::get('/userAddresses', 'UsrAdrsController@index')->name('admin.userAddresses.index');
     Route::get('/userAddresses/create', 'UsrAdrsController@create')->name('admin.userAddresses.create');
