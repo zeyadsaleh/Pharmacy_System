@@ -68,49 +68,37 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-
 ####### Admin Route
-// Auth::routes();
-
 Route::prefix('admin')->group(function () {
-    ## login
-    Route::get('/login', 'Auth\AdminController@showLoginForm')->name('admin.login');
-    Route::post('/login', 'Auth\AdminController@login')->name('admin.login.submit');
-    Route::get('logout/', 'Auth\AdminController@logout')->name('admin.logout');
     ## Main page
     Route::get('/', 'AdminController@index')->name('admin.index');
-    ## Doctor
-    Route::get('/doctors', 'AdminController@indexDoctors')->name('admin.doctors.index');
-    Route::get('/doctors/create', 'AdminController@createDoctor')->name('admin.doctors.create');
-    Route::post('/doctors/store', 'AdminController@storeDoctor')->name('admin.doctors.store');
     ## Areas
-    Route::get('/areas', 'AdminController@indexArea')->name('admin.areas.index');
-    Route::get('/areas/create', 'AdminController@createArea')->name('admin.areas.create');
-    Route::post('/areas/store', 'AdminController@storeArea')->name('admin.areas.store');
-    Route::get('/areas/{area}/edit', 'AdminController@editArea')->name('admin.areas.edit');
-    Route::put('/areas/{area}', 'AdminController@updateArea')->name('admin.areas.update');
-    Route::delete('/areas/{area}', 'AdminController@destroyArea')->name('admin.areas.destroy');
-    ## Users
-    Route::get('/users', 'AdminController@indexUser')->name('admin.users.index');
-    Route::get('/users/create', 'AdminController@createUser')->name('admin.users.create');
-    Route::post('/users/store', 'AdminController@storeUser')->name('admin.users.store');
-    Route::get('/users/{user}/edit', 'AdminController@editUser')->name('admin.users.edit');
-    Route::put('/users/{user}', 'AdminController@updateUser')->name('admin.users.update');
-    Route::delete('/users/{user}', 'AdminController@destroyUser')->name('admin.users.destroy');
+    Route::get('/areas', 'AreaController@index')->name('admin.areas.index');
+    Route::get('/areas/create', 'AreaController@create')->name('admin.areas.create');
+    Route::post('/areas/store', 'AreaController@store')->name('admin.areas.store');
+    Route::get('/areas/{area}/edit', 'AreaController@edit')->name('admin.areas.edit');
+    Route::put('/areas/{area}', 'AreaController@update')->name('admin.areas.update');
+    Route::delete('/areas/{area}', 'AreaController@destroy')->name('admin.areas.destroy');
+    ## Clients
+    Route::get('/clients', 'ClientController@index')->name('admin.clients.index');
+    Route::get('/clients/create', 'ClientController@create')->name('admin.clients.create');
+    Route::post('/clients/store', 'ClientController@store')->name('admin.clients.store');
+    Route::get('/clients/{client}/edit', 'ClientController@edit')->name('admin.clients.edit');
+    Route::put('/clients/{client}', 'ClientController@update')->name('admin.clients.update');
+    Route::delete('/clients/{client}', 'ClientController@destroy')->name('admin.clients.destroy');
     ## Pharmacy
-    Route::get('/pharmacies', 'AdminController@indexPharmacy')->name('admin.pharmacies.index');
-    Route::get('/pharmacies/create', 'AdminController@createPharmacy')->name('admin.pharmacies.create');
-    Route::post('/pharmacies/store', 'AdminController@storePharmacy')->name('admin.pharmacies.store');
-    Route::get('/pharmacies/{user}/edit', 'AdminController@editPharmacy')->name('admin.pharmacies.edit');
-    Route::put('/pharmacies/{user}', 'AdminController@updatePharmacy')->name('admin.pharmacies.update');
-    Route::delete('/pharmacies/{user}', 'AdminController@destroyPharmacy')->name('admin.pharmacies.destroy');
+    Route::get('/pharmacies', 'PharmacyController@index')->name('admin.pharmacies.index');
+    Route::get('/pharmacies/create', 'PharmacyController@create')->name('admin.pharmacies.create');
+    Route::post('/pharmacies/store', 'PharmacyController@store')->name('admin.pharmacies.store');
+    Route::get('/pharmacies/{user}/edit', 'PharmacyController@edit')->name('admin.pharmacies.edit');
+    Route::put('/pharmacies/{user}', 'PharmacyController@update')->name('admin.pharmacies.update');
+    Route::delete('/pharmacies/{user}', 'PharmacyController@destroy')->name('admin.pharmacies.destroy');
     ## User Addresses
-    Route::get('/userAddresses', 'AdminController@indexUserAddress')->name('admin.userAddresses.index');
-    Route::get('/userAddresses/create', 'AdminController@createUserAddress')->name('admin.userAddresses.create');
-    Route::post('/userAddresses/store', 'AdminController@storeUserAddress')->name('admin.userAddresses.store');
-    Route::get('/userAddresses/{usraddresss}/edit', 'AdminController@editUserAddress')->name('admin.userAddresses.edit');
-    Route::put('/userAddresses/{usraddress}', 'AdminController@updateUserAddress')->name('admin.userAddresses.update');
-    Route::delete('/userAddresses/{usraddress}', 'AdminController@destroyUserAddress')->name('admin.userAddresses.destroy');
+    Route::get('/userAddresses', 'UsrAdrsController@index')->name('admin.userAddresses.index');
+    Route::get('/userAddresses/create', 'UsrAdrsController@create')->name('admin.userAddresses.create');
+    Route::post('/userAddresses/store', 'UsrAdrsController@store')->name('admin.userAddresses.store');
+    Route::get('/userAddresses/{usraddresss}/edit', 'UsrAdrsController@edit')->name('admin.userAddresses.edit');
+    Route::put('/userAddresses/{usraddress}', 'UsrAdrsController@update')->name('admin.userAddresses.update');
+    Route::delete('/userAddresses/{usraddress}', 'UsrAdrsController@destroy')->name('admin.userAddresses.destroy');
 
 });
-#######

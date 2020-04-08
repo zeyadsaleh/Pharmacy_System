@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\admin;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DoctorRequest extends FormRequest
+class StoreClientRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,11 +25,10 @@ class DoctorRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'pharmacy_id'=>'exists:pharmacies,id',
-            'email' => 'required|unique:doctors,email',
+            'email' => 'required|unique:users,email,'.$this->client,
             'password' => 'required|min:6',
-            'national_id' => 'required|unique:doctors,national_id',
-            'avatar' => 'image|mimes:jpg,jpeg',
+            'national_id' => 'required|unique:clients,national_id,'.$this->client,
+            'avatar' => 'image|mimes:jpg,jpeg'
         ];
     }
 }

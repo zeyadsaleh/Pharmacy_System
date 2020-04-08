@@ -13,17 +13,17 @@
 @section('content')
 
 <div class="container-fluid">
-    <h1>Pharmacies</h1>
+    <h1>Clients</h1>
 
 
-    <a href="{{route('admin.pharmacies.create')}}" class="btn btn-success mb-3">Add Pharmacy</a>
+    <a href="{{route('admin.clients.create')}}" class="btn btn-success mb-3">Add client</a>
 
-    <table id="users-table" class="table table-striped table-bordered" style="width:100%">
+    <table id="clients-table" class="table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Name</th>
-                <th>Address</th>
+                <th>Email</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -47,20 +47,20 @@
 <script>
     // Create table and fetch data using ajax
         $(function() {
-            $('#users-table').DataTable({
+            $('#clients-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{!! route('admin.pharmacies.index') !!}',
+                ajax: '{!! route('admin.clients.index') !!}',
                 columns: [
                     { data: 'id', name: 'id' },
                     { data: 'name', name: 'name' },
-                    { data: 'address', name: 'address' },
+                    { data: 'email', name: 'email' },
                     { data: 'action', name: 'action', orderable:false},
                 ]
             });
         });
         function deleteArea(id) {
-                if(confirm('Do tou want to delete this pharmacy ?'))
+                if(confirm('Do tou want to delete this area ?'))
                     document.querySelector(`#delete-${id}`).submit();
             }
 </script>

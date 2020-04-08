@@ -2,9 +2,15 @@
 
 @extends('adminlte::page')
 
-@section('title', 'Add Area')
+@section('title', 'Add Client')
 
 @include('layouts.sidebar')
+
+@section('content_header')
+<div class="container">
+    <h1 class="mb-3">Add an Client</h1>
+</div>
+@stop
 
 @section('content')
 <div class="container">
@@ -17,20 +23,18 @@
         </ul>
     </div>
 @endif
-<form method="POST" action="{{route('admin.areas.update', ['area' => $area->id])}}" enctype="multipart/form-data">
+<form method="POST" action="{{route('admin.areas.store')}}" enctype="multipart/form-data">
     @csrf
-    {{method_field('PUT')}}
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="name">Name</label>
-      <input type="text" name="name" class="form-control" id="name" placeholder="Name" value="{{$area->name}}">
+      <input type="text" name="name" class="form-control" id="name" placeholder="Name">
     </div>
     <div class="form-group col-md-6">
-      <label for="address">Address</label>
-      <input type="text" class="form-control" name="address" placeholder="Email" value="{{$area->address}}">
+      <label for="address"></label>
+      <input type="text" name="address" class="form-control" id="address" placeholder="Address">
     </div>
-  </div>
-  <button type="submit" class="btn btn-primary">Update</button>
+  <button type="submit" class="btn btn-primary">Add</button>
 </form>
 </div>
 @stop

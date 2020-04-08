@@ -24,8 +24,8 @@
 @stop
 @endhasrole
 
-@hasrole('admin')
-@include('layout.sidebar')
+@hasrole('super-admin')
+@include('layouts.sidebar')
 
 @section('content')
 

@@ -2,9 +2,16 @@
 
 @extends('adminlte::page')
 
-@section('title', 'Add Area')
+@section('title', 'Admin Panel')
 
 @include('layouts.sidebar')
+
+
+@section('content_header')
+<div class="container">
+    <h1 class="mb-3">Edit Address</h1>
+</div>
+@stop
 
 @section('content')
 <div class="container">
@@ -17,7 +24,7 @@
         </ul>
     </div>
 @endif
-<form method="POST" action="{{route('admin.areas.update', ['area' => $area->id])}}" enctype="multipart/form-data">
+<form method="POST" action="{{route('admin.userAddresses.update', ['area' => $area->id])}}" enctype="multipart/form-data">
     @csrf
     {{method_field('PUT')}}
   <div class="form-row">

@@ -18,19 +18,11 @@ class RedirectIfAuthenticated
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = null)
-        {
-            switch ($guard) {
-                case 'admin':
-                  if (Auth::guard($guard)->check()) {
-                    return redirect()->route('admin.index');
-                  }
-
-                default:
-                  if (Auth::guard($guard)->check()) {
-                       return redirect('home');
-                  }
-                  break;
-              }
-              return $next($request);
+    {
+        if (Auth::guard($guard)->check()) {
+            return redirect(RouteServiceProvider::HOME);
         }
+
+        return $next($request);
+    }
 }

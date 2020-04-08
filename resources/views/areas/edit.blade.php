@@ -6,6 +6,12 @@
 
 @include('layouts.sidebar')
 
+@section('content_header')
+<div class="container">
+    <h1 class="mb-3">Edit Area</h1>
+</div>
+@stop
+
 @section('content')
 <div class="container">
 @if ($errors->any())

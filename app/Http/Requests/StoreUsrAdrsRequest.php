@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\admin;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreAreaRequest extends FormRequest
+class StoreUsrAdrsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class StoreAreaRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -25,8 +25,6 @@ class StoreAreaRequest extends FormRequest
     {
         return [
             //
-            'name'=>'required',
-            'address'=>'required'
         ];
     }
 }

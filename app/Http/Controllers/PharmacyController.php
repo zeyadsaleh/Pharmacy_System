@@ -27,15 +27,15 @@ class PharmacyController extends Controller
         return view('Pharmacy.Doctors.index');
     }
 
-    
+
     public function createDoctors()
     {
         return view('Pharmacy.Doctors.create');
     }
-    
+
     public function storeDoctors(DoctorRequest $request)
     {
-        
+
         $validatedData = $request->validated();
         $validatedData['pharmacy_id'] = 1; //@TOBECHANGED
 
@@ -71,10 +71,10 @@ class PharmacyController extends Controller
         $user->assignRole($role);
 
         $doctor->user()->save($user);
-        
+
         return redirect()->route('pharmacies.doctors.index');
     }
-    
+
     public function indexRevenues()
     {
         return view('Pharmacy.Revenues.index');
