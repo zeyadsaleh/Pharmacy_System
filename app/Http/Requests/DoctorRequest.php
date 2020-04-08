@@ -32,7 +32,7 @@ class DoctorRequest extends FormRequest
         
         return [
             'name' => 'required',
-            'email' => 'required|unique:users,email,'.$user_id,
+            'email' => 'required|email:rfc,dns|unique:users,email,'.$user_id,
             'password' => 'required|min:6',
             'national_id' => 'required|unique:doctors,national_id,'.$this->doctor,
             'avatar' => 'image|mimes:jpg,jpeg'

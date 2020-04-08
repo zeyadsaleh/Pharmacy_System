@@ -14,16 +14,21 @@ class ClientResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
+        $jsonData = [
             'id' => $this->id,
             'name' => $this->name,
-            'email' => $this->user->email,
+            'email' => $this->email ? $this->email : $this->user->email,
             'gender' => $this->gender,
             'date_of_birth' => $this->date_of_birth,
-            'avatar' => $this->avatar,
+            'avatar' => $this->avatar_file_name,
             'mobile_number' => $this->mobile_number,
             'national_id' => $this->national_id,
-            'is_insured' => $this->is_insured
         ];
+
+        if($this->token) {
+            $jsonData['token'] = $this->token;
+        }
+
+        return $jsonData;
     }
 }

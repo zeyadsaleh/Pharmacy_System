@@ -51,7 +51,7 @@ class PharmacyController extends Controller
         }
 
         // First slash is for concatenation with url of blade in ajax
-        $validatedData['avatar'] = '/avatars/'.$filename;
+        $validatedData['avatar'] = '/'.$filename;
 
         $user = User::create([
             // 'name' => $validatedData['name'],
