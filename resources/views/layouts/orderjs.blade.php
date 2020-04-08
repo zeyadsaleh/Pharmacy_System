@@ -6,13 +6,11 @@
 
 <script>
 
-$(document).ready(function () {
+$(function () {
 
-  $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-  });
+  // $.ajax({
+  //     url: '{!! route('orders.index') !!}',
+  //     success: function (data) {}
 
     $('#orders-table').DataTable({
           processing: true,
@@ -29,8 +27,10 @@ $(document).ready(function () {
               {data: 'created_by', name: 'created_by'},
               {data: 'pharmacy_id', name: 'pharmacy_id'},
               {data: 'action', name: 'action'},
+              // pharmacy,
           ],
       });
+    // });
 
       $('.medicine').select2({
           tags: true,
@@ -38,12 +38,10 @@ $(document).ready(function () {
       })
 
       $('.user').select2({
-          tags: true,
           theme: "classic",
       })
 
       $('.type').select2({
-          tags: true,
           theme: "classic",
       })
 

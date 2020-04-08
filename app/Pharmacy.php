@@ -8,9 +8,14 @@ class Pharmacy extends Model
 {
     protected $guarded = [];
 
-    public function user() 
-    { 
+    public function user()
+    {
       return $this->morphOne('App\User', 'profile');
     }
+
+    // public function area()
+    // {
+    //   return $this->belongsTo('App\Address', 'profile');
+    // }
 
 }

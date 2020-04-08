@@ -21,6 +21,9 @@
                        <form id="order" method="POST" action="{{route('orders.update',['order' => $order->id])}}" enctype="multipart/form-data" class="form-horizontal" role="form">
                          @method('PUT')
                          @csrf
+
+                         @hasrole('Pharmacy')
+
                            <p><b>Order Username</b></p>
                            <div class="input-group">
                                        <input type="text" class="form-control" name="username" value="{{$order->user->name}}" readonly>
@@ -30,7 +33,7 @@
 
                            <p><b>Deliverying Address</b></p>
                            <div class="input-group">
-                                       <input type="text" class="form-control" name="addres" value="{{$order->address->street_name}}" readonly>
+                                       <input type="text" class="form-control" name="addres" value="{{$order->address}}" readonly>
                            </div>
 
                            <hr>
@@ -55,7 +58,7 @@
                                    </div>
 
                           <hr>
-
+                        @endhasrole
                             <p><b>Current Order Status: </b><span style="color: green;"><u>{{$order->status}}</u></span></p>
                             <div class="input-group">
                                  <select name="status" class="form-control">
@@ -72,11 +75,11 @@
                                         <option value="Delivered">Delivered</option>
                                      @endswitch
 
-                                      @if($order->status == 'Caneled')
-                                     <option value="Canceled">Canceled</option>
-                                     <option value="Confirmed">Confirmed</option>
+                                     @hasrole('client')
+                                     <option value="Canceled">Cancel</option>
+                                     <option value="Confirmed">Confirm</option>
                                      <option value="Delivered">Delivered</option>
-                                   @endif
+                                     @endhasrole
                                 </select>
                             </div>
 
