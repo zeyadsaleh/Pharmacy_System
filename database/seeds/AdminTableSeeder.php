@@ -1,8 +1,14 @@
 <?php
 
+use App\Admin;
+use App\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class AdminTableSeeder extends Seeder
 {
@@ -14,12 +20,19 @@ class AdminTableSeeder extends Seeder
     public function run()
     {
         //
-        $admin = DB::table('admins')->insert([
-            'name' => 'admin',
+        $admin = User::create([
             'email' => 'admin@admin.com',
             'password' => Hash::make('123456'),
         ]);
-        //will assign roles here
-        // $admin->assignRole('admin');
+        $admin_user = Admin::create([
+            'name' => 'admin',
+        ]);
+        $admin_user->user()->save($admin);
+
+        $role = Role::create(['name' => 'super-admin']);
+        $role->givePermissionTo(Permission::all());
+
+        $admin->assignRole($role);
+
     }
 }

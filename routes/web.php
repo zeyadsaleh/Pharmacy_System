@@ -22,9 +22,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth','is-ban']], function () {
     Route::get('/doctors', 'DoctorController@index')->name('doctors.index');
     // Main route for pharmacy with table of data
+    Route::get('/pharmacies', 'PharmacyController@index')->name('pharmacies.index');
+    Route::get('/pharmacies/doctors', 'PharmacyController@indexDoctors')->name('pharmacies.doctors.index');
+    Route::get('/pharmacies/doctors/create', 'PharmacyController@createDoctors')->name('pharmacies.doctors.create');
+    Route::get('/pharmacies/revenues', 'PharmacyController@indexRevenues')->name('pharmacies.revenues.index');
+
+    Route::post('/pharmacies/doctors', 'PharmacyController@storeDoctors')->name('pharmacies.doctors.store');
+    Route::get('/pharmacies/doctors/{doctor}', 'PharmacyController@edit')->name('pharmacies.doctors.edit');
+    Route::patch('/pharmacies/doctors/{doctor}', 'PharmacyController@update')->name('pharmacies.doctors.update');
+    Route::delete('/pharmacies/doctors/{doctor}', 'PharmacyController@delete')->name('pharmacies.doctors.delete');
+    Route::get('/unban/{doctor}', 'PharmacyController@unban')->name('pharmacies.doctors.unban');
+    Route::get('/ban/{doctor}', 'PharmacyController@ban')->name('pharmacies.doctors.ban');
+    // Route to fetch data in json format from user table
+    Route::get('/pharmacies-doctors-dt', 'PharmacyController@doctorsData')->name('pharmacies:doctors:dt');
 });
 
 ################## // @TOBECHANGED
@@ -32,19 +45,6 @@ Route::group(['middleware' => 'auth'], function () {
 // Route::post('/pharmacies/login', 'Auth\DoctorLoginController@login')->name('pharmacies.login.submit');
 // Route::get('/pharmacies/logout/', 'Auth\DoctorLoginController@logout')->name('pharmacies.logout');
 // #############
-Route::get('/pharmacies', 'PharmacyController@index')->name('pharmacies.index');
-Route::get('/pharmacies/doctors', 'PharmacyController@indexDoctors')->name('pharmacies.doctors.index');
-Route::get('/pharmacies/doctors/create', 'PharmacyController@createDoctors')->name('pharmacies.doctors.create');
-Route::get('/pharmacies/revenues', 'PharmacyController@indexRevenues')->name('pharmacies.revenues.index');
-
-Route::post('/pharmacies/doctors', 'PharmacyController@storeDoctors')->name('pharmacies.doctors.store');
-Route::get('/pharmacies/doctors/{doctor}', 'PharmacyController@edit')->name('pharmacies.doctors.edit');
-Route::patch('/pharmacies/doctors/{doctor}', 'PharmacyController@update')->name('pharmacies.doctors.update');
-Route::delete('/pharmacies/doctors/{doctor}', 'PharmacyController@delete')->name('pharmacies.doctors.delete');
-Route::get('/unban/{doctor}', 'PharmacyController@unban')->name('pharmacies.doctors.unban');
-Route::get('/ban/{doctor}', 'PharmacyController@ban')->name('pharmacies.doctors.ban');
-// Route to fetch data in json format from user table
-Route::get('/pharmacies-doctors-dt', 'PharmacyController@doctorsData')->name('pharmacies:doctors:dt');
 
 #################################################################################
 
@@ -68,49 +68,40 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-
 ####### Admin Route
-// Auth::routes();
-
-Route::prefix('admin')->group(function () {
-    ## login
-    Route::get('/login', 'Auth\AdminController@showLoginForm')->name('admin.login');
-    Route::post('/login', 'Auth\AdminController@login')->name('admin.login.submit');
-    Route::get('logout/', 'Auth\AdminController@logout')->name('admin.logout');
+Route::group([
+    'prefix'     => 'admin',
+    'middleware' => ['role:super-admin',],
+],function () {
     ## Main page
     Route::get('/', 'AdminController@index')->name('admin.index');
-    ## Doctor
-    Route::get('/doctors', 'AdminController@indexDoctors')->name('admin.doctors.index');
-    Route::get('/doctors/create', 'AdminController@createDoctor')->name('admin.doctors.create');
-    Route::post('/doctors/store', 'AdminController@storeDoctor')->name('admin.doctors.store');
     ## Areas
-    Route::get('/areas', 'AdminController@indexArea')->name('admin.areas.index');
-    Route::get('/areas/create', 'AdminController@createArea')->name('admin.areas.create');
-    Route::post('/areas/store', 'AdminController@storeArea')->name('admin.areas.store');
-    Route::get('/areas/{area}/edit', 'AdminController@editArea')->name('admin.areas.edit');
-    Route::put('/areas/{area}', 'AdminController@updateArea')->name('admin.areas.update');
-    Route::delete('/areas/{area}', 'AdminController@destroyArea')->name('admin.areas.destroy');
-    ## Users
-    Route::get('/users', 'AdminController@indexUser')->name('admin.users.index');
-    Route::get('/users/create', 'AdminController@createUser')->name('admin.users.create');
-    Route::post('/users/store', 'AdminController@storeUser')->name('admin.users.store');
-    Route::get('/users/{user}/edit', 'AdminController@editUser')->name('admin.users.edit');
-    Route::put('/users/{user}', 'AdminController@updateUser')->name('admin.users.update');
-    Route::delete('/users/{user}', 'AdminController@destroyUser')->name('admin.users.destroy');
+    Route::get('/areas', 'AreaController@index')->name('admin.areas.index');
+    Route::get('/areas/create', 'AreaController@create')->name('admin.areas.create');
+    Route::post('/areas/store', 'AreaController@store')->name('admin.areas.store');
+    Route::get('/areas/{area}/edit', 'AreaController@edit')->name('admin.areas.edit');
+    Route::put('/areas/{area}', 'AreaController@update')->name('admin.areas.update');
+    Route::delete('/areas/{area}', 'AreaController@destroy')->name('admin.areas.destroy');
+    ## Clients
+    Route::get('/clients', 'ClientController@index')->name('admin.clients.index');
+    Route::get('/clients/create', 'ClientController@create')->name('admin.clients.create');
+    Route::post('/clients/store', 'ClientController@store')->name('admin.clients.store');
+    Route::get('/clients/{client}/edit', 'ClientController@edit')->name('admin.clients.edit');
+    Route::put('/clients/{client}', 'ClientController@update')->name('admin.clients.update');
+    Route::delete('/clients/{client}', 'ClientController@destroy')->name('admin.clients.destroy');
     ## Pharmacy
-    Route::get('/pharmacies', 'AdminController@indexPharmacy')->name('admin.pharmacies.index');
-    Route::get('/pharmacies/create', 'AdminController@createPharmacy')->name('admin.pharmacies.create');
-    Route::post('/pharmacies/store', 'AdminController@storePharmacy')->name('admin.pharmacies.store');
-    Route::get('/pharmacies/{user}/edit', 'AdminController@editPharmacy')->name('admin.pharmacies.edit');
-    Route::put('/pharmacies/{user}', 'AdminController@updatePharmacy')->name('admin.pharmacies.update');
-    Route::delete('/pharmacies/{user}', 'AdminController@destroyPharmacy')->name('admin.pharmacies.destroy');
+    Route::get('/medicines', 'MedicineController@index')->name('medicines.index');
+    Route::get('/medicines/create', 'MedicineController@create')->name('medicines.create');
+    Route::post('/medicines/store', 'MedicineController@store')->name('medicines.store');
+    Route::get('/medicines/{medicine}/edit', 'MedicineController@edit')->name('medicines.edit');
+    Route::put('/medicines/{medicine}', 'MedicineController@update')->name('medicines.update');
+    Route::delete('/medicines/{medicine}', 'MedicineController@destroy')->name('medicines.destroy');
     ## User Addresses
-    Route::get('/userAddresses', 'AdminController@indexUserAddress')->name('admin.userAddresses.index');
-    Route::get('/userAddresses/create', 'AdminController@createUserAddress')->name('admin.userAddresses.create');
-    Route::post('/userAddresses/store', 'AdminController@storeUserAddress')->name('admin.userAddresses.store');
-    Route::get('/userAddresses/{usraddresss}/edit', 'AdminController@editUserAddress')->name('admin.userAddresses.edit');
-    Route::put('/userAddresses/{usraddress}', 'AdminController@updateUserAddress')->name('admin.userAddresses.update');
-    Route::delete('/userAddresses/{usraddress}', 'AdminController@destroyUserAddress')->name('admin.userAddresses.destroy');
+    Route::get('/userAddresses', 'UsrAdrsController@index')->name('admin.userAddresses.index');
+    Route::get('/userAddresses/create', 'UsrAdrsController@create')->name('admin.userAddresses.create');
+    Route::post('/userAddresses/store', 'UsrAdrsController@store')->name('admin.userAddresses.store');
+    Route::get('/userAddresses/{usraddresss}/edit', 'UsrAdrsController@edit')->name('admin.userAddresses.edit');
+    Route::put('/userAddresses/{usraddress}', 'UsrAdrsController@update')->name('admin.userAddresses.update');
+    Route::delete('/userAddresses/{usraddress}', 'UsrAdrsController@destroy')->name('admin.userAddresses.destroy');
 
 });
-#######
