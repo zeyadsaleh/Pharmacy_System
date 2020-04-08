@@ -41,7 +41,7 @@ class ForbidBannedUserCustom
         //     dd($user->profile->isBanned());
         // }
 
-        if ($user && $user->profile->isBanned()) {
+        if ($user && $user->profile->is_ban) {
             \Session::flush();
             return redirect('login')->withInput()->withErrors([
                 'email' => 'This account is blocked.',

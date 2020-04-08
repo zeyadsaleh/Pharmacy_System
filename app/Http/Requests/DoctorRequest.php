@@ -25,10 +25,14 @@ class DoctorRequest extends FormRequest
     public function rules()
     {
         $doctor = Doctor::find($this->doctor);
-        $user_id = $doctor->user->id;
+        if($doctor)
+            $user_id = $doctor->user->id;
+        else
+            $user_id = '';
+        
         return [
             'name' => 'required',
-            'email' => 'required|unique:users,email,'.$user_id,
+            'email' => 'required|email:rfc,dns|unique:users,email,'.$user_id,
             'password' => 'required|min:6',
             'national_id' => 'required|unique:doctors,national_id,'.$this->doctor,
             'avatar' => 'image|mimes:jpg,jpeg'

@@ -4,26 +4,7 @@
 
 @section('title', 'Dashboard')
 
-@section('sidebar')
-    <li class="nav-item">
-        <a href="{{route('orders.index')}}" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Orders</p>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="{{route('pharmacies.doctors.index')}}" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Doctors</p>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="{{route('revenues.index')}}" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Revenues</p>
-        </a>
-    </li>
-@stop
+@include('layouts.sidebar')
 
 @section('content_header')
 <div class="container">
@@ -85,7 +66,7 @@
                                 data: columnNames[i],
                                 name: columnNames[i],
                                 render: function(url) {
-                                    return '<img src="{{url("uploads")}}'+url+'" width=100 height=100>';
+                                    return '<img src="{{url("uploads/avatars")}}'+url+'" width=100 height=100>';
                                 }
                             });
                         } else 

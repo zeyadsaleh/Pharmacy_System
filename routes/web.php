@@ -40,12 +40,6 @@ Route::group(['middleware' => ['auth','is-ban']], function () {
     Route::get('/pharmacies-doctors-dt', 'PharmacyController@doctorsData')->name('pharmacies:doctors:dt');
 });
 
-################## // @TOBECHANGED
-// Route::get('/pharmacies/login', 'Auth\DoctorLoginController@showLoginForm')->name('pharmacies.login');
-// Route::post('/pharmacies/login', 'Auth\DoctorLoginController@login')->name('pharmacies.login.submit');
-// Route::get('/pharmacies/logout/', 'Auth\DoctorLoginController@logout')->name('pharmacies.logout');
-// #############
-
 #################################################################################
 
 Route::get('/orders', 'OrderController@index')->name('orders.index');
