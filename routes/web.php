@@ -29,7 +29,7 @@ Route::group(['middleware' => ['auth','is-ban']], function () {
     Route::get('/pharmacies/doctors', 'PharmacyController@indexDoctors')->name('pharmacies.doctors.index');
     Route::get('/pharmacies/doctors/create', 'PharmacyController@createDoctors')->name('pharmacies.doctors.create');
     Route::get('/pharmacies/revenues', 'PharmacyController@indexRevenues')->name('pharmacies.revenues.index');
-    
+
     Route::post('/pharmacies/doctors', 'PharmacyController@storeDoctors')->name('pharmacies.doctors.store');
     Route::get('/pharmacies/doctors/{doctor}', 'PharmacyController@edit')->name('pharmacies.doctors.edit');
     Route::patch('/pharmacies/doctors/{doctor}', 'PharmacyController@update')->name('pharmacies.doctors.update');
@@ -69,7 +69,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 
 ####### Admin Route
-Route::prefix('admin')->group(function () {
+Route::group([
+    'prefix'     => 'admin',
+    'middleware' => ['role:super-admin',],
+],function () {
     ## Main page
     Route::get('/', 'AdminController@index')->name('admin.index');
     ## Areas

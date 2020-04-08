@@ -9,7 +9,11 @@ use Yajra\DataTables\Facades\DataTables;
 
 class AreaController extends Controller
 {
-    //
+    public function __construct()
+    {
+        $this->middleware(['role:super-admin']);
+    }
+
     public function index(Request $request)
     {
            if ($request->ajax()) {
