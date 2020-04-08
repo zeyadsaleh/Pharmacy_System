@@ -8,11 +8,9 @@ use Faker\Generator as Faker;
 $factory->define(Doctor::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'national_id' => Str::random(10),
         'created_at' => now(),
-        'is_ban' => false,
-        'pharmacy_id' =>  1
+        'is_ban' => rand(0,1) ? true : false,
+        'pharmacy_id' =>  rand(1,18),
     ];
 });
