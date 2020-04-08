@@ -12,7 +12,7 @@ class Order extends Model
 
     public function user()
     {
-      return $this->belongsTo('App\User');
+      return $this->belongsTo('App\Client');
     }
 
     public function medicines()
@@ -20,17 +20,18 @@ class Order extends Model
         return $this->belongsToMany('App\Medicine');
     }
 
-    public function doctor(){
+    public function doctor()
+    {
         return $this->belongsTo('App\Doctor');
     }
 
-    public function pharmacy(){
+    public function pharmacy()
+    {
         return $this->belongsTo('App\Pharmacy');
     }
 
-    public function address(){
+    public function address()
+    {
         return $this->belongsTo('App\Address');
     }
-
-
 }

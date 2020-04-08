@@ -29,7 +29,6 @@ class CreateOrdersTable extends Migration
             $table->foreign('doctor_id')->references('id')->on('doctors');
         });
     }
-
     /**
      * Reverse the migrations.
      *
