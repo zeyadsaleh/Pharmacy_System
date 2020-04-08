@@ -9,9 +9,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\User;
 use App\Client;
-use App\Http\Requests\ClientRequest;
+use App\Http\Requests\UpdateClientRequest;
+use App\Http\Requests\StoreClientRequest;
 use App\Http\Resources\ClientResource;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+
 
 class ClientController extends Controller
 {
@@ -36,25 +40,20 @@ class ClientController extends Controller
         return new ClientResource($client);
     }
 
-    public function register(ClientRequest $request) {
+    public function register(StoreClientRequest $request) {
         $validatedData = $request->validated();
 
         if($request->hasfile('avatar'))
         {
             $file = $request->file('avatar');
-            $originalName = $file->getClientOriginalName();
-            // dd($file->getClientOriginalName());
+            $originalName = $file->getClientOriginalName(); // original name of file
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename =time().'.'.$extension;
 
             Storage::disk('public')->put('avatars/'.$filename, File::get($file));
         }
 
-        // First slash is for concatenation with url of blade in ajax
         $validatedData['avatar'] = '/'.$filename;
-
-        // dd($file->getClientOriginalName());
-
 
         $user = User::create([
             'email' => $validatedData['email'],
@@ -67,12 +66,48 @@ class ClientController extends Controller
             'date_of_birth' => $validatedData['date_of_birth'],
             'national_id' => $validatedData['national_id'],
             'avatar' => $validatedData['avatar'],
-            'avatar_file_name' => $originalName ? $originalName : 'anything',
+            'avatar_file_name' => $originalName,
             'mobile_number' => $validatedData['mobile_number'],
             'is_insured' => false
         ]);
 
         $client->user()->save($user);
+
+        return new ClientResource($client);
+    }
+
+    public function update(UpdateClientRequest $request) {
+
+        if($request->has('email')) {
+            throw ValidationException::withMessages([
+                'email' => ['Can\'t change email address.'],
+            ]);
+        }
+
+        if($request->hasfile('avatar')) {
+            $file = $request->file('avatar');
+            $originalName = $file->getClientOriginalName(); // original name of file
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename =time().'.'.$extension;
+            Storage::disk('public')->put('avatars/'.$filename, File::get($file));
+
+        }
+
+        $client = Client::find($request->client);
+
+        $client->update([
+            'name' => $request->name ? $request->name : $client->name,
+            'gender' => $request->gender ? $request->gender : $client->gender,
+            'date_of_birth' => $request->date_of_birth ? $request->date_of_birth : $client->date_of_birth,
+            'national_id' => $request->national_id ? $request->national_id : $client->national_id,
+            'avatar' => $request->avatar ? '/'.$filename : $client->avatar,
+            'avatar_file_name' => $request->avatar? $originalName : $client->avatar_file_name,
+            'mobile_number' => $request->mobile_number ? $request->mobile_number : $client->mobile_number,
+        ]);
+
+        $client->user()->update([
+            'password' => $request->password ? Hash::make($request->password) : $client->user->password,
+        ]);
 
         return new ClientResource($client);
     }
