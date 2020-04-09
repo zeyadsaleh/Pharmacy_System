@@ -2,6 +2,8 @@
 
 @section('title', 'Order')
 
+@include('layouts.sidebar')
+
 @section('css')
 @include('layouts.ordercss')
 @stop

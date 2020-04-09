@@ -85,7 +85,7 @@ class PharmacyController extends Controller
 
 
 
-    public function update(DoctorRequest $request)
+    public function updateDoctors(DoctorRequest $request)
     {
 
         if ($request->hasfile('avatar')) {
@@ -115,7 +115,7 @@ class PharmacyController extends Controller
         return redirect()->route('pharmacies.doctors.index');
     }
 
-    public function edit(Request $request)
+    public function editDoctors(Request $request)
     {
         $doctor = Doctor::find($request->doctor);
 
@@ -127,7 +127,7 @@ class PharmacyController extends Controller
         ]);
     }
 
-    public function delete()
+    public function deleteDoctors()
     {
         $doctor = Doctor::find(request()->doctor);
         $doctor->user()->delete();
@@ -141,7 +141,7 @@ class PharmacyController extends Controller
      *
      * @return Response
      */
-    public function ban(Request $request)
+    public function banDoctors(Request $request)
     {
 
         if (!empty($request->doctor)) {
@@ -163,7 +163,7 @@ class PharmacyController extends Controller
      *
      * @return Response
      */
-    public function unban(Request $request)
+    public function unbanDoctors(Request $request)
     {
         if (!empty($request->doctor)) {
             $doctor = Doctor::find($request->doctor);

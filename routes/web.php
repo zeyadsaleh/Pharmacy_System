@@ -39,11 +39,11 @@ Route::group(['middleware' => ['auth', 'is-ban']], function () {
     Route::get('/pharmacies/revenues', 'PharmacyController@indexRevenues')->name('pharmacies.revenues.index');
 
     Route::post('/pharmacies/doctors', 'PharmacyController@storeDoctors')->name('pharmacies.doctors.store');
-    Route::get('/pharmacies/doctors/{doctor}', 'PharmacyController@edit')->name('pharmacies.doctors.edit');
-    Route::patch('/pharmacies/doctors/{doctor}', 'PharmacyController@update')->name('pharmacies.doctors.update');
-    Route::delete('/pharmacies/doctors/{doctor}', 'PharmacyController@delete')->name('pharmacies.doctors.delete');
-    Route::get('/unban/{doctor}', 'PharmacyController@unban')->name('pharmacies.doctors.unban');
-    Route::get('/ban/{doctor}', 'PharmacyController@ban')->name('pharmacies.doctors.ban');
+    Route::get('/pharmacies/doctors/{doctor}', 'PharmacyController@editDoctors')->name('pharmacies.doctors.edit');
+    Route::patch('/pharmacies/doctors/{doctor}', 'PharmacyController@updateDoctors')->name('pharmacies.doctors.update');
+    Route::delete('/pharmacies/doctors/{doctor}', 'PharmacyController@deleteDoctors')->name('pharmacies.doctors.delete');
+    Route::get('/unban/{doctor}', 'PharmacyController@unbanDoctors')->name('pharmacies.doctors.unban');
+    Route::get('/ban/{doctor}', 'PharmacyController@banDoctors')->name('pharmacies.doctors.ban');
     // Route to fetch data in json format from user table
     Route::get('/pharmacies-doctors-dt', 'PharmacyController@doctorsData')->name('pharmacies:doctors:dt');
 
