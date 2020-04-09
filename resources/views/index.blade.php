@@ -7,13 +7,67 @@
 @include('layouts.sidebar')
 
 @section('content_header')
+@hasrole('pharmacy')
+
+@endhasrole
+
+@hasrole('super-admin|admin')
 <div class="container">
-    <h1>Doctors</h1>
+    <h1>Admin</h1>
 </div>
+@endhasrole
+
+@hasrole('doctor')
+<div class="container">
+    <h1>Doctor</h1>
+</div>
+@endhasrole
 @stop
 
 @section('content')
+@hasrole('pharmacy')
+<div class="container">
+    <div class="card">
+        <h5 class="card-header">Pharmacy Info</h5>
+        <div class="card-body mx-5">
+            <div class="text-center mb-5">
+                <img src="{{ url('uploads/avatars').$pharmacy->avatar }}" width=100 height=100>
+                <h2 class="">{{ $pharmacy->name }}</h2>
+            </div>
+            <div class="row my-4">
+                <div class="col-md-6">
+                    <h6 class="font-weight-bold">Email</h6>
+                    <p class="card-text">{{ $user->email }}</p>
+                </div>
+                <div class="col-md-6">
+                    <h6 class="font-weight-bold">National ID</h6>
+                    <p class="card-text">{{ $pharmacy->national_id }}</p>
+                </div>
+            </div>
 
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h6 class="font-weight-bold">Priority</h6>
+                    <p class="card-text">{{ $pharmacy->priority }}</p>
+                </div>
+                <div class="col-md-6">
+                    <h6 class="font-weight-bold">Area</h6>
+                    <p class="card-text">{{ $pharmacy->area->name }}</p>
+                </div>
+            </div>
+            <a href="#" class="btn btn-primary">Update Info</a>
+        </div>
+    </div>
+</div>
+@endhasrole
+
+@hasrole('super-admin|admin')
+
+@endhasrole
+
+@hasrole('doctor')
+
+@endhasrole
 @stop
 
 @section('css')

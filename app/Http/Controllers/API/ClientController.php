@@ -80,7 +80,7 @@ class ClientController extends Controller
 
     public function update(UpdateClientRequest $request) {
 
-        if(auth()->user()->id ==  $request->client && auth()->user()->hasrole('client')){
+        if(auth()->user()->id ==  $request->client && auth()->user()->hasRole('client')){
             if($request->has('email')) {
                 throw ValidationException::withMessages([
                     'email' => ['Can\'t change email address.'],

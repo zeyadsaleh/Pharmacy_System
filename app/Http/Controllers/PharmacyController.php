@@ -23,7 +23,14 @@ class PharmacyController extends Controller
 {
     public function index()
     {
-        return view('Pharmacy.index');
+        $user = User::find(auth()->user()->id);
+        $pharmacy = $user->profile;
+        // dd($pharmacy->area());
+
+        return view('index', [
+            'pharmacy' => $pharmacy,
+            'user' => $user
+        ]);
     }
 
     public function indexDoctors(Request $request)
