@@ -261,8 +261,8 @@ class PharmacyController extends Controller
             'name' => $request->name,
             'national_id' => $request->national_id,
             'avatar' =>  '/' . $filename,
-            'area_id' => $request->area_id,
-            'priority' => $request->priority
+            'area_id' => $request->area_id ? $request->area_id : $pharmacy->area_id,
+            'priority' => $request->priority ? $request->priority : $pharmacy->priority
         ]);
 
         $pharmacy->user()->update([
@@ -270,7 +270,10 @@ class PharmacyController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('admin.pharmacies.index');
+        if(auth()->user()->hasRole('super-admin'))
+            return redirect()->route('admin.pharmacies.index');
+        else if(auth()->user()->hasRole('pharmacy'))
+            return redirect()->route('pharmacies.index');
     }
 
     public function editPh(Request $request)

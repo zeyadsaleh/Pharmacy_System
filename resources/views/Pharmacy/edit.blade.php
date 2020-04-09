@@ -55,6 +55,7 @@
                 <label for="national_id">National Id</label>
                 <input type="text" name="national_id" class="form-control" id="national_id" placeholder="National ID" value="{{$pharmacy->national_id}}">
             </div>
+            @hasanyrole('super-admin|admin')
             <div class="form-group col-md-4">
                 <label for="area_id">Area</label>
                 <select name="area_id" class="form-control" id="area_id" value="{{$pharmacy->area->name}}">
@@ -73,6 +74,7 @@
                     <option value="5">very low</option>
                 </select>
             </div>
+            @endhasanyrole
 
             <div class="form-group col-md-4">
                 <div class="form-group col-md-12">

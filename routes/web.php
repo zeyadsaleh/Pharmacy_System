@@ -78,7 +78,7 @@ Auth::routes();
 ####### Admin Route
 Route::group([
     'prefix'     => 'admin',
-    'middleware' => ['role:super-admin',],
+    // 'middleware' => ['role:super-admin',],
 ], function () {
     ## Main page
     Route::get('/', 'AdminController@index')->name('admin.index');

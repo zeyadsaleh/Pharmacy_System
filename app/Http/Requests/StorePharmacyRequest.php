@@ -36,8 +36,8 @@ class StorePharmacyRequest extends FormRequest
             'password' => 'required|min:6',
             'national_id'=>'required|numeric|unique:pharmacies,national_id,' . $this->pharmacy,
             'avatar' => 'image|mimes:jpg,jpeg|nullable',
-            'priority'=>'present',
-            'area_id'=>'present'
+            'priority'=>'filled',
+            'area_id'=>'filled'
         ];
     }
 }

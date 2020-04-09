@@ -11,11 +11,11 @@
 
 @endhasrole
 
-@hasrole('super-admin|admin')
+@hasanyrole('super-admin|admin')
 <div class="container">
     <h1>Admin</h1>
 </div>
-@endhasrole
+@endhasanyrole
 
 @hasrole('doctor')
 
@@ -53,15 +53,15 @@
                     <p class="card-text">{{ $pharmacy->area->name }}</p>
                 </div>
             </div>
-            <a href="#" class="btn btn-primary">Update Info</a>
+            <a href="{{route('admin.pharmacies.edit', ['pharmacy' => $pharmacy->id])}}" class="btn btn-primary">Update Info</a>
         </div>
     </div>
 </div>
 @endhasrole
 
-@hasrole('super-admin|admin')
+@hasanyrole('super-admin|admin')
 
-@endhasrole
+@endhasanyrole
 
 @hasrole('doctor')
 <div class="container">
