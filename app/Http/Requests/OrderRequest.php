@@ -41,17 +41,10 @@ class OrderRequest extends FormRequest
 
   public function messages()
   {
-<<<<<<< Updated upstream
     return [
       'user_id.required' => 'The UserName field is not valide',
       'name.required' => 'Medicine name is required.',
-      'tyoe.required' => 'Type of medicine is required.',
-
-
-=======
-    $messages = [
-      'user_id' => 'The UserName field is not valide',
->>>>>>> Stashed changes
+      'type.required' => 'Type of medicine is required.',
       // 'delivering_address' => 'This user has'nt main address to Deliver the order',
     ];
   }
