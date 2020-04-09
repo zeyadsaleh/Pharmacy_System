@@ -5,7 +5,7 @@ use Illuminate\Validation\Rule;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClientRequest extends FormRequest
+class UpdateClientRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,18 +25,18 @@ class ClientRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'email' => 'required|email:rfc,dns|unique:users,email',
+            'name' => 'filled',
+            'email' => 'filled|email:rfc,dns|unique:users,email',
             'gender' => [
-                'required',
+                'filled',
                 Rule::in(['Male', 'Female']),
             ],
-            'password' => 'required|min:6|confirmed',
-            'password_confirmation' => 'required|same:password',
-            'date_of_birth' => 'required|date',
-            'avatar' => 'required|image|mimes:jpg,jpeg',
-            'mobile_number' => 'required|numeric',
-            'national_id' => 'required|unique:clients|numeric',
+            'password' => 'filled|min:6|confirmed',
+            'password_confirmation' => 'filled|same:password',
+            'date_of_birth' => 'filled|date',
+            'avatar' => 'filled|image|mimes:jpg,jpeg',
+            'mobile_number' => 'filled|numeric',
+            'national_id' => 'filled|unique:clients|numeric',
         ];
     }
 
