@@ -23,6 +23,7 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
+      // dd(Datatables::of(OrderResource::collection(Order::all()))->make(true));
       if ($request->ajax()) {
         return Datatables::of(OrderResource::collection(Order::all()))->make(true);
         }
@@ -33,7 +34,7 @@ class OrderController extends Controller
       return view('orders.create', ['users' => Client::all(), 'medicines' => Medicine::all()]);
     }
 
-    public function store(Request $request)
+    public function store(OrderRequest $request)
     {
         $order = $this->storeOrder($request);
         for($i=1; $i<=$request->items ; $i++){

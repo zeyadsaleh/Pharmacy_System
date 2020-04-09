@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Resources;
+
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 use App\Order;
@@ -25,7 +26,7 @@ class OrderResource extends JsonResource
         }else{
           $action = null;
         }
-
+        // dd($this->address);
          return [
            'id' => $this->id,
            'user_id' => $this->user_id ? $this->user->name : "Not exist",
@@ -37,11 +38,11 @@ class OrderResource extends JsonResource
 
            'action' => $action,
 
-           'created_by' => $this->created_by,
-           'pharmacy_id' => $this->pharmacy_id ? $this->pharmacy->name : "",
-         ];
-     }
-   }
+      'created_by' => $this->created_by,
+      'pharmacy_id' => $this->pharmacy_id ? $this->pharmacy->name : "",
+    ];
+  }
+}
 
       //
       // 'id' => $this->id,
