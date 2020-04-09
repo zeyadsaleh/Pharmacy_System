@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Area;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Storage;
@@ -12,8 +13,11 @@ use Spatie\Permission\Models\Role;
 use App\Doctor;
 use App\User;
 use App\Http\Requests\DoctorRequest;
+use App\Http\Requests\StorePharmacyRequest;
 use App\Http\Resources\DoctorResource;
+use App\Http\Resources\pharmacyResource;
 use App\Order;
+use App\Pharmacy;
 
 class PharmacyController extends Controller
 {
@@ -39,19 +43,18 @@ class PharmacyController extends Controller
         $validatedData = $request->validated();
         $validatedData['pharmacy_id'] = 1; //@TOBECHANGED
 
-        if($request->hasfile('avatar'))
-        {
+        if ($request->hasfile('avatar')) {
             $file = $request->file('avatar');
             $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename =time().'.'.$extension;
+            $filename = time() . '.' . $extension;
 
-            Storage::disk('public')->put('avatars/'.$filename, File::get($file));
+            Storage::disk('public')->put('avatars/' . $filename, File::get($file));
         } else {
             $filename = 'doctor.jpeg';
         }
 
         // First slash is for concatenation with url of blade in ajax
-        $validatedData['avatar'] = '/'.$filename;
+        $validatedData['avatar'] = '/' . $filename;
 
         $user = User::create([
             // 'name' => $validatedData['name'],
@@ -74,17 +77,17 @@ class PharmacyController extends Controller
 
         return redirect()->route('pharmacies.doctors.index');
     }
-    
 
 
-    public function update(DoctorRequest $request) {
 
-        if($request->hasfile('avatar')) {
+    public function update(DoctorRequest $request)
+    {
+
+        if ($request->hasfile('avatar')) {
             $file = $request->file('avatar');
             $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename =time().'.'.$extension;
-            Storage::disk('public')->put('avatars/'.$filename, File::get($file));
-
+            $filename = time() . '.' . $extension;
+            Storage::disk('public')->put('avatars/' . $filename, File::get($file));
         } else {
             $filename = 'doctor.jpeg';
         }
@@ -94,7 +97,7 @@ class PharmacyController extends Controller
         $doctor->update([
             'name' => $request->name,
             'national_id' => $request->national_id,
-            'avatar' => '/avatars/'.$filename,
+            'avatar' => '/avatars/' . $filename,
         ]);
 
         $doctor->user()->update([
@@ -106,7 +109,8 @@ class PharmacyController extends Controller
         return redirect()->route('pharmacies.doctors.index');
     }
 
-    public function edit(Request $request) {
+    public function edit(Request $request)
+    {
         $doctor = Doctor::find($request->doctor);
 
         $doctor['email'] = $doctor->user->email;
@@ -117,7 +121,8 @@ class PharmacyController extends Controller
         ]);
     }
 
-    public function delete() {
+    public function delete()
+    {
         $doctor = Doctor::find(request()->doctor);
         $doctor->user()->delete();
         $doctor->delete();
@@ -133,10 +138,10 @@ class PharmacyController extends Controller
     public function ban(Request $request)
     {
 
-        if(!empty($request->doctor)){
+        if (!empty($request->doctor)) {
             $doctor = Doctor::find($request->doctor);
             $doctor->bans()->create([
-                'comment'=>$request->baninfo
+                'comment' => $request->baninfo
             ]);
 
             $doctor->update([
@@ -144,7 +149,7 @@ class PharmacyController extends Controller
             ]);
         }
 
-        return redirect()->route('pharmacies.doctors.index')->with('success','Ban Successfully..');
+        return redirect()->route('pharmacies.doctors.index')->with('success', 'Ban Successfully..');
     }
 
     /**
@@ -154,7 +159,7 @@ class PharmacyController extends Controller
      */
     public function unban(Request $request)
     {
-        if(!empty($request->doctor)){
+        if (!empty($request->doctor)) {
             $doctor = Doctor::find($request->doctor);
             $doctor->unban();
 
@@ -164,7 +169,7 @@ class PharmacyController extends Controller
         }
 
         return redirect()->route('pharmacies.doctors.index')
-        				->with('success','User Unbanned Successfully.');
+            ->with('success', 'User Unbanned Successfully.');
     }
 
     /**
@@ -177,4 +182,37 @@ class PharmacyController extends Controller
         return Datatables::of(DoctorResource::collection(Doctor::all()))->make(true);
     }
 
+
+
+    ## Admin Role
+    public function indexPh(Request $request)
+    {
+        if ($request->ajax()) {
+            return Datatables::of(pharmacyResource::collection(Pharmacy::all()))
+                ->make(true);
+        }
+        return view('Pharmacy.index');
+    }
+    public function createPh()
+    {
+        return view('Pharmacy.create',[
+            'areas'=> Area::all()
+        ]);
+    }
+    public function storePh(StorePharmacyRequest $request)
+    {
+        Pharmacy::create($request->validated());
+        return redirect()->route('admin.pharmacies.index');
+    }
+    public function updatePh()
+    {
+    }
+    public function editPh()
+    {
+    }
+    public function destroyPh()
+    {
+        Pharmacy::where('id', request()->pharmacy)->delete();
+        return redirect()->route('admin.pharmacies.index');
+    }
 }

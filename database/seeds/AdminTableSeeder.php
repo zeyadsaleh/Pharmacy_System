@@ -21,6 +21,7 @@ class AdminTableSeeder extends Seeder
     {
         //
         $admin = User::create([
+            'name' => 'admin',
             'email' => 'admin@admin.com',
             'password' => Hash::make('123456'),
         ]);
