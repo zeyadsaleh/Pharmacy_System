@@ -14,6 +14,7 @@ use App\Doctor;
 use App\User;
 use App\Http\Requests\DoctorRequest;
 use App\Http\Requests\StorePharmacyRequest;
+use App\Http\Resources\DeletedPharmacyResource;
 use App\Http\Resources\DoctorResource;
 use App\Http\Resources\pharmacyResource;
 use App\Order;
@@ -185,6 +186,7 @@ class PharmacyController extends Controller
     ## Admin Role
     public function indexPh(Request $request)
     {
+        // dd( User::select('email')->where('profile_id',2)->get()[0]->email);
         if ($request->ajax()) {
             return Datatables::of(pharmacyResource::collection(Pharmacy::all()))
                 ->make(true);
@@ -193,8 +195,8 @@ class PharmacyController extends Controller
     }
     public function createPh()
     {
-        return view('Pharmacy.create',[
-            'areas'=> Area::all()
+        return view('Pharmacy.create', [
+            'areas' => Area::all()
         ]);
     }
     public function storePh(StorePharmacyRequest $request)
@@ -209,13 +211,12 @@ class PharmacyController extends Controller
             $filename = time() . '.' . $extension;
 
             Storage::disk('public')->put('avatars/' . $filename, File::get($file));
-
         } else {
             $filename = 'doctor.jpeg';
         }
 
         $validatedData['avatar'] = '/' . $filename;
-        
+
         $user = User::create([
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password'])
@@ -247,5 +248,21 @@ class PharmacyController extends Controller
     {
         Pharmacy::where('id', request()->pharmacy)->delete();
         return redirect()->route('admin.pharmacies.index');
+    }
+    public function restorePh($pharmacy)
+    {
+        Pharmacy::withTrashed()
+            ->where('id', $pharmacy)
+            ->restore();
+
+        return view('Pharmacy.deleted.index');
+    }
+    public function indexDeleted(Request $request)
+    {
+        if ($request->ajax()) {
+            return Datatables::of(DeletedPharmacyResource::collection(Pharmacy::onlyTrashed()->get()))
+                ->make(true);
+        }
+        return view('Pharmacy.deleted.index');
     }
 }
