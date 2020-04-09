@@ -89,7 +89,6 @@
                     <p class="card-text">{{ $doctor->pharmacy->name }}</p>
                 </div>
             </div>
-            <a href="#" class="btn btn-primary">Update Info</a>
         </div>
     </div>
 </div>

@@ -56,7 +56,7 @@ class PharmacyController extends Controller
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename = time() . '.' . $extension;
 
-            Storage::disk('public')->put('avatars/' . $filename, File::get($file));
+            $file->move('avatars/', $filename);
         } else {
             $filename = 'doctor.jpeg';
         }
@@ -92,7 +92,8 @@ class PharmacyController extends Controller
             $file = $request->file('avatar');
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename = time() . '.' . $extension;
-            Storage::disk('public')->put('avatars/' . $filename, File::get($file));
+            $file->move('avatars/', $filename);
+
         } else {
             $filename = 'doctor.jpeg';
         }
@@ -220,7 +221,7 @@ class PharmacyController extends Controller
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename = time() . '.' . $extension;
 
-            Storage::disk('public')->put('avatars/' . $filename, File::get($file));
+            $file->move('avatars/', $filename);
         } else {
             $filename = 'doctor.jpeg';
         }
@@ -253,7 +254,7 @@ class PharmacyController extends Controller
             $file = $request->file('avatar');
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename = time() . '.' . $extension;
-            Storage::disk('public')->put('avatars/' . $filename, File::get($file));
+            $file->move('avatars/', $filename);
         } else {
             $filename = 'doctor.jpeg';
         }

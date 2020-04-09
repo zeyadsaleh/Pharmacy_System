@@ -50,7 +50,7 @@ class ClientController extends Controller
             $extension = $file->getClientOriginalExtension(); // getting image extension
             $filename =time().'.'.$extension;
 
-            Storage::disk('public')->put('avatars/'.$filename, File::get($file));
+            $file->move('avatars/', $filename);
         }
 
         $validatedData['avatar'] = '/'.$filename;
@@ -92,8 +92,7 @@ class ClientController extends Controller
                 $originalName = $file->getClientOriginalName(); // original name of file
                 $extension = $file->getClientOriginalExtension(); // getting image extension
                 $filename =time().'.'.$extension;
-                Storage::disk('public')->put('avatars/'.$filename, File::get($file));
-
+                $file->move('avatars/', $filename);
             }
 
             $client = Client::find($request->client);
