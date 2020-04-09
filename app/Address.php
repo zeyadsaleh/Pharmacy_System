@@ -6,12 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
 {
-    protected $fillable = [
-        'street_name', 'building_name', 'flat_number','floor_number','is_main','user_id'
-    ];
 
-    public function client()
-    {
-        return $this->belongsTo('App\Client');
-    }
+  protected $table = 'addresses';
+
+  protected $fillable = [
+    'street_name', 'building_name', 'floor_number', 'flat_number', 'is_main', 'user_id', 'area_id'
+  ];
 }

@@ -8,11 +8,12 @@ class Order extends Model
 {
 
   protected $fillable = [
-    'delivering_address', 'is_insured', 'created_by', 'status', 'pharmacy_id', 'user_id', 'doctor_id'];
+    'delivering_address', 'is_insured', 'created_by', 'status', 'pharmacy_id', 'user_id', 'doctor_id', 'total_price'
+  ];
 
     public function user()
     {
-      return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Client');
     }
 
     public function medicines()
@@ -20,17 +21,26 @@ class Order extends Model
         return $this->belongsToMany('App\Medicine');
     }
 
-    public function doctor(){
+    public function doctor()
+    {
         return $this->belongsTo('App\Doctor');
     }
+    
 
-    public function pharmacy(){
+    public function pharmacy()
+    {
         return $this->belongsTo('App\Pharmacy');
     }
 
-    public function address(){
-        return $this->belongsTo('App\Address');
+
+    public  function getPriceInDollars($cents)
+    {
+        $dollars = $cents / 100;
+        return $dollars;
     }
 
-
+    public function address()
+    {
+        return $this->belongsTo('App\Address');
+    }
 }

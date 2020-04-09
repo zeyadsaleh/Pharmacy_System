@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests\OrderRequest;
-use Yajra\Datatables\Datatables;
-use App\Order;
 use App\User;
+use App\Order;
+use App\Client;
 use App\Address;
 use App\Medicine;
+use App\Doctor;
+use App\Pharmacy;
 use App\OrderMedicine;
+use Illuminate\Http\Request;
+use App\Http\Requests\OrderRequest;
 use App\Http\Resources\OrderResource;
+use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\Auth;
+
 
 class OrderController extends Controller
 {
@@ -18,14 +23,15 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
+      // dd(Datatables::of(OrderResource::collection(Order::all()))->make(true));
       if ($request->ajax()) {
-          return Datatables::of(OrderResource::collection(Order::all()))->make(true);
+        return Datatables::of(OrderResource::collection(Order::all()))->make(true);
         }
         return view('orders.index');
     }
 
     public function create(Request $request){
-      return view('orders.create', ['users' => User::all(), 'medicines' => Medicine::all()]);
+      return view('orders.create', ['users' => Client::all(), 'medicines' => Medicine::all()]);
     }
 
     public function store(OrderRequest $request)
@@ -34,12 +40,10 @@ class OrderController extends Controller
         for($i=1; $i<=$request->items ; $i++){
           $medicine = $this->storeMedicine($request, $i);
 
-          // dd(($request->input('price'.$i)/100));
           OrderMedicine::create([
             'order_id' => $order->id,
             'medicine_id' => $medicine->id,
-            'pharmacy_id' => null,
-            'price' => ($request->input('price'.$i)/100),
+            'price' => number_format($request->input('price'.$i),2,'.',''),
             'quantity' => $request->input('quantity'.$i),
           ]);
         }
@@ -67,25 +71,42 @@ class OrderController extends Controller
 
     private function storeOrder($request){
 
-      $user = User::where('name', $request->user)->first();
-      $address = Address::where('user_id', $user->id)->where('is_main', 1)->first();
-      $total_price = (($request->quantity * $request->price)/100);
+      $client = Client::where('name', $request->user)->first();
+      $address = Address::where('user_id', $client->id)->where('is_main', 1)->first();
+      $user = Auth::User();
+
+      if($user->hasRole('Pharmacy')){
+        $pharmacy = $user->profile;
+        $created_by = 'Pharmacy';
+      }else if($user->hasRole('Doctor')){
+        $doctor = $user->profile;
+        $pharmacy = $doctor->pharmacy;
+        $created_by = 'Doctor';
+      }else{
+        $pharmacies = Pharmacy::where('area_id',$address->area_id);
+        $pharmacy = $pharmacies->orderBy('priority', 'desc')->first();
+        $created_by = 'User';
+      }
+
+      if($request->items>0){
+        $total_price = 0;
+        for($i=1; $i<=$request->items ; $i++){
+          $total_price += (number_format($request->input('price'.$i)*$request->input('quantity'.$i), 2, '.', ''));
+        }
+      }
       // dd($address);
       return Order::create([
           'delivering_address' => $address ? $address->id : null,
-          'is_insured' => $user->is_insured ? $user->is_insured: false,
-          // 'is_insured' => 0,
-          'created_by' => 'Pharmacy',
+          'created_by' => $created_by,
           'status'=> 'New',
-          'pharmacy_id' => null,
-          'user_id'=> $user->id,
-          'doctor_id'=> null,
-          // 'total_price' => $total_price
+          'pharmacy_id' => isset($pharmacy) ? $pharmacy->id: null,
+          'user_id'=> $client->id,
+          'doctor_id'=> isset($doctor) ? $doctor->id: null,
+          'total_price' => $total_price,
           ]);
 }
 
     private function storeMedicine($request, $i){
-
       $medicine = Medicine::where('name', $request->input('medicine'.$i))->where('name', $request->input('type'.$i))->first();
       if(!$medicine && $medicine != 'Select Medicine'){
         return Medicine::create([
@@ -95,6 +116,6 @@ class OrderController extends Controller
         }else{
           return $medicine;
         }
-    }
+      }
 
 }

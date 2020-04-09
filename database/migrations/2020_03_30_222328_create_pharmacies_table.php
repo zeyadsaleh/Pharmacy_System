@@ -18,7 +18,7 @@ class CreatePharmaciesTable extends Migration
             $table->string('name');
             $table->string('national_id')->unique();
             $table->string('avatar')->nullable();
-            $table->enum('priority', ['Low', 'Middle','High']);
+            $table->enum('priority', ['1', '2', '3', '4', '5']);
             $table->timestamps();
             $table->unsignedBigInteger('area_id');
             $table->foreign('area_id')->references('id')->on('areas');

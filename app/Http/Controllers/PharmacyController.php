@@ -51,10 +51,10 @@ class PharmacyController extends Controller
         }
 
         // First slash is for concatenation with url of blade in ajax
-        $validatedData['avatar'] = '/avatars/'.$filename;
+        $validatedData['avatar'] = '/'.$filename;
 
         $user = User::create([
-            'name' => $validatedData['name'],
+            // 'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password'])
         ]);
@@ -74,11 +74,7 @@ class PharmacyController extends Controller
 
         return redirect()->route('pharmacies.doctors.index');
     }
-
-    public function indexRevenues()
-    {
-        return view('Pharmacy.Revenues.index');
-    }
+    
 
 
     public function update(DoctorRequest $request) {
@@ -102,7 +98,7 @@ class PharmacyController extends Controller
         ]);
 
         $doctor->user()->update([
-            'name' => $request->name,
+            // 'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);

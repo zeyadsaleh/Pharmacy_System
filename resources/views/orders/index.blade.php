@@ -53,7 +53,6 @@
                 <th>Creator</th>
                 <th>Pharmacy</th>
                 <th width="280px">Action</th>
-
             </tr>
         </thead>
         <tbody>

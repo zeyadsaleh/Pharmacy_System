@@ -22,8 +22,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => ['auth','is-ban']], function () {
-    Route::get('/doctors', 'DoctorController@index')->name('doctors.index');
+// Route::group([
+//     'prefix'     => 'doctor',
+//     'middleware' => ['role:doctor', 'auth'],
+// ], function () {
+// Route::get('/', 'DoctorController@index')->name('doctors.index');
+// });
+
+##########################route of doctor role#################################
+Route::get('/doctors', 'DoctorController@index')->name('doctors.index');
+################################################################################
+Route::group(['middleware' => ['auth', 'is-ban']], function () {
+
     // Main route for pharmacy with table of data
     Route::get('/pharmacies', 'PharmacyController@index')->name('pharmacies.index');
     Route::get('/pharmacies/doctors', 'PharmacyController@indexDoctors')->name('pharmacies.doctors.index');
@@ -38,13 +48,13 @@ Route::group(['middleware' => ['auth','is-ban']], function () {
     Route::get('/ban/{doctor}', 'PharmacyController@ban')->name('pharmacies.doctors.ban');
     // Route to fetch data in json format from user table
     Route::get('/pharmacies-doctors-dt', 'PharmacyController@doctorsData')->name('pharmacies:doctors:dt');
-});
 
-################## // @TOBECHANGED
-// Route::get('/pharmacies/login', 'Auth\DoctorLoginController@showLoginForm')->name('pharmacies.login');
-// Route::post('/pharmacies/login', 'Auth\DoctorLoginController@login')->name('pharmacies.login.submit');
-// Route::get('/pharmacies/logout/', 'Auth\DoctorLoginController@logout')->name('pharmacies.logout');
-// #############
+    ##################################Revenue############################################
+
+    Route::get('/revenues', 'RevenueController@index')->name('revenues.index');
+
+    #################################################################################
+});
 
 #################################################################################
 
@@ -72,7 +82,7 @@ Auth::routes();
 Route::group([
     'prefix'     => 'admin',
     'middleware' => ['role:super-admin',],
-],function () {
+], function () {
     ## Main page
     Route::get('/', 'AdminController@index')->name('admin.index');
     ## Areas
