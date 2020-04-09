@@ -46,12 +46,14 @@
                 <th>ID</th>
                 <th>UserName</th>
                 <th>Delivering Address</th>
-                <th>Creation Date</th>
-                <th>Doctor Name</th>
                 <th>is Insured</th>
                 <th>Status</th>
-                <th>Creator</th>
                 <th>Pharmacy</th>
+                <th>Doctor Name</th>
+                <th>Creation Date</th>
+                @hasrole('admin')
+                <th>Creator</th>
+                @endhasrole
                 <th width="280px">Action</th>
             </tr>
         </thead>
@@ -65,4 +67,5 @@
 
 @section('js')
   @include('layouts.orderjs')
+  <script src="/js/order.js"></script>
 @stop
