@@ -11,7 +11,6 @@ use App\Pharmacy;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use Yajra\Datatables\Datatables;
-use App\Http\Resources\RevenueResource;
 
 
 
