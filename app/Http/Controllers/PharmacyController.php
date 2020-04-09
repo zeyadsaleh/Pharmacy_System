@@ -240,14 +240,21 @@ class PharmacyController extends Controller
         $pharmacy->user()->save($user);
 
         return redirect()->route('admin.pharmacies.index');
-        // Pharmacy::create($request->validated());
-        // return redirect()->route('admin.pharmacies.index');
     }
     public function updatePh()
     {
     }
-    public function editPh()
+    public function editPh(Request $request)
     {
+        $pharmacy = Pharmacy::find($request->pharmacy);
+
+        $pharmacy['email'] = $pharmacy->user->email;
+        $pharmacy['password'] = $pharmacy->user->password; //@TOBECHANGED
+
+        return view('Pharmacy.edit', [
+            'pharmacy' => $pharmacy,
+            'areas'=> Area::all()
+        ]);
     }
     public function destroyPh()
     {
