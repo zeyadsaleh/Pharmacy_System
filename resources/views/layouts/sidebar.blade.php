@@ -12,7 +12,7 @@
 
 @hasanyrole('super-admin|pharmacy')
 <li class="nav-item">
-    <a href={{route('pharmacies.doctors.index')}} class="nav-link">
+    <a href="{{route('pharmacies.doctors.index')}}" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
         <p>Doctors</p>
     </a>
@@ -93,13 +93,11 @@
 
 @endhasrole
 
-
 @hasrole('doctor')
 @section('sidebar')
 
 <li class="nav-item">
-    {{-- {{route('admin.orders.index')}} --}}
-    <a href="" class="nav-link">
+    <a href="{{route('orders.index')}}" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
         <p>Orders</p>
     </a>

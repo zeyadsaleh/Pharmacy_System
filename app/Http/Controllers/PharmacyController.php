@@ -74,11 +74,7 @@ class PharmacyController extends Controller
 
         return redirect()->route('pharmacies.doctors.index');
     }
-
-    public function indexRevenues()
-    {
-        return view('Pharmacy.Revenues.index');
-    }
+    
 
 
     public function update(DoctorRequest $request) {

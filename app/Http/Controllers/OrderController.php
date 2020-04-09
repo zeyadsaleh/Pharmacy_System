@@ -23,8 +23,9 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
+      // dd(Datatables::of(OrderResource::collection(Order::all()))->make(true));
       if ($request->ajax()) {
-        return Datatables::of(OrderResource::collection(Order::all()))->make(true);
+          return Datatables::of(OrderResource::collection(Order::all()))->make(true);
         }
         return view('orders.index');
     }
@@ -33,7 +34,7 @@ class OrderController extends Controller
       return view('orders.create', ['users' => Client::all(), 'medicines' => Medicine::all()]);
     }
 
-    public function store(Request $request)
+    public function store(OrderRequest $request)
     {
         $order = $this->storeOrder($request);
         for($i=1; $i<=$request->items ; $i++){
@@ -67,6 +68,13 @@ class OrderController extends Controller
       return redirect()->back()->with('warning','Order Deleted successfully!');;
     }
 
+    public function show(Request $request){
+        $order = Order::find($request->order)->first();
+        $address = Address::where('id', $order->delivering_address)->first();
+        return view('orders.show',[
+            'order' => Order::find($request->order), 'address' => $address
+        ]);
+    }
 
     private function storeOrder($request){
 
@@ -95,7 +103,7 @@ class OrderController extends Controller
       }
       // dd($address);
       return Order::create([
-          'delivering_address' => $address ? $address->id : null,
+          'delivering_address' => $address ? $address->id : "user address is unavailable",
           'created_by' => $created_by,
           'status'=> 'New',
           'pharmacy_id' => isset($pharmacy) ? $pharmacy->id: null,
@@ -104,6 +112,7 @@ class OrderController extends Controller
           'total_price' => $total_price,
           ]);
 }
+
 
     private function storeMedicine($request, $i){
       $medicine = Medicine::where('name', $request->input('medicine'.$i))->where('name', $request->input('type'.$i))->first();

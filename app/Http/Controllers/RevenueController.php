@@ -11,7 +11,7 @@ use App\Pharmacy;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use Yajra\Datatables\Datatables;
-use App\Http\Resources\RevenueResource;
+
 
 
 
@@ -23,13 +23,12 @@ class RevenueController extends Controller
         if ($user->hasRole('pharmacy')) {
             $revenue = $this->calculatePharmacyRevene();
             return view('revenue.index', $revenue);
-        } elseif ($user->hasRole('admin')) {
+        } elseif ($user->hasRole('super-admin')) {
             if ($request->ajax()) {
-                 return $this->calculateAdminRevene($request);
+                return $this->calculateAdminRevene();
             }
         }
         return view('revenue.index');
-
     }
     public function calculatePharmacyRevene()
     {
@@ -43,13 +42,13 @@ class RevenueController extends Controller
         ];
     }
 
-    public function calculateAdminRevene($request){
-            $orders = DB::table('pharmacies')
-                ->join('orders', 'orders.pharmacy_id', '=', 'pharmacies.id')
-                ->select('pharmacies.name', 'pharmacies.avatar', DB::raw('SUM(total_price) as total_price'), DB::raw('count(pharmacy_id) as count'))
-                ->groupBy('pharmacies.name', 'pharmacies.avatar')
-                ->get();
-            return Datatables::of($orders)->make(true);
+    public function calculateAdminRevene()
+    {
+        $orders = DB::table('pharmacies')
+            ->join('orders', 'orders.pharmacy_id', '=', 'pharmacies.id')
+            ->select('pharmacies.name', 'pharmacies.avatar', DB::raw('SUM(total_price) as total_price'), DB::raw('count(pharmacy_id) as count'))
+            ->groupBy('pharmacies.name', 'pharmacies.avatar')
+            ->get();
+        return Datatables::of(RevenueResource::collection($orders))->make(true);
     }
-
 }

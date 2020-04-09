@@ -5,48 +5,48 @@
 
 
 <script>
+    $(document).ready(function() {
+
+if (!String(window.location.href).includes("orders/create")) {
 
 $(function () {
 
-  // $.ajax({
-  //     url: '{!! route('orders.index') !!}',
-  //     success: function (data) {}
-
+  $.ajax({
+      url: '{!! route('orders.index') !!}',
+      success: function (data) {
+        columnNames = Object.keys(data.data[0]);
+        let columns = [];
+        for (let colName of columnNames) {
+                columns.push({data: colName, name: colName});
+        }
     $('#orders-table').DataTable({
           processing: true,
           serverSide: true,
           ajax: '{!! route('orders.index') !!}',
-          columns: [
-              {data: 'id', name: 'id'},
-              {data: 'user_id', name: 'user_id'},
-              {data: 'delivering_address', name: 'delivering_address'},
-              {data: 'created_at', name: 'created_at'},
-              {data: 'doctor_id', name: 'doctor_id'},
-              {data: 'is_insured', name: 'is_insured'},
-              {data: 'status', name: 'status'},
-              {data: 'created_by', name: 'created_by'},
-              {data: 'pharmacy_id', name: 'pharmacy_id'},
-              {data: 'action', name: 'action'},
-              // pharmacy,
-          ],
-      });
-    // });
+          columns: columns,
+        })
+      }
+    });
+    });
+
+}else{
+  $(function () {
 
       $('.medicine').select2({
           tags: true,
           theme: "classic",
+          maximumSelectionLength: 5,
       })
 
       $('.user').select2({
           theme: "classic",
+          maximumSelectionLength: 5,
       })
 
       $('.type').select2({
           theme: "classic",
+          maximumSelectionLength: 5,
       })
-
 });
-
+}
  </script>
-
- <script src="/js/order.js"></script>

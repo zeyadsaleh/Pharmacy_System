@@ -74,7 +74,7 @@
                                     return '<img src="{{url("uploads/avatars")}}'+url+'" width=100 height=100>';
                                 }
                             });
-                        } else 
+                        } else
                             columns.push({data: columnNames[i], name: columnNames[i]});
                     }
 

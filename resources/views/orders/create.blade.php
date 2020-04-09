@@ -3,7 +3,7 @@
 @section('title', 'Order')
 
 @section('css')
-  @include('layouts.ordercss')
+@include('layouts.ordercss')
 @stop
 
 @section('content_header')
@@ -61,16 +61,16 @@
 
                       </tbody>
                   </table>
-                  <input type="number" class="form-control text-center d-none" name="items" value="0" id="items" readonly >
-                    <div class="d-flex justify-content-center mt-3">
-                    <button id="rm-medicine" class="shadow btn border border-danger text-left d-inline">Remove Last Medicines <span class="bg-danger p-1"> <b> --</b></span></button>
-                    <button id="rs-medicine" class="shadow btn border border-danger text-right d-inline ml-5">Reset Order list <span class="bg-danger p-1"> <b> --</b></span></button>
+                  <input type="number" class="d-none" name="items" value="0" id="items" readonly hidden>
+                    <div class="d-flex justify-content-center mt-5 mb-2">
+                    <input id="rm-medicine" class="col-2 shadow btn border border-danger text-center p-auto d-inline" value="Undo">
+                    <input id="rs-medicine" class="col-2 shadow btn border border-danger text-center p-auto d-inline ml-5" value="Reset">
                   </div>
                 </div>
               </div>
               <hr>
               <div class="d-flex justify-content-center mt-5">
-                  <button type="submit" class="btn btn-success text-dark btn-lg shadow-lg">Put in Order</button>
+                  <button type="submit" class="btn btn-primary btn-lg shadow-lg disabled border border-dark" id="addin"><b>Put in Order</b></button>
               </div>
             </form>
           </div>
@@ -82,6 +82,9 @@
             <p><b>Medicine_Name</b></p>
             <div class="input-group">
                 <select class="medicine form-control" name="medicine" id="medicine">
+                  @hasrole('Pharmacy')
+                    <input type="number" value="1" disabled hidden id="pharm"/>
+                  @endhasrole
                     <option disabled selected>Select Medicine</option>
                     @foreach($medicines as $medicine)
                     <option value="{{$medicine->name}}">{{$medicine->name}}</option>
@@ -92,14 +95,19 @@
             <hr>
             <p><b>Type</b></p>
             <div class="input-group">
+              @hasrole('Pharmacy')
+                <input type="text" id="log" hidden disabled value="1">
+              @endhasrole
                 <select class="type form-control" name="type" id="type">
                     <option disabled selected>Select Type</option>
                     <option value="Liquid">Liquid</option>
-                    <option value="Tablet">Tablet</option>
+                    <option value="Drops">Drops</option>
                     <option value="Capsules">Capsules</option>
+                    <option value="Tablet">Tablet</option>
                     <option value="Cream">Cream</option>
-                    <option value="Drop">Drop</option>
-                    <option value="Injection">Injection</option>
+                    <option value="Injections">Injections</option>
+                    <option value="Injections">Suppositories</option>
+                    <option value="Injections">Inhalers</option>
                 </select>
             </div>
             {!! $errors->first('type', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
@@ -115,24 +123,23 @@
                 <input type="number" class="form-control" name="price" id="price">
             </div>
         </div>
-        <div class="d-flex justify-content-center mt-5">
+        <div class="d-flex justify-content-center m-5">
             <button id="add-medicine" class="btn btn-warning shadow-lg">Add medicine to order</button>
         </div>
     </div>
+    {!! $errors->first('price', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
+
+    <div class="d-flex justify-content-center mt-5">
+        <button id="add-medicine" class="btn btn-warning shadow-lg">Add medicine to order</button>
+    </div>
+</div>
 </div>
 
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+
 
 @stop
 
 @section('js')
+<script src="/js/order.js"></script>
 @include('layouts.orderjs')
 @stop

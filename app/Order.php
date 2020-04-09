@@ -13,7 +13,7 @@ class Order extends Model
 
     public function user()
     {
-      return $this->belongsTo('App\Client');
+        return $this->belongsTo('App\Client');
     }
 
     public function medicines()
@@ -25,14 +25,25 @@ class Order extends Model
     {
         return $this->belongsTo('App\Doctor');
     }
+    
 
     public function pharmacy()
     {
         return $this->belongsTo('App\Pharmacy');
     }
 
+<<<<<<< Updated upstream
+
+    public  function getPriceInDollars($cents)
+    {
+        $dollars = $cents / 100;
+        return $dollars;
+    }
+
     public function address()
     {
         return $this->belongsTo('App\Address');
     }
+=======
+>>>>>>> Stashed changes
 }
