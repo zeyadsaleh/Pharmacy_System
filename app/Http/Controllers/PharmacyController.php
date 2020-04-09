@@ -101,7 +101,7 @@ class PharmacyController extends Controller
         $doctor->update([
             'name' => $request->name,
             'national_id' => $request->national_id,
-            'avatar' => '/avatars/' . $filename,
+            'avatar' => '/' . $filename,
         ]);
 
         $doctor->user()->update([
@@ -197,12 +197,14 @@ class PharmacyController extends Controller
         }
         return view('Pharmacy.index');
     }
+
     public function createPh()
     {
         return view('Pharmacy.create',[
             'areas'=> Area::all()
         ]);
     }
+
     public function storePh(StorePharmacyRequest $request)
     {
         $validatedData = $request->validated();
@@ -241,9 +243,36 @@ class PharmacyController extends Controller
 
         return redirect()->route('admin.pharmacies.index');
     }
-    public function updatePh()
+
+    public function updatePh(StorePharmacyRequest $request)
     {
+        if ($request->hasfile('avatar')) {
+            $file = $request->file('avatar');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename = time() . '.' . $extension;
+            Storage::disk('public')->put('avatars/' . $filename, File::get($file));
+        } else {
+            $filename = 'doctor.jpeg';
+        }
+
+        $pharmacy = Pharmacy::find($request->pharmacy);
+
+        $pharmacy->update([
+            'name' => $request->name,
+            'national_id' => $request->national_id,
+            'avatar' =>  '/' . $filename,
+            'area_id' => $request->area_id,
+            'priority' => $request->priority
+        ]);
+
+        $pharmacy->user()->update([
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('admin.pharmacies.index');
     }
+
     public function editPh(Request $request)
     {
         $pharmacy = Pharmacy::find($request->pharmacy);
@@ -256,6 +285,7 @@ class PharmacyController extends Controller
             'areas'=> Area::all()
         ]);
     }
+
     public function destroyPh()
     {
         Pharmacy::where('id', request()->pharmacy)->delete();
