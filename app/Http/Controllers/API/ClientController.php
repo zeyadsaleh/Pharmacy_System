@@ -71,6 +71,8 @@ class ClientController extends Controller
             'is_insured' => false
         ]);
 
+        $user->assignRole('client');
+
         $client->user()->save($user);
 
         return new ClientResource($client);
@@ -78,37 +80,44 @@ class ClientController extends Controller
 
     public function update(UpdateClientRequest $request) {
 
-        if($request->has('email')) {
+        if(auth()->user()->id ==  $request->client && auth()->user()->hasRole('client')){
+            if($request->has('email')) {
+                throw ValidationException::withMessages([
+                    'email' => ['Can\'t change email address.'],
+                ]);
+            }
+
+            if($request->hasfile('avatar')) {
+                $file = $request->file('avatar');
+                $originalName = $file->getClientOriginalName(); // original name of file
+                $extension = $file->getClientOriginalExtension(); // getting image extension
+                $filename =time().'.'.$extension;
+                Storage::disk('public')->put('avatars/'.$filename, File::get($file));
+
+            }
+
+            $client = Client::find($request->client);
+
+            $client->update([
+                'name' => $request->name ? $request->name : $client->name,
+                'gender' => $request->gender ? $request->gender : $client->gender,
+                'date_of_birth' => $request->date_of_birth ? $request->date_of_birth : $client->date_of_birth,
+                'national_id' => $request->national_id ? $request->national_id : $client->national_id,
+                'avatar' => $request->avatar ? '/'.$filename : $client->avatar,
+                'avatar_file_name' => $request->avatar? $originalName : $client->avatar_file_name,
+                'mobile_number' => $request->mobile_number ? $request->mobile_number : $client->mobile_number,
+            ]);
+
+            $client->user()->update([
+                'password' => $request->password ? Hash::make($request->password) : $client->user->password,
+            ]);
+
+            return new ClientResource($client);
+
+        } else {
             throw ValidationException::withMessages([
-                'email' => ['Can\'t change email address.'],
+                'id' => ['You can\'t access this profile'],
             ]);
         }
-
-        if($request->hasfile('avatar')) {
-            $file = $request->file('avatar');
-            $originalName = $file->getClientOriginalName(); // original name of file
-            $extension = $file->getClientOriginalExtension(); // getting image extension
-            $filename =time().'.'.$extension;
-            Storage::disk('public')->put('avatars/'.$filename, File::get($file));
-
-        }
-
-        $client = Client::find($request->client);
-
-        $client->update([
-            'name' => $request->name ? $request->name : $client->name,
-            'gender' => $request->gender ? $request->gender : $client->gender,
-            'date_of_birth' => $request->date_of_birth ? $request->date_of_birth : $client->date_of_birth,
-            'national_id' => $request->national_id ? $request->national_id : $client->national_id,
-            'avatar' => $request->avatar ? '/'.$filename : $client->avatar,
-            'avatar_file_name' => $request->avatar? $originalName : $client->avatar_file_name,
-            'mobile_number' => $request->mobile_number ? $request->mobile_number : $client->mobile_number,
-        ]);
-
-        $client->user()->update([
-            'password' => $request->password ? Hash::make($request->password) : $client->user->password,
-        ]);
-
-        return new ClientResource($client);
     }
 }

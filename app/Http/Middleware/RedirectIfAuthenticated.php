@@ -22,7 +22,12 @@ class RedirectIfAuthenticated
         if (Auth::guard($guard)->check()) {
             if (Auth::User()->hasRole('super-admin')) {
                 return redirect(RouteServiceProvider::ADMIN);
-            }else{
+            } else if(Auth::User()->hasRole('pharmacy')) {
+                return redirect(RouteServiceProvider::PHARMACY);
+            }  else if(Auth::User()->hasRole('doctor')) {
+                return redirect(RouteServiceProvider::DOCTOR);
+            }
+            else{
                 return redirect(RouteServiceProvider::HOME);
             }
         }

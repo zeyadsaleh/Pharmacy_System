@@ -24,37 +24,65 @@
         </ul>
     </div>
 @endif
-<form method="POST" action="{{route('admin.userAddresses.update', ['useraddress' => $userAddress->id])}}" enctype="multipart/form-data">
-    @csrf
-    {{method_field('PUT')}}
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="name">User</label>
-      <input readonly type="text" name="name" class="form-control" id="name" placeholder="Name" value="{{$user->name}}">
+
+<div class="container">
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
     </div>
-    <div class="form-group col-md-6">
-      <label for="natid">National ID</label>
-      <input readonly type="text" name="natid" class="form-control" id="natid" placeholder="National ID" value="{{$user->national_id}}">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="street">Street</label>
-      <input type="text" name="street" class="form-control" id="street" placeholder="Street" value="{{$userAddress->street_name}}">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="building">Building</label>
-      <input type="text" name="building" class="form-control" id="building" placeholder="Building" value="{{$userAddress->building_name}}">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="floor">Floor</label>
-      <input type="text" name="floor" class="form-control" id="floor" placeholder="Floor" value="{{$userAddress->floor_number}}">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="flat">Flat</label>
-      <input type="text" name="flat" class="form-control" id="flat" placeholder="Flat" value="{{$userAddress->flat_number}}">
-    </div>
-  </div>
-  <button type="submit" class="btn btn-primary">Update</button>
-</form>
+    @endif
+    <form method="POST" action="{{route('admin.pharmacies.update', ['pharmacy' => $pharmacy->id])}}" enctype="multipart/form-data">
+        @csrf
+        {{method_field('PUT')}}
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="name">Pharmacy Name</label>
+                <input type="text" name="name" class="form-control" id="name" placeholder="Name" value="{{$pharmacy->name}}">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="email">E-mail</label>
+                <input type="text" name="email" class="form-control" id="email" placeholder="E-mail" value="{{$pharmacy->email}}">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="name">Password</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Password" value="{{$pharmacy->password}}">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="national_id">National Id</label>
+                <input type="text" name="national_id" class="form-control" id="national_id" placeholder="National ID" value="{{$pharmacy->national_id}}">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="area_id">Area</label>
+                <select name="area_id" class="form-control" id="area_id" value="{{$pharmacy->area->name}}">
+                    @foreach ($areas as $area)
+                    <option value="{{$area->id}}">{{$area->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="priority">Priority</label>
+                <select name="priority" class="form-control" id="priority" value="{{$pharmacy->priority}}">
+                    <option value="3">medium</option>
+                    <option value="1">very high</option>
+                    <option value="2">high</option>
+                    <option value="4">low</option>
+                    <option value="5">very low</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-4">
+                <div class="form-group col-md-12">
+                    <label for="avatar">Image</label>
+                    <input type="file" class="d-block" id="avatar" name="avatar" accept="image/*">
+                </div>
+            </div>
+        </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+    </form>
 </div>
 @stop
 

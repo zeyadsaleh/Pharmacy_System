@@ -15,6 +15,10 @@ class Pharmacy extends Model
       return $this->morphOne('App\User', 'profile');
     }
 
+    public function area() {
+      return $this->belongsTo('App\Area');
+  }
+
     // public function area()
     // {
     //   return $this->belongsTo('App\Address', 'profile');

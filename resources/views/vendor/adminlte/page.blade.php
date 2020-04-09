@@ -150,7 +150,7 @@
                         @else
                         <li class="nav-item">
                             <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <i class="fa fa-fw fa-power-off"></i> {{ __('adminlte::adminlte.log_out') }}
+                                <i class="fa fa-fw fa-power-off"></i>{{ __('adminlte::adminlte.log_out') }}
                             </a>
                             <form id="logout-form" action="{{ $logout_url }}" method="POST" style="display: none;">
                                 @if(config('adminlte.logout_method'))
@@ -181,12 +181,35 @@
                     <img src="{{ asset(config('adminlte.logo_img_xl')) }}" alt="{{config('adminlte.logo_img_alt', 'AdminLTE')}}" class="{{config('adminlte.logo_img_xl_class', 'brand-image-xs')}} logo-xl">
                 </a>
             @else
-                <a href="{{ $dashboard_url }}" class="brand-link {{ config('adminlte.classes_brand') }}">
+                @hasrole('super-admin|admin')
+                <a href="{{ route('admin.index') }}" class="brand-link {{ config('adminlte.classes_brand') }}">
                     <img src="{{ asset(config('adminlte.logo_img', 'vendor/adminlte/dist/img/AdminLTELogo.png')) }}" alt="{{config('adminlte.logo_img_alt', 'AdminLTE')}}" class="{{ config('adminlte.logo_img_class', 'brand-image img-circle elevation-3') }}" style="opacity: .8">
                     <span class="brand-text font-weight-light {{ config('adminlte.classes_brand_text') }}">
-                        {!! config('adminlte.logo', '<b>Admin</b>LTE') !!}
+                        <!-- {!! config('adminlte.logo', '<b>Pharmacy</b>System') !!} -->
+                        <b>Pharmacy</b>System
                     </span>
                 </a>
+                @endhasrole
+
+                @hasrole('pharmacy')
+                <a href="{{ route('pharmacies.index') }}" class="brand-link {{ config('adminlte.classes_brand') }}">
+                    <img src="{{ asset(config('adminlte.logo_img', 'vendor/adminlte/dist/img/AdminLTELogo.png')) }}" alt="{{config('adminlte.logo_img_alt', 'AdminLTE')}}" class="{{ config('adminlte.logo_img_class', 'brand-image img-circle elevation-3') }}" style="opacity: .8">
+                    <span class="brand-text font-weight-light {{ config('adminlte.classes_brand_text') }}">
+                        <!-- {!! config('adminlte.logo', '<b>Pharmacy</b>System') !!} -->
+                        <b>Pharmacy</b>System
+                    </span>
+                </a>
+                @endhasrole
+
+                @hasrole('doctor')
+                <a href="{{ route('doctors.index') }}" class="brand-link {{ config('adminlte.classes_brand') }}">
+                    <img src="{{ asset(config('adminlte.logo_img', 'vendor/adminlte/dist/img/AdminLTELogo.png')) }}" alt="{{config('adminlte.logo_img_alt', 'AdminLTE')}}" class="{{ config('adminlte.logo_img_class', 'brand-image img-circle elevation-3') }}" style="opacity: .8">
+                    <span class="brand-text font-weight-light {{ config('adminlte.classes_brand_text') }}">
+                        <!-- {!! config('adminlte.logo', '<b>Pharmacy</b>System') !!} -->
+                        <b>Pharmacy</b>System
+                    </span>
+                </a>
+                @endhasrole
             @endif
             <div class="sidebar">
                 <nav class="mt-2">

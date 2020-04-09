@@ -18,9 +18,7 @@ Auth::routes();
 
 Route::get('password/reset/{token?}', 'Auth\ForgotPasswordController@showLinkRequestForm');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', 'MainController@index')->middleware('auth');
 
 // Route::group([
 //     'prefix'     => 'doctor',
@@ -30,9 +28,9 @@ Route::get('/', function () {
 // });
 
 ##########################route of doctor role#################################
-Route::get('/doctors', 'DoctorController@index')->name('doctors.index');
 ################################################################################
 Route::group(['middleware' => ['auth', 'is-ban']], function () {
+    Route::get('/doctors', 'DoctorController@index')->name('doctors.index');
 
     // Main route for pharmacy with table of data
     Route::get('/pharmacies', 'PharmacyController@index')->name('pharmacies.index');
