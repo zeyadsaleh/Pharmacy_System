@@ -78,6 +78,8 @@ class ClientController extends Controller
 
     public function update(UpdateClientRequest $request) {
 
+
+        if(auth()->user()->id ==  $request->client ){
         if($request->has('email')) {
             throw ValidationException::withMessages([
                 'email' => ['Can\'t change email address.'],
@@ -110,5 +112,11 @@ class ClientController extends Controller
         ]);
 
         return new ClientResource($client);
+        }
+        else {
+            throw ValidationException::withMessages([
+                'error' => ['You can\'t access this profile'],
+            ]);
+        }
     }
 }
