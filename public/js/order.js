@@ -6,9 +6,9 @@ if (String(window.location.href).includes("orders/create")) {
     let rsBtn = document.querySelector("#rs-medicine");
     let rmBtn = document.querySelector("#rm-medicine");
     let atBtn = document.querySelector("#actions-buttons");
+    let addInBtn = document.querySelector("#addin");
 
     addBtn.addEventListener("click", addMedicine);
-
 
     function addMedicine() {
 
@@ -17,9 +17,10 @@ if (String(window.location.href).includes("orders/create")) {
         let quantity = document.getElementById("quantity").value;
         let type = document.getElementById("type").value;
 
-        if (true && items < 10) {
-            // if( medicine && Number.isInteger(price) && Number.isInteger(quantity) && type && medicine != 'Select Medicine' && type != 'Select Type' && items < 10){
-            atBtn.classList.remove('d-none');
+        // if (true && items < 10) {
+            if( medicine && price && quantity && type && medicine != 'Select Medicine' && type != 'Select Type' && items < 10){
+
+            if(items == 1) {displayOrder(true);}
 
             let box = document.createElement("tr");
             box.id = `row-${items}`;
@@ -44,7 +45,7 @@ if (String(window.location.href).includes("orders/create")) {
 
     function rsMedicine() {
         deleteChild(addHtml);
-        atBtn.classList.add('d-none');
+        displayOrder(false);
         items = 1;
         document.getElementById('items').value = 0;
     }
@@ -55,9 +56,19 @@ if (String(window.location.href).includes("orders/create")) {
         addHtml.removeChild(addHtml.lastElementChild);
         items--;
         if (items == 1) {
-            atBtn.classList.add('d-none');
+            displayOrder(false);
             document.getElementById('items').value = items;
         }
+    }
+
+    function displayOrder(check){
+      if(!check){
+        atBtn.classList.add('d-none');
+        addInBtn.classList.add('disabled');
+      }else{
+        atBtn.classList.remove('d-none');
+        addInBtn.classList.remove('disabled');
+      }
     }
 
     function deleteChild(ele) {
@@ -67,6 +78,7 @@ if (String(window.location.href).includes("orders/create")) {
             child = ele.lastElementChild;
         }
     }
+
 }
 
 if (String(window.location.href).includes("/orders")) {

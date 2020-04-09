@@ -45,12 +45,17 @@
     <link rel="stylesheet" href="/css/admin_custom.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+    <!-- <link rel="stylesheet" href="sweetalert2.min.css"> -->
 @stop
 
 @section('js')
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="/js/sweetalert2.all.min.js"></script>
+    <!-- <script src="sweetalert2.min.js"></script> -->
+
     <script>
         // Create table and fetch data using ajax
         $(function() {
@@ -69,7 +74,7 @@
                                     return '<img src="{{url("uploads/avatars")}}'+url+'" width=100 height=100>';
                                 }
                             });
-                        } else 
+                        } else
                             columns.push({data: columnNames[i], name: columnNames[i]});
                     }
 
@@ -84,8 +89,26 @@
         });
 
         function deleteDoctor(id) {
-            if(confirm('Do you want to delete this doctor ?'))
-                document.querySelector(`#delete-${id}`).submit();
+            var form = document.querySelector(`#delete-${id}`);
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.value) {
+                        form.submit();
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                    }
+            })
         }
     </script>
 @stop

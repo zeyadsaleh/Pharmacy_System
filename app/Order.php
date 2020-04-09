@@ -32,6 +32,7 @@ class Order extends Model
         return $this->belongsTo('App\Pharmacy');
     }
 
+<<<<<<< Updated upstream
 
     public  function getPriceInDollars($cents)
     {
@@ -43,4 +44,6 @@ class Order extends Model
     {
         return $this->belongsTo('App\Address');
     }
+=======
+>>>>>>> Stashed changes
 }
