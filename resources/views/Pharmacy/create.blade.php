@@ -32,14 +32,18 @@
                 <input type="text" name="name" class="form-control" id="name" placeholder="Name">
             </div>
             <div class="form-group col-md-6">
-                <label for="email">e-mail</label>
-                <input type="text" name="email" class="form-control" id="email" placeholder="e-mail">
+                <label for="email">E-mail</label>
+                <input type="text" name="email" class="form-control" id="email" placeholder="E-mail">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="name">Password</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Password">
             </div>
             <div class="form-group col-md-6">
                 <label for="national_id">National Id</label>
                 <input type="text" name="national_id" class="form-control" id="national_id" placeholder="National ID">
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label for="area_id">Area</label>
                 <select name="area_id" class="form-control" id="area_id">
                     @foreach ($areas as $area)
@@ -47,7 +51,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label for="priority">Priority</label>
                 <select name="priority" class="form-control" id="priority">
                     <option value="3">medium</option>
@@ -58,7 +62,7 @@
                 </select>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <div class="form-group col-md-12">
                     <label for="avatar">Image</label>
                     <input type="file" class="d-block" id="avatar" name="avatar" accept="image/*">

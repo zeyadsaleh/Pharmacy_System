@@ -21,7 +21,6 @@ class DoctorResource extends JsonResource
             'email' => $this->user->email,
             'created_at' => $this->created_at->format('Y-m-d'),
             'national_id' => $this->national_id,
-            //    'avatar' => "<img src=".url("uploads").$this->avatar." width=100 height=100 >",
             'avatar' => $this->avatar,
             'is_ban' => $this->is_ban ? 'True' : 'False',
             
@@ -38,7 +37,7 @@ class DoctorResource extends JsonResource
 
         ];
 
-        if(auth()->user() && auth()->user()->hasrole('admin')) {
+        if(auth()->user() && auth()->user()->hasrole('super-admin')) {
 
             // add pharmacy_name in the correct index
             $data = array_slice($data, 0, 6, true) +

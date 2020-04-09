@@ -27,7 +27,7 @@
                 <th>Created At</th>
                 <th>National ID</th>
                 <th>Avatar</th>
-                @hasrole('admin')
+                @hasrole('super-admin')
                 <th>Pharmacy</th>
                 @endhasrole
                 <th>Banned</th>

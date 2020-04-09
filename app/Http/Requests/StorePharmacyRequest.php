@@ -26,6 +26,7 @@ class StorePharmacyRequest extends FormRequest
         return [
             'name'=>'required',
             'email'=>'required|email',
+            'password' => 'required|min:6',
             'national_id'=>'required|numeric',
             'avatar' => 'image|mimes:jpg,jpeg|nullable',
             'priority'=>'present',

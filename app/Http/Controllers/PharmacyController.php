@@ -69,8 +69,6 @@ class PharmacyController extends Controller
             'pharmacy_id' => $validatedData['pharmacy_id']
         ]);
 
-        // $role = Role::create(['name' => 'doctor']);
-
         $user->assignRole('doctor');
 
         $doctor->user()->save($user);
@@ -201,8 +199,43 @@ class PharmacyController extends Controller
     }
     public function storePh(StorePharmacyRequest $request)
     {
-        Pharmacy::create($request->validated());
+        $validatedData = $request->validated();
+
+        // dd($validatedData['avatar']);
+
+        if ($request->hasfile('avatar')) {
+            $file = $request->file('avatar');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename = time() . '.' . $extension;
+
+            Storage::disk('public')->put('avatars/' . $filename, File::get($file));
+
+        } else {
+            $filename = 'doctor.jpeg';
+        }
+
+        $validatedData['avatar'] = '/' . $filename;
+        
+        $user = User::create([
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password'])
+        ]);
+
+        $pharmacy = Pharmacy::create([
+            'name' => $validatedData['name'],
+            'national_id' => $validatedData['national_id'],
+            'avatar' => $validatedData['avatar'],
+            'priority' => $validatedData['priority'],
+            'area_id' => $validatedData['area_id']
+        ]);
+
+        $user->assignRole('pharmacy');
+
+        $pharmacy->user()->save($user);
+
         return redirect()->route('admin.pharmacies.index');
+        // Pharmacy::create($request->validated());
+        // return redirect()->route('admin.pharmacies.index');
     }
     public function updatePh()
     {
