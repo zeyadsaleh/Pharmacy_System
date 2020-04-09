@@ -10,7 +10,7 @@
 @stop
 
 @hasrole('pharmacy')
-@include('layout.sidebar')
+@include('layouts.sidebar')
 @section('content')
 <div class="card m-3">
   <div class="card-body">

@@ -18,9 +18,10 @@ class DoctorController extends Controller
     public function index()
     {
         $user = Auth::User();
+        // dd($user);
         if ($user->hasRole('doctor')) {
             $doctor = Doctor::find($user->profile->id);
-            return view('doctor.index',['doctor' => $doctor]);
+            return view('index',['doctor' => $doctor, 'user' => $user]);
         }   
         else{
             return view('layouts.404');

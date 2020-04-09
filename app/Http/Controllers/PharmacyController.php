@@ -25,7 +25,6 @@ class PharmacyController extends Controller
     {
         $user = User::find(auth()->user()->id);
         $pharmacy = $user->profile;
-        // dd($pharmacy->area());
 
         return view('index', [
             'pharmacy' => $pharmacy,
