@@ -26,15 +26,37 @@
 @endif
 <form method="POST" action="{{route('admin.userAddresses.store')}}" enctype="multipart/form-data">
     @csrf
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="name">Name</label>
-      <input type="text" name="name" class="form-control" id="name" placeholder="Name">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="address"></label>
-      <input type="text" name="address" class="form-control" id="address" placeholder="Address">
-    </div>
+    <div class="form-row">
+        <div class="form-group">
+            <label for="user">select user to assign this address to</label>
+            <div class="mb-1">user name : national ID </div>
+            <select name="user_id" class="form-control" id="user_id">
+                @foreach ($users as $user)
+                <option value="{{$user->id}}">{{$user->name .' : '. $user->national_id}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="street">Street</label>
+          <input type="text" name="street_name" class="form-control" id="street_name" placeholder="Street">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="building">Building</label>
+          <input type="text" name="building_name" class="form-control" id="building_name" placeholder="Building">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="floor">Floor</label>
+          <input type="text" name="floor_number" class="form-control" id="floor_number" placeholder="Floor">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="flat">Flat</label>
+          <input type="text" name="flat_number" class="form-control" id="flat_number" placeholder="Flat">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="is_main">check button if this is your permenant address</label>
+            <input type="checkbox" value="1" name="is_main" class="form-control" id="is_main">
+          </div>
+      </div>
   <button type="submit" class="btn btn-primary">Add</button>
 </form>
 </div>
@@ -48,3 +70,4 @@
 @section('js')
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 @stop
+

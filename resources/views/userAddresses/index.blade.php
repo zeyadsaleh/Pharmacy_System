@@ -17,12 +17,12 @@
     <table id="clients-table" class="table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
-                <th>User</th>
+                <th>Client</th>
+                <th>National ID</th>
                 <th>street</th>
                 <th>Building</th>
                 <th>Floor</th>
                 <th>flat</th>
-                <th>Main Address</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -45,18 +45,18 @@
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <script>
-     $(function() {
+    $(function() {
                 $('#clients-table').DataTable({
                     processing: true,
                     serverSide: true,
                     ajax: '{!! route('admin.userAddresses.index') !!}',
                     columns: [
-                        { data: 'user', name: 'user' },
+                        { data: 'client', name: 'client' },
+                        { data: 'nat', name: 'nat' },
                         { data: 'street', name: 'street' },
                         { data: 'building', name: 'building' },
                         { data: 'floor', name: 'floor' },
                         { data: 'flat', name: 'flat' },
-                        { data: 'main address', name: 'main address' },
                         {data: 'action', name: 'action', orderable: false, searchable: false},
                     ],
                 });

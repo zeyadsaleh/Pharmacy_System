@@ -24,17 +24,33 @@
         </ul>
     </div>
 @endif
-<form method="POST" action="{{route('admin.userAddresses.update', ['area' => $area->id])}}" enctype="multipart/form-data">
+<form method="POST" action="{{route('admin.userAddresses.update', ['useraddress' => $userAddress->id])}}" enctype="multipart/form-data">
     @csrf
     {{method_field('PUT')}}
   <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="name">Name</label>
-      <input type="text" name="name" class="form-control" id="name" placeholder="Name" value="{{$area->name}}">
+      <label for="name">User</label>
+      <input readonly type="text" name="name" class="form-control" id="name" placeholder="Name" value="{{$user->name}}">
     </div>
     <div class="form-group col-md-6">
-      <label for="address">Address</label>
-      <input type="text" class="form-control" name="address" placeholder="Email" value="{{$area->address}}">
+      <label for="natid">National ID</label>
+      <input readonly type="text" name="natid" class="form-control" id="natid" placeholder="National ID" value="{{$user->national_id}}">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="street">Street</label>
+      <input type="text" name="street" class="form-control" id="street" placeholder="Street" value="{{$userAddress->street_name}}">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="building">Building</label>
+      <input type="text" name="building" class="form-control" id="building" placeholder="Building" value="{{$userAddress->building_name}}">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="floor">Floor</label>
+      <input type="text" name="floor" class="form-control" id="floor" placeholder="Floor" value="{{$userAddress->floor_number}}">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="flat">Flat</label>
+      <input type="text" name="flat" class="form-control" id="flat" placeholder="Flat" value="{{$userAddress->flat_number}}">
     </div>
   </div>
   <button type="submit" class="btn btn-primary">Update</button>

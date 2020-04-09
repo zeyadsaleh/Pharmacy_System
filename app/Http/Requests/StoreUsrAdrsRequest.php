@@ -13,7 +13,7 @@ class StoreUsrAdrsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class StoreUsrAdrsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'user_id'=>'exists:clients,id',
+            'street_name'=>'required',
+            'building_name'=>'required',
+            'floor_number'=>'present',
+            'flat_number'=>'present',
+            'is_main'=>'nullable'
         ];
     }
 }

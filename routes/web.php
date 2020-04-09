@@ -100,8 +100,8 @@ Route::group([
     Route::get('/userAddresses', 'UsrAdrsController@index')->name('admin.userAddresses.index');
     Route::get('/userAddresses/create', 'UsrAdrsController@create')->name('admin.userAddresses.create');
     Route::post('/userAddresses/store', 'UsrAdrsController@store')->name('admin.userAddresses.store');
-    Route::get('/userAddresses/{usraddresss}/edit', 'UsrAdrsController@edit')->name('admin.userAddresses.edit');
-    Route::put('/userAddresses/{usraddress}', 'UsrAdrsController@update')->name('admin.userAddresses.update');
-    Route::delete('/userAddresses/{usraddress}', 'UsrAdrsController@destroy')->name('admin.userAddresses.destroy');
+    Route::get('/userAddresses/{useraddresss}/edit', 'UsrAdrsController@edit')->name('admin.userAddresses.edit');
+    Route::put('/userAddresses/{useraddress}', 'UsrAdrsController@update')->name('admin.userAddresses.update');
+    Route::delete('/userAddresses/{useraddress}', 'UsrAdrsController@destroy')->name('admin.userAddresses.destroy');
 
 });

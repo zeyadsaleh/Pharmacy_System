@@ -12,8 +12,8 @@ class Client extends Model
         'name', 'gender', 'date_of_birth', 'national_id', 'avatar', 'mobile_number', 'is_insured'
     ];
 
-    public function user() 
-    { 
+    public function user()
+    {
       return $this->morphOne('App\User', 'profile');
     }
 }
