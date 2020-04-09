@@ -18,7 +18,7 @@ Auth::routes();
 
 Route::get('password/reset/{token?}', 'Auth\ForgotPasswordController@showLinkRequestForm');
 
-// Route::get('/', 'MainController@index')->middleware('auth');
+// Route::get('/', 'LoginC@index')->middleware('auth');
 
 // Route::group([
 //     'prefix'     => 'doctor',
@@ -71,6 +71,9 @@ Route::get('/revenues', 'RevenueController@index')->name('revenues.index');
 
 Auth::routes();
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+Route::get('/', function() {
+    return redirect('/login');
+});
 
 Route::get('/home', 'HomeController@index')->name('home');
 

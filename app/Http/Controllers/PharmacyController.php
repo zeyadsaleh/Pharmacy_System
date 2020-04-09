@@ -41,14 +41,15 @@ class PharmacyController extends Controller
 
     public function createDoctors()
     {
-        return view('Pharmacy.Doctors.create');
+        return view('Pharmacy.Doctors.create', [
+            'pharmacies' => Pharmacy::all()
+        ]);
     }
 
     public function storeDoctors(DoctorRequest $request)
     {
 
         $validatedData = $request->validated();
-        $validatedData['pharmacy_id'] = 1; //@TOBECHANGED
 
         if ($request->hasfile('avatar')) {
             $file = $request->file('avatar');
@@ -64,7 +65,6 @@ class PharmacyController extends Controller
         $validatedData['avatar'] = '/' . $filename;
 
         $user = User::create([
-            // 'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password'])
         ]);
@@ -103,10 +103,10 @@ class PharmacyController extends Controller
             'name' => $request->name,
             'national_id' => $request->national_id,
             'avatar' => '/' . $filename,
+            'pharmacy_id' => $request->pharmacy_id ? $request->pharmacy_id : $doctor->pharmacy_id
         ]);
 
         $doctor->user()->update([
-            // 'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
@@ -184,7 +184,12 @@ class PharmacyController extends Controller
      */
     public function doctorsData()
     {
-        return Datatables::of(DoctorResource::collection(Doctor::all()))->make(true);
+        if(auth()->user()->hasRole('super-admin|admin'))
+            return Datatables::of(DoctorResource::collection(Doctor::all()))->make(true);
+        else if(auth()->user()->hasRole('pharmacy'))
+            return Datatables::of(DoctorResource::collection(
+                Doctor::where('pharmacy_id', auth()->user()->profile_id)->get()
+            ))->make(true);
     }
 
 
@@ -192,7 +197,6 @@ class PharmacyController extends Controller
     ## Admin Role
     public function indexPh(Request $request)
     {
-        // dd( User::select('email')->where('profile_id',2)->get()[0]->email);
         if ($request->ajax()) {
             return Datatables::of(pharmacyResource::collection(Pharmacy::all()))
                 ->make(true);
@@ -210,8 +214,6 @@ class PharmacyController extends Controller
     public function storePh(StorePharmacyRequest $request)
     {
         $validatedData = $request->validated();
-
-        // dd($validatedData['avatar']);
 
         if ($request->hasfile('avatar')) {
             $file = $request->file('avatar');

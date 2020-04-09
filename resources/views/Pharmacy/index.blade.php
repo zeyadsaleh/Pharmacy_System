@@ -16,7 +16,7 @@
     <h1>Pharmacies</h1>
 
     <a href="{{route('admin.pharmacies.create')}}" class="btn btn-success mb-3">Add Pharmacy</a>
-    <a href="{{route('admin.pharmacies.deleted')}}" class="btn btn-sm btn-danger mb-3">show deleted pharmacies</a>
+    <a href="{{route('admin.pharmacies.deleted')}}" class="btn btn-danger mb-3">Show deleted Pharmacies</a>
 
     <table id="pharma-table" class="table table-striped table-bordered" style="width:100%">
         <thead>

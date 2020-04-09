@@ -4,26 +4,6 @@
 
 @section('title', 'Dashboard')
 
-<!-- @section('sidebar')
-    <li class="nav-item">
-        <a href="#" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Orders</p>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="{{route('pharmacies.doctors.index')}}" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Doctors</p>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="#" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Revenues</p>
-        </a>
-    </li>
-@stop -->
 @include('layouts.sidebar')
 
 @section('content_header')
@@ -68,10 +48,21 @@
   </div>
 
   <div class="form-row">
-    <div class="form-group col-md-12">
+    <div class="form-group col-md-6">
       <label for="avatar">Avatar</label>
       <input type="file" class="d-block" id="avatar" name="avatar" accept="image/*">
     </div>
+
+    @hasanyrole('super-admin|admin')
+    <div class="form-group col-md-6">
+        <label for="pharmacy_id">Pharmacy</label>
+        <select name="pharmacy_id" class="form-control" id="pharmacy_id">
+            @foreach ($pharmacies as $pharmacy)
+            <option value="{{$pharmacy->id}}">{{$pharmacy->name}}</option>
+            @endforeach
+        </select>
+    </div>
+    @endhasanyrole
   </div>
   <button type="submit" class="btn btn-primary">Create</button>
 </form>
