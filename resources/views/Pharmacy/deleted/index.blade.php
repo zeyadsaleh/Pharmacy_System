@@ -7,16 +7,13 @@
 @include('layouts.sidebar')
 
 @section('content_header')
-<h1>Pharmacy Main Page</h1>
+<h1>Pharmacy</h1>
 @stop
 
 
 @section('content')
 <div class="container-fluid">
-    <h1>Pharmacies</h1>
-
-    <a href="{{route('admin.pharmacies.create')}}" class="btn btn-success mb-3">Add Pharmacy</a>
-    <a href="{{route('admin.pharmacies.deleted')}}" class="btn btn-sm btn-danger mb-3">show deleted pharmacies</a>
+    <h1>Deleted Pharmacies</h1>
 
     <table id="pharma-table" class="table table-striped table-bordered" style="width:100%">
         <thead>
@@ -50,7 +47,7 @@
                 $('#pharma-table').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('admin.pharmacies.index') !!}',
+                    ajax: '{!! route('admin.pharmacies.deleted') !!}',
                     columns: [
                         { data: 'name', name: 'name' },
                         { data: 'email', name: 'email' },
@@ -64,10 +61,5 @@
                     ],
                 });
             });
-            // check soft delete
-            function deleteAddress(id) {
-                if(confirm('Do tou want to delete this Pharmacy ?'))
-                    document.querySelector(`#delete-${id}`).submit();
-            }
 
 </script>@stop

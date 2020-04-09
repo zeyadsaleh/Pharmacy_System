@@ -111,6 +111,8 @@ Route::group([
     Route::get('/pharmacies/{pharmacy}/edit', 'PharmacyController@editPh')->name('admin.pharmacies.edit');
     Route::put('/pharmacies/{pharmacy}', 'PharmacyController@updatePh')->name('admin.pharmacies.update');
     Route::delete('/pharmacies/{pharmacy}', 'PharmacyController@destroyPh')->name('admin.pharmacies.destroy');
+    Route::patch('/pharmacies/{pharmacy}', 'PharmacyController@restorePh')->name('admin.pharmacies.restore');
+    Route::get('/pharmacies/deleted', 'PharmacyController@indexDeleted')->name('admin.pharmacies.deleted');
     ## User Addresses
     Route::get('/userAddresses', 'UsrAdrsController@index')->name('admin.userAddresses.index');
     Route::get('/userAddresses/create', 'UsrAdrsController@create')->name('admin.userAddresses.create');
