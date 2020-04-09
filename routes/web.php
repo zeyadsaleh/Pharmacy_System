@@ -19,8 +19,8 @@ Auth::routes();
 Route::get('password/reset/{token?}', 'Auth\ForgotPasswordController@showLinkRequestForm');
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('index');
+})->middleware('auth');
 
 // Route::group([
 //     'prefix'     => 'doctor',
