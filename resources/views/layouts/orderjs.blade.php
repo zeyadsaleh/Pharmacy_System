@@ -70,17 +70,21 @@ function deleteOrder(id) {
                     success: function (data) {
                         var table = $('#orders-table').dataTable(); 
                         table.fnDraw(false);
+                        Swal.fire(
+                            'Deleted!',
+                            'Your record has been deleted.',
+                            'success'
+                        )
                     },
                     error: function (data) {
                         console.log('Error:', data);
+                        Swal.fire(
+                            'Not Deleted!',
+                            'Your record can\'t be deleted',
+                            'error'
+                        )
                     }
                 });
-
-                Swal.fire(
-                    'Deleted!',
-                    'Your record has been deleted.',
-                    'success'
-                )
         }
     })
 }

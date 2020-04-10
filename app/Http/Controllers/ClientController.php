@@ -77,7 +77,6 @@ class ClientController extends Controller
     public function edit(Request $request)
     {
         $client = Client::find($request->client);
-        // $email = User::select('email')->where('profile_id',$client->id)->first()->email;
         $user = $client->user;
         return view('clients.edit', [
             'client' => $client,
@@ -114,10 +113,7 @@ class ClientController extends Controller
             $client->user()->update([
                 'password' => $request->password ? Hash::make($request->password) : $client->user->password,
             ]);
-            // Client::where('id', $request->client)->update([
-            //     'name' => $request->name,
-            //     'email' => $request->email,
-            // ]);
+
              return redirect()->route('admin.cleints.index');
         }
     }

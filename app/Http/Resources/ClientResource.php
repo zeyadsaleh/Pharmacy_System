@@ -25,7 +25,7 @@ class ClientResource extends JsonResource
             'avatar' => $this->avatar,
             'mobile_number' => $this->mobile_number,
             'national_ID' => $this->national_id,
-            'action' => '<form method="GET" class="d-inline p-2" action="' . url("admin/clients", [$this->id, "edit"]) . '"><input type="hidden" name="_token" value="' . csrf_token() . '"><button type="submit" class="d-inline p-2 edit btn btn-primary">Edit</button></form>' . '<form method="POST" class="d-inline p-2" id="delete" action="' . url("admin/clients", $this->id) . '"><input type="hidden" name="_method" value="DELETE"><input type="hidden" name="_token" value="' . csrf_token() . '"><button type=""buttin" onclick="deleteClient('.$this->id.')" class="d-inline p-2 del btn btn-danger">Delete</button></form>',
+            'action' => '<form method="GET" class="d-inline p-2" action="' . url("admin/clients", [$this->id, "edit"]) . '"><input type="hidden" name="_token" value="' . csrf_token() . '"><button type="submit" class="d-inline p-2 edit btn btn-primary">Edit</button></form>' . '<button type=""buttin" onclick="deleteClient('.$this->id.')" class="d-inline p-2 del btn btn-danger">Delete</button>',
         ];
 
         if($this->token) {
