@@ -77,10 +77,11 @@ class ClientController extends Controller
     public function edit(Request $request)
     {
         $client = Client::find($request->client);
-        $email = User::select('email')->where('profile_id',$client->id)->first()->email;
+        // $email = User::select('email')->where('profile_id',$client->id)->first()->email;
+        $user = $client->user;
         return view('clients.edit', [
             'client' => $client,
-            'email' => $email
+            'user' => $user
         ]);
     }
     public function update(Request $request)

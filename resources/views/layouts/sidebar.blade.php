@@ -27,13 +27,13 @@
 <li class="nav-item">
     <a href="{{route('admin.clients.index')}}" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
-        <p>Users</p>
+        <p>Clients</p>
     </a>
 </li>
 <li class="nav-item">
     <a href="{{route('admin.userAddresses.index')}}" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
-        <p>User Addresses</p>
+        <p>Client Addresses</p>
     </a>
 </li>
 <li class="nav-item">
