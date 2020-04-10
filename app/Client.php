@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\VerifyApiEmail;
 
 class Client extends Authenticatable implements MustVerifyEmail
 {
@@ -26,5 +27,8 @@ class Client extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsTo('App\Order');
     }
-
+    public function sendApiEmailVerificationNotification()
+    {
+    $this->notify(new VerifyApiEmail); 
+    }
 }

@@ -2,13 +2,14 @@
 
 namespace App;
 
+use App\Notifications\VerifyApiEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable,HasRoles,HasApiTokens;
     // protected $with = ['profile'];
@@ -43,5 +44,9 @@ class User extends Authenticatable
     public function profile()
     {
       return $this->morphTo();
+    }
+    public function sendApiEmailVerificationNotification()
+    {
+    $this->notify(new VerifyApiEmail);
     }
 }

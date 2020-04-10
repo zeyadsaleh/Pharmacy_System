@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 // use App\User;
 // use Illuminate\Support\Facades\Hash;
@@ -16,12 +17,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth:sanctum','verified'])->get('/user', function (Request $request) {
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+Route::get('email/verify/{id}', 'VerificationApiController@verify')->name('verificationapi.verify');
+Route::get('email/resend', 'VerificationApiController@resend')->name('verificationapi.resend');
+Route::post('/register', 'API\ClientController@register');
+Route::post('/login', 'API\ClientController@login');
+Route::get('test', 'API\ClientController@testEmail');
+Route::get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::post('/login', 'API\ClientController@login');
-Route::post('/register', 'API\ClientController@register');
 // Has to be post not put but add in body __method and value set to PUT
 Route::post('/clients/{client}', 'API\ClientController@update')->middleware('auth:sanctum');
 Route::get('/orders', 'API\OrderController@index');
@@ -39,4 +45,3 @@ Route::put('/addresses/{address}', 'API\AddressController@update')->middleware('
 Route::post('/addresses/{address}', 'API\AddressController@store')->middleware('auth:sanctum');
 Route::delete('/addresses/{address}', 'API\AddressController@delete')->middleware('auth:sanctum');
 ######################################################################################
-
