@@ -27,6 +27,9 @@ class RevenueController extends Controller
             if ($request->ajax()) {
                 return $this->calculateAdminRevene();
             }
+            $totalRevenues = DB::table('orders')->sum('total_price');
+            $totalRevenuesInDollers = Order::getPriceInDollars($totalRevenues);
+            return view('revenue.index',['totalRevenuesInDollers' => $totalRevenuesInDollers] );
         }
         return view('revenue.index');
     }
@@ -49,7 +52,6 @@ class RevenueController extends Controller
             ->select('pharmacies.name', 'pharmacies.avatar', DB::raw('SUM(total_price) as total_price'), DB::raw('count(pharmacy_id) as count'))
             ->groupBy('pharmacies.name', 'pharmacies.avatar')
             ->get();
-        // dd($orders);
         return Datatables::of(RevenueResource::collection($orders))->make(true);
     }
 }

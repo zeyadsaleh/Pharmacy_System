@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+      Commands\NotifyUserMissing::class
     ];
 
     /**
@@ -46,6 +46,8 @@ class Kernel extends ConsoleKernel
 
           }
       })->everyminute();
+      $schedule->command('users:notify')->daily();
+
     }
 
     /**
