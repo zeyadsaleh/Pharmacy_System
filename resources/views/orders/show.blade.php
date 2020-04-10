@@ -39,10 +39,12 @@
               <tr>
                 <td class="h5 align-middle border rounded pl-4 text-left"><u>Flat Number</u>&nbsp;&nbsp; {{$address->flat_number}}</td>
               </tr>
+              @if( $order->pharmacy )
               <tr>
                 <th width="220px" class="bg-dark h3 align-middle">Pharmacy</th>
                 <td class="h5 align-middle border rounded pl-4 text-left">{{$order->pharmacy->name}}</td>
               </tr>
+              @endif
               <tr>
                 <th width="220px" class="bg-dark h3 align-middle">Status</th>
                 <td class="h5 align-middle border rounded pl-4 text-left">{{$order->status}}</td>

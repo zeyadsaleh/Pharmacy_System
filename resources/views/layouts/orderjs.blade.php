@@ -48,4 +48,40 @@ $(function () {
       })
 });
 }
+function deleteOrder(id) {
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "post",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "_method": "DELETE"
+                    },
+                    url: "{{ url('') }}" + "/orders/"+id,
+                    success: function (data) {
+                        var table = $('#orders-table').dataTable(); 
+                        table.fnDraw(false);
+                    },
+                    error: function (data) {
+                        console.log('Error:', data);
+                    }
+                });
+
+                Swal.fire(
+                    'Deleted!',
+                    'Your record has been deleted.',
+                    'success'
+                )
+        }
+    })
+}
  </script>

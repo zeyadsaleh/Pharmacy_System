@@ -82,11 +82,3 @@ if (String(window.location.href).includes("orders/create")) {
     }
 
 }
-
-if (String(window.location.href).includes("/orders")) {
-
-function deleteOrder(id) {
-    if(confirm('Do you want to delete this order ?'))
-        document.querySelector(`#delete${id}`).submit();
-}
-}

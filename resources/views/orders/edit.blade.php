@@ -1,6 +1,7 @@
 @extends('adminlte::page')
 
 @section('title', 'Order')
+@include('layouts.sidebar')
 
 @section('css')
 @include('layouts.ordercss')
