@@ -73,8 +73,6 @@
             });
         });
         function deleteClient(id) {
-                // if(confirm('Do tou want to delete this area ?'))
-                //     document.querySelector(`#delete-${id}`).submit();
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",

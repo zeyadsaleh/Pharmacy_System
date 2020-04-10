@@ -23,11 +23,11 @@ class ClientController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            if ($request->ajax()) {
+            // if ($request->ajax()) {
                 return Datatables::of(ClientResource::collection(Client::all()))
                 ->make(true);
-            }
-            return view('userAddresses.index');
+            // }
+            // return view('userAddresses.index');
         }
         return view('clients.index');
     }

@@ -52,6 +52,10 @@
       <label for="flat">Flat</label>
       <input type="text" name="flat" class="form-control" id="flat" placeholder="Flat" value="{{$userAddress->flat_number}}">
     </div>
+    <div class="form-group d-block col-md-12">
+      <input type="checkbox" name="is_main" id="is_main">
+      <label for="is_main">Main Address</label>
+    </div>
   </div>
   <button type="submit" class="btn btn-primary">Update</button>
 </form>

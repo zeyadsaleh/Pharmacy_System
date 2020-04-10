@@ -4,26 +4,6 @@
 
 @section('title', 'Dashboard')
 
-<!-- @section('sidebar')
-    <li class="nav-item">
-        <a href="#" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Orders</p>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="{{route('pharmacies.doctors.index')}}" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Doctors</p>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a href="#" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Revenues</p>
-        </a>
-    </li>
-@stop -->
 @include('layouts.sidebar')
 
 @section('content_header')
