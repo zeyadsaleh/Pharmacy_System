@@ -41,12 +41,12 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="password">password</label>
-                <input type="password" name="password" class="form-control" id="password" value="{{$user->password}}"
+                <input type="password" name="password" class="form-control" id="password"
                     placeholder="password">
             </div>
             <div class="form-group col-md-6">
                 <label for="password_confirmation">confirm password</label>
-                <input type="password" name="password_confirmation" class="form-control" value="{{$user->password}}"
+                <input type="password" name="password_confirmation" class="form-control"
                     id="password_confirmation" placeholder="Confirm Password">
             </div>
             <div class="form-group">
