@@ -29,6 +29,6 @@ class Client extends Authenticatable implements MustVerifyEmail
     }
     public function sendApiEmailVerificationNotification()
     {
-    $this->notify(new VerifyApiEmail); 
+    $this->notify(new VerifyApiEmail);
     }
 }

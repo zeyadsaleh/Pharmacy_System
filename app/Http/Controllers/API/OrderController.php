@@ -110,16 +110,16 @@ class OrderController extends Controller
       // $client =2;
       if(isset($client)){
             $address = Address::where('user_id', $client->id)->first();
-            $pharmacies = Pharmacy::where('area_id',$address->area_id)->get();
-            if(!isset($pharmacies) || empty($pharmacies)){return json_encode("your address out of serving range!");}
-            $pharmacy = $pharmacies->orderBy('priority', 'desc')->first();
+            // $pharmacies = Pharmacy::where('area_id',$address->area_id)->get();
+            // if(!isset($pharmacies) || empty($pharmacies)){return json_encode("your address out of serving range!");}
+            // $pharmacy = $pharmacies->orderBy('priority', 'desc')->first();
             $created_by = 'User';
 
       return Order::create([
           'delivering_address' => $address ? $address->id : "user address is unavailable",
           'created_by' => 'User',
           'status'=> 'New',
-          'pharmacy_id' => isset($pharmacy) ? $pharmacy->id: null,
+          // 'pharmacy_id' => isset($pharmacy) ? $pharmacy->id: null,
           'user_id'=> $client->id,
           ]);
         }else{
