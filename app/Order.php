@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class Order extends Model
 {
@@ -18,7 +19,7 @@ class Order extends Model
 
     public function medicines()
     {
-        return $this->belongsToMany('App\Medicine');
+        return $this->belongsToMany(Medicine::class, 'order_medicine');
     }
 
     public function doctor()
@@ -32,7 +33,7 @@ class Order extends Model
         return $this->belongsTo('App\Pharmacy');
     }
 
-    public  function getPriceInDollars($cents)
+    public static function getPriceInDollars($cents)
     {
         $dollars = $cents / 100;
         return $dollars;

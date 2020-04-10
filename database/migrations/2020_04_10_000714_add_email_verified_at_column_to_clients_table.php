@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ModifyOrderMedicineTable extends Migration
+class AddEmailVerifiedAtColumnToClientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class ModifyOrderMedicineTable extends Migration
      */
     public function up()
     {
-        Schema::table('order_medicine', function (Blueprint $table) {
-            $table->unsignedBigInteger('pharmacy_id')->nullable();
-
+        Schema::table('clients', function (Blueprint $table) {
+            $table->timestamp('email_verified_at')->nullable();
         });
     }
 
@@ -26,6 +25,8 @@ class ModifyOrderMedicineTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('clients', function (Blueprint $table) {
+            $table->dropColumn('email_verified_at');
+        });
     }
 }

@@ -5,7 +5,6 @@
 
 
 <script>
-    $(document).ready(function() {
 
 if (!String(window.location.href).includes("orders/create")) {
 

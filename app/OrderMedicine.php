@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class OrderMedicine extends Model
 {
@@ -12,7 +13,8 @@ class OrderMedicine extends Model
       'order_id', 'medicine_id', 'price', 'quantity'
   ];
 
-  // public function pharmacy(){
-  //     return $this->belongsTo('App\Pharmacy');
+  // public function medicines()
+  // {
+  //     return $this->belongsToMany('App\Medicine', 'order_medicine');
   // }
 }

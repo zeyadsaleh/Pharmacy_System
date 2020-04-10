@@ -18,6 +18,7 @@ use App\Http\Resources\DeletedPharmacyResource;
 use App\Http\Resources\DoctorResource;
 use App\Http\Resources\pharmacyResource;
 use App\Order;
+use App\OrderMedicine;
 use App\Pharmacy;
 
 class PharmacyController extends Controller
@@ -293,10 +294,19 @@ class PharmacyController extends Controller
         ]);
     }
 
-    public function destroyPh()
+    public function destroyPh(Request $request)
     {
-        Pharmacy::where('id', request()->pharmacy)->delete();
-        return redirect()->route('admin.pharmacies.index');
+        $orders = Order::where('pharmacy_id',$request->pharmacy)->get();
+
+        foreach($orders as $order){
+          if($order->status != 'Canceled' || !$order->status != 'Delivered' ){
+            return redirect()->route('admin.pharmacies.index')->with('danger','Pharmacy has assigned Orders, cant delete it!');;
+          }
+        }
+        OrderMedicine::where('order_id', $request->order)->delete();
+        Order::where('pharmacy_id', $request->pharmacy)->delete();
+        Pharmacy::where('id', $request->pharmacy)->delete();
+        return redirect()->route('admin.pharmacies.index')->with('success','Pharmacy Deleted successfully!');;
     }
     public function restorePh($pharmacy)
     {

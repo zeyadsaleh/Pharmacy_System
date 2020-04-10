@@ -3,9 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use App\Notifications\VerifyApiEmail;
 
-class Client extends Model
+class Client extends Authenticatable implements MustVerifyEmail
 {
+    use Notifiable;
+
     protected $guarded = [];
 
     protected $fillable = [
@@ -17,4 +23,12 @@ class Client extends Model
       return $this->morphOne('App\User', 'profile');
     }
 
+    public function order()
+    {
+        return $this->belongsTo('App\Order');
+    }
+    public function sendApiEmailVerificationNotification()
+    {
+    $this->notify(new VerifyApiEmail); 
+    }
 }

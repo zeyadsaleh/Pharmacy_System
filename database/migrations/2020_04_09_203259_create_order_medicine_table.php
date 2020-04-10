@@ -16,9 +16,9 @@ class CreateOrderMedicineTable extends Migration
         Schema::create('order_medicine', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id');
-            $table->foreign('order_id')->references('id')->on('orders');
             $table->unsignedBigInteger('medicine_id');
-            $table->foreign('medicine_id')->references('id')->on('medicines');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            $table->foreign('medicine_id')->references('id')->on('medicines')->onDelete('cascade');
             $table->float('price', 10, 2);
             $table->unsignedBigInteger('quantity');
             $table->timestamps();

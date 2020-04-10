@@ -11,7 +11,7 @@ use App\Pharmacy;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use Yajra\Datatables\Datatables;
-
+use App\Http\Resources\RevenueResource;
 
 
 
@@ -49,6 +49,7 @@ class RevenueController extends Controller
             ->select('pharmacies.name', 'pharmacies.avatar', DB::raw('SUM(total_price) as total_price'), DB::raw('count(pharmacy_id) as count'))
             ->groupBy('pharmacies.name', 'pharmacies.avatar')
             ->get();
+        // dd($orders);
         return Datatables::of(RevenueResource::collection($orders))->make(true);
     }
 }

@@ -12,4 +12,8 @@ class Address extends Model
   protected $fillable = [
     'street_name', 'building_name', 'floor_number', 'flat_number', 'is_main', 'user_id', 'area_id'
   ];
+
+  public function area() {
+    return $this->belongsTo('App\Area');
+}
 }

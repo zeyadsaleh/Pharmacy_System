@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
+
 class StoreClientRequest extends FormRequest
 {
     /**
@@ -23,7 +24,7 @@ class StoreClientRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
+    { 
         // return [
         //     'name' => 'required',
         //     'email' => 'required|unique:users,email,'.$this->client,

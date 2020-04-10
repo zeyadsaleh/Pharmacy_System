@@ -24,28 +24,22 @@ class OrderRequest extends FormRequest
   public function rules()
   {
     return [
-      // 'delivering_address' => 'required',
       'name' => 'required',
       'type' => 'required|exists:App\Medicine,type',
-      'user_id' => 'required|exists:App\User,id',
-      'status' => 'exists:App\Order,status',
-      'pharmacy_id' => 'exists:App\Pharmacy,id',
+      'user' => 'required|exists:App\Client,name',
       'price' => 'required',
       'quantity' => 'required',
-      'delivering_address' => 'exists:App\Address,id',
-      'visa' => 'required'
-      // 'is_insured' => '',
-      // 'created_by' => '',
+      'visa' => 'required',
     ];
   }
 
   public function messages()
   {
     return [
-      'user_id.required' => 'The UserName field is not valide',
+      'user.required' => 'The UserName field is not valide',
+      'user.exists' => 'The UserName field is not exist',
       'name.required' => 'Medicine name is required.',
-      'type.required' => 'Type of medicine is required.',
-      // 'delivering_address' => 'This user has'nt main address to Deliver the order',
+      'type.required' => 'Type of medicine is required.'
     ];
   }
 }

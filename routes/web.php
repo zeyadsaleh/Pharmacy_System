@@ -31,7 +31,6 @@ Route::get('password/reset/{token?}', 'Auth\ForgotPasswordController@showLinkReq
 ################################################################################
 Route::group(['middleware' => ['auth', 'is-ban']], function () {
     Route::get('/doctors', 'DoctorController@index')->name('doctors.index');
-
     // Main route for pharmacy with table of data
     Route::get('/pharmacies', 'PharmacyController@index')->name('pharmacies.index');
     Route::get('/pharmacies/doctors', 'PharmacyController@indexDoctors')->name('pharmacies.doctors.index');
@@ -54,6 +53,7 @@ Route::group(['middleware' => ['auth', 'is-ban']], function () {
     #################################################################################
 });
 
+Route::group(['middleware' => 'auth'], function (){
 ################################Order#########################################
 
 Route::get('/orders', 'OrderController@index')->name('orders.index');
@@ -63,12 +63,12 @@ Route::get('/orders/{order}/edit', 'OrderController@edit')->name('orders.edit');
 Route::put('/orders/{order}', 'OrderController@update')->name('orders.update');
 Route::delete('/orders/{order}', 'OrderController@destroy')->name('orders.destroy');
 Route::get('/orders/{order}', 'OrderController@show')->name('orders.show');
-##################################Revenue############################################
 
+});
+##################################Revenue############################################
 Route::get('/revenues', 'RevenueController@index')->name('revenues.index');
 
 #################################################################################
-
 Auth::routes();
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('/', function() {

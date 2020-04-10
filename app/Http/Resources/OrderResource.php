@@ -24,7 +24,7 @@ class OrderResource extends JsonResource
         $action = '<form method="GET" class="d-inline p-2" action="'.url("orders", [ $this->id]).'"><button type="submit" class="btn btn-success">Details</button></form>'.'<form method="GET" class="d-inline p-2" action="'.url("orders", [ $this->id, "edit"]).'"><button type="submit" class="d-inline p-2 edit btn btn-primary">Edit</button></form>'.'<form method="POST" class="d-inline p-2" id="delete'.$this->id.'" action="'.url("orders", $this->id).'"><input type="hidden" name="_method" value="DELETE"><input type="hidden" name="_token" value="'.csrf_token().'"><button class="d-inline p-2 del btn btn-danger" onclick="deleteOrder('.$this->id.')"">Delete</button></form>';
 
         $address = Address::where('id', $this->delivering_address)->first();
-
+ 
         $datas = [
           'id' => $this->id,
           'user_id' => $this->user_id ? $this->user->name : "Not exist",
@@ -37,9 +37,10 @@ class OrderResource extends JsonResource
         ];
 
 
-        // if ($user->hasRole('admin')) {
+        // if ($user->hasrole('admin')) {
         //   $datas['created_by']=$this->created_by;
         // }
+
         $datas['action']=$action;
 
          return $datas;
