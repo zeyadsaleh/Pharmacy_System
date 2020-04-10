@@ -97,7 +97,7 @@
                 @endhasrole
                 <option disabled selected>Select Medicine</option>
                 @foreach($medicines as $medicine)
-                <option value="{{$medicine->name}}">{{$medicine->name}}</option>
+                <option value="{{$medicine->name}}">{{$medicine->name}} || '{{$medicine->type}}'</option>
                 @endforeach
             </select>
         </div>
