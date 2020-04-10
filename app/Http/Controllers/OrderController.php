@@ -42,6 +42,10 @@ class OrderController extends Controller
         if(isset($user) || !empty($user)){
 
          $order = $this->storeOrder($request);
+
+         if (!$order){
+           return redirect()->route('orders.create')->with('danger','This user didnt has main address!');
+         }
         foreach (range(1, 15) as $i) {
             if( $request->input('quantity'.$i) == null ){ break;}
 
@@ -65,13 +69,14 @@ class OrderController extends Controller
     {
       $user = Auth::User();
       if(isset($user) || !empty($user)){
-        if($user->hasrole('doctor')){
-          return view('orders.edit',[
-              'order' => Order::find($request->order), 'check' => 'readonly'
-          ]);
+
+        return view('orders.edit',[
+              'order' => Order::find($request->order), 'pharmacies' => Pharmacy::all(), 'check' => 'readonly'
+            ]);
+            if($user->hasrole('admin')){
         }else{
           return view('orders.edit',[
-              'order' => Order::find($request->order), 'check' => ''
+              'order' => Order::find($request->order), 'check' => 'readonly'
           ]);
         }
         }else{
@@ -81,12 +86,21 @@ class OrderController extends Controller
 
 
     public function update(Request $request){
-      Order::find($request->order)->fill($request->all())->save();
-      return redirect()->route('orders.index')->with('success','Order Updated successfully!');
+      $user = Auth::User();
+
+      if(isset($user) || !empty($user)){
+        Order::find($request->order)->update([
+          'pharmacy_id' => $request->pharmacy ? $request->pharmacy : $request->order->pharmacy->id,
+          'status' => $request->status ? $request->status : $request->order->status,
+        ]);
+        return redirect()->route('orders.index')->with('success','Order Updated successfully!');
+      }else{
+        return redirect()->route('orders.index')->with('danger','Order not allowed to Updated!');
+      }
     }
 
 
- 
+
     public function destroy(Request $request)
     {
       OrderMedicine::where('order_id', $request->order)->delete();
@@ -106,9 +120,12 @@ class OrderController extends Controller
 
       $client = Client::where('name', $request->user)->first();
       $address = Address::where('user_id', $client->id)->where('is_main', 1)->first();
+
+      if(!isset($address) || !empty($address)){
+          return false;
+      }
       $user = Auth::User();
       if(isset($user) || !empty($user)){
-
           if($user->hasrole('Pharmacy')){
             $pharmacy = $user->profile;
             $created_by = 'Pharmacy';
@@ -119,17 +136,11 @@ class OrderController extends Controller
           }else{
             $pharmacies = Pharmacy::where('area_id',$address->area_id);
             if(isset($pharmacies)){
-                $pharmacy = $pharmacies->orderBy('priority', 'asc')->first();
+                $pharmacy = $pharmacies->sortBy('priority')->first();
               }
             $created_by = 'User';
-          }
-      }else{
-        $pharmacies = Pharmacy::where('area_id',$address->area_id);
-        if(isset($pharmacies) || !empty($pharmacies)){
-            $pharmacy = $pharmacies->orderBy('priority', 'asc')->first();
-          }
-        $created_by = 'User';
       }
+    }
 
       $prices = 0;
       foreach (range(1, 15) as $i) {
