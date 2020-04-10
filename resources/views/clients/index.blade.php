@@ -24,6 +24,9 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>National ID</th>
+                <th>Mobile Number</th>
+                <th>Gender</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -55,6 +58,9 @@
                     { data: 'id', name: 'id' },
                     { data: 'name', name: 'name' },
                     { data: 'email', name: 'email' },
+                    { data: 'national_ID', name: 'national_ID' },
+                    { data: 'mobile_number', name: 'mobile_number' },
+                    { data: 'gender', name: 'gender' },
                     { data: 'action', name: 'action', orderable:false},
                 ]
             });

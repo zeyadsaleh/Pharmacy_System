@@ -15,41 +15,82 @@
 
 @section('content')
 <div class="container">
-@if ($errors->any())
+    @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
+            <li>{{ $error }}</li>
             @endforeach
         </ul>
     </div>
-@endif
-<form method="POST" action="{{route('admin.users.update', ['user' => $user->id])}}" enctype="multipart/form-data">
-    @csrf
-    {{method_field('PUT')}}
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="name">Name</label>
-      <input type="text" name="name" class="form-control" id="name" placeholder="Name" value="{{$user->name}}">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="email">Email</label>
-      <input type="email" class="form-control" name="email" placeholder="Email" value="{{$user->address}}">
-    </div>
-    <div class="form-group col-md-6">
-        <input hidden type="id" class="form-control" name="id" placeholder="Email" value="{{$user->id}}">
-      </div>
-  </div>
-  <button type="submit" class="btn btn-primary">Update</button>
-</form>
-</div>
-@stop
+    @endif
+    <form method="POST" action="{{route('admin.clients.update', ['client' => $client->id])}}"
+        enctype="multipart/form-data">
+        @csrf
+        {{method_field('PUT')}}
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="name">Name</label>
+                <input type="text" name="name" class="form-control" id="name" value="{{$client->name}}"
+                    placeholder="Name">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="email">e-mail</label>
+                <input type="email" name="email" class="form-control" id="email" value="{{$email}}"
+                    placeholder="email">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="password">password</label>
+                <input type="password" name="password" class="form-control" id="password" value="{{$client->password}}"
+                    placeholder="password">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="password_confirmation">confirm password</label>
+                <input type="password" name="password_confirmation" class="form-control" value="{{$client->password}}"
+                    id="password_confirmation" placeholder="Confirm Password">
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select name="gender" class="form-control" value="{{$client->gender}}" id="gender">
+                    <option id="Female" value="Female">Female</option>
+                    <option id="Male" value="Male">Male</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="national_id">National ID</label>
+                <input type="text" name="national_id" class="form-control" id="national_id"
+                    value="{{$client->national_id}}" placeholder="national_id">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="mobile_number">Mobile Number</label>
+                <input type="text" name="mobile_number" class="form-control" value="{{$client->mobile_number}}"
+                    id="mobile_number" placeholder="mobile number">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="date_of_birth">Birth Date</label>
+                <input type="date" id="date_of_birth" value="{{$client->date_of_birth}}" name="date_of_birth"
+                    min="2018-01-01" max="2020-04-11">
+            </div>
+            <div class="form-group col-md-4">
+                <div class="form-group col-md-12">
+                    <label for="avatar">Image</label>
+                    <input type="file" class="d-block" id="avatar" name="avatar" value="{{$client->avatar}}"
+                        accept="image/*">
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+    @stop
 
-@section('css')
+    @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
-@stop
+    @stop
 
-@section('js')
+    @section('js')
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-@stop
+    <script>
+        document.getElementById("{{$client->gender}}").selected = "true";
+    </script>
+    @stop
