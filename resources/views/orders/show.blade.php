@@ -28,16 +28,16 @@
               </tr>
               <tr>
                 <th width="220px" class="bg-dark h3 align-middle" rowspan="4">Address</th>
-                <td class="h5 align-middle border rounded pl-4 text-left"><u>Street Name</u>&nbsp;&nbsp; {{$address->street_name}}</td>
+                <td class="h5 align-middle border rounded pl-4 text-left"><u>Street Name</u>&nbsp;&nbsp; {{$order->address->street_name}}</td>
               </tr>
               <tr>
-                <td class="h5 align-middle border rounded pl-4 text-left"><u>Building Name</u>&nbsp;&nbsp; {{$address->building_name}}</td>
+                <td class="h5 align-middle border rounded pl-4 text-left"><u>Building Name</u>&nbsp;&nbsp; {{$order->address->building_name}}</td>
               </tr>
               <tr>
-                <td class="h5 align-middle border rounded pl-4 text-left"><u>Floor Number</u>&nbsp;&nbsp; {{$address->floor_number}}</td>
+                <td class="h5 align-middle border rounded pl-4 text-left"><u>Floor Number</u>&nbsp;&nbsp; {{$order->address->floor_number}}</td>
               </tr>
               <tr>
-                <td class="h5 align-middle border rounded pl-4 text-left"><u>Flat Number</u>&nbsp;&nbsp; {{$address->flat_number}}</td>
+                <td class="h5 align-middle border rounded pl-4 text-left"><u>Flat Number</u>&nbsp;&nbsp; {{$order->address->flat_number}}</td>
               </tr>
               @if( $order->pharmacy )
               <tr>
@@ -48,6 +48,14 @@
               <tr>
                 <th width="220px" class="bg-dark h3 align-middle">Status</th>
                 <td class="h5 align-middle border rounded pl-4 text-left">{{$order->status}}</td>
+              </tr>
+              <tr>
+                <th width="220px" class="bg-dark h3 align-middle">Medicine Details</th>
+                <td class="h5 align-middle border rounded pl-4 text-left">
+                  @foreach($order->medicines as $medicine)
+                  <p>{{$medicine->name}} </p>
+                  @endforeach
+                </td>
               </tr>
               <tr>
                 <th width="220px" class="bg-dark h3 align-middle">Total Price</th>

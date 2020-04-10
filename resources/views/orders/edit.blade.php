@@ -27,35 +27,35 @@
 
                            <p><b>Order Username</b></p>
                            <div class="input-group">
-                                       <input type="text" class="form-control" name="username" value="{{$order->user->name}}" readonly>
+                                       <input type="text" class="form-control" name="username" value="{{$order->user->name}}" "{{$check}}">
                                    </div>
 
                            <hr>
 
                            <p><b>Deliverying Address</b></p>
                            <div class="input-group">
-                                       <input type="text" class="form-control" name="addres" value="{{$order->address}}" readonly>
+                                       <input type="text" class="form-control" name="addres" value="{{$order->address->street_name}}" "{{$check}}">
                            </div>
 
                            <hr>
 
                             <p><b>Created by</b></p>
                             <div class="input-group">
-                                        <input type="text" class="form-control" name="creation_data" value="{{$order->created_by}}" readonly>
+                                        <input type="text" class="form-control" name="creation_data" value="{{$order->created_by}}" "{{$check}}">
                             </div>
 
                             <hr>
 
                             <p><b>Doctor Name</b></p>
                             <div style="margin-bottom: 25px" class="input-group">
-                                        <input type="text" class="form-control" name="dname" value="{{$order->doctor? 'Dr. '.$order->doctor->name : " "}}" readonly>
+                                        <input type="text" class="form-control" name="dname" value="{{$order->doctor? 'Dr. '.$order->doctor->name : " "}}" "{{$check}}">
                                     </div>
 
                            <hr>
 
                            <p><b>Is Insured</b></p>
                            <div class="input-group">
-                                       <input type="text" class="form-control" name="isinsured" value="{{$order->is_insured? 'Yes':'No'}}" readonly>
+                                       <input type="text" class="form-control" name="isinsured" value="{{$order->is_insured? 'Yes':'No'}}" "{{$check}}">
                                    </div>
 
                           <hr>

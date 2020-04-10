@@ -38,8 +38,10 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        $order = $this->storeOrder($request);
+        $user = Auth::User();
+        if(isset($user) || !empty($user)){
 
+         $order = $this->storeOrder($request);
         foreach (range(1, 15) as $i) {
             if( $request->input('quantity'.$i) == null ){ break;}
 
@@ -53,15 +55,29 @@ class OrderController extends Controller
             ]);
         }
         return view('orders.index');
+      }else{
+        return redirect()->route('orders.index')->with('danger','Permission denied!');
+      }
     }
 
 
     public function edit(Request $request)
     {
-      return view('orders.edit',[
-          'order' => Order::find($request->order),
-      ]);
-    }
+      $user = Auth::User();
+      if(isset($user) || !empty($user)){
+        if($user->hasrole('doctor')){
+          return view('orders.edit',[
+              'order' => Order::find($request->order), 'check' => 'readonly'
+          ]);
+        }else{
+          return view('orders.edit',[
+              'order' => Order::find($request->order), 'check' => ''
+          ]);
+        }
+        }else{
+          return redirect()->route('orders.index')->with('danger','Permission denied!');
+        }
+      }
 
 
     public function update(Request $request){
@@ -80,10 +96,8 @@ class OrderController extends Controller
 
 
     public function show(Request $request){
-        $order = Order::find($request->order)->first();
-        $address = Address::where('id', $order->delivering_address)->first();
         return view('orders.show',[
-            'order' => Order::find($request->order), 'address' => $address
+            'order' => Order::find($request->order)
         ]);
     }
 
@@ -120,9 +134,9 @@ class OrderController extends Controller
       $prices = 0;
       foreach (range(1, 15) as $i) {
           if( $request->input('quantity'.$i) == null || $request->input('price'.$i) == null ){ break;}
-          $prices += (number_format($request->input('price'.$i)*$request->input('quantity'.$i), 2, '.', ''));
+          $prices += $request->input('price'.$i)*$request->input('quantity'.$i);
         }
-        $total_price = (number_format($prices, 2, '.',''));
+        $total_price = (number_format($prices*100, 2, '.',''));
 
       return Order::create([
           'delivering_address' => $address ? $address->id : "user address is unavailable",

@@ -44,6 +44,8 @@
 
               </div>
 
+
+
                 <div class="d-none" id="actions-buttons">
                     <div id="order-medicine" class="panel-heading p-3 mt-5 border border-dark rounded">
                         <div class="d-flex justify-content-center">
@@ -128,14 +130,10 @@
             </div>
             {!! $errors->first('price1', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
         </div>
-        <!-- <hr>
-        <p><b>Price/Medicine</b></p>
-        <div class="input-group">
-            <input type="number" class="form-control" name="price" id="price">
-        </div> -->
-    </div>
-    <div class="d-flex justify-content-center mt-5">
-        <button id="add-medicine" class="btn btn-warning shadow-lg">Add medicine to order</button>
+
+        <div class="d-flex justify-content-center mt-5">
+          <button id="add-medicine" class="btn btn-warning shadow-lg">Add medicine to order</button>
+        </div>
     </div>
 </div>
 </div>
