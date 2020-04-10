@@ -18,7 +18,7 @@ if (String(window.location.href).includes("orders/create")) {
         let type = document.getElementById("type").value;
 
         // if (true && items < 10) {
-            if( medicine && price && quantity && type && medicine != 'Select Medicine' && type != 'Select Type' && items < 10){
+            if( medicine && price && quantity && type && medicine != 'Select Medicine' && type != 'Select Type' && items < 10 && quantity < 12){
 
             if(items == 1) {displayOrder(true);}
 
@@ -35,6 +35,8 @@ if (String(window.location.href).includes("orders/create")) {
 
         } else if (items >= 10) {
             alert("you have reach the limited number of medicines for this order!")
+        } else if (quantity >= 12){
+          alert("you order quantity limited by 12 items only per medicine!")
         } else {
             alert("please fill this Medicine Info, to add more..!")
         }

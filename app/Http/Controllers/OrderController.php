@@ -23,32 +23,38 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
-      // dd(Datatables::of(OrderResource::collection(Order::all()))->make(true));
+
       if ($request->ajax()) {
           return Datatables::of(OrderResource::collection(Order::all()))->make(true);
         }
         return view('orders.index');
     }
 
+
     public function create(Request $request){
-      return view('orders.create', ['users' => Client::all(), 'medicines' => Medicine::all()]);
+      return view('orders.create', ['clients' => Client::all(), 'medicines' => Medicine::all()]);
     }
 
-    public function store(OrderRequest $request)
+
+    public function store(Request $request)
     {
         $order = $this->storeOrder($request);
-        for($i=1; $i<=$request->items ; $i++){
-          $medicine = $this->storeMedicine($request, $i);
 
-          OrderMedicine::create([
-            'order_id' => $order->id,
-            'medicine_id' => $medicine->id,
-            'price' => number_format($request->input('price'.$i),2,'.',''),
-            'quantity' => $request->input('quantity'.$i),
-          ]);
+        foreach (range(1, 15) as $i) {
+            if( $request->input('quantity'.$i) == null ){ break;}
+
+            $medicine = $this->storeMedicine($request, $i);
+
+            OrderMedicine::create([
+              'order_id' => $order->id,
+              'medicine_id' => $medicine->id,
+              'price' => number_format($request->input('price'.$i),2,'.',''),
+              'quantity' => $request->input('quantity'.$i),
+            ]);
         }
         return view('orders.index');
     }
+
 
     public function edit(Request $request)
     {
@@ -57,16 +63,20 @@ class OrderController extends Controller
       ]);
     }
 
+
     public function update(Request $request){
       Order::find($request->order)->fill($request->all())->save();
       return redirect()->route('orders.index')->with('success','Order Updated successfully!');
     }
 
+
     public function destroy(Request $request)
     {
+      OrderMedicine::where('order_id', $request->order)->delete();
       Order::find($request->order)->delete();
       return redirect()->back()->with('warning','Order Deleted successfully!');;
     }
+
 
     public function show(Request $request){
         $order = Order::find($request->order)->first();
@@ -76,40 +86,48 @@ class OrderController extends Controller
         ]);
     }
 
+
     private function storeOrder($request){
 
       $client = Client::where('name', $request->user)->first();
       $address = Address::where('user_id', $client->id)->where('is_main', 1)->first();
       $user = Auth::User();
 
-      if($user->hasRole('Pharmacy')){
-        $pharmacy = $user->profile;
-        $created_by = 'Pharmacy';
-      }else if($user->hasRole('Doctor')){
-        $doctor = $user->profile;
-        $pharmacy = $doctor->pharmacy;
-        $created_by = 'Doctor';
+      if(isset($user)){
+
+          if($user->hasrole('Pharmacy')){
+            $pharmacy = $user->profile;
+            $created_by = 'Pharmacy';
+          }else if($user->hasrole('Doctor')){
+            $doctor = $user->profile;
+            $pharmacy = $doctor->pharmacy;
+            $created_by = 'Doctor';
+          }else{
+            $pharmacies = Pharmacy::where('area_id',$address->area_id);
+            $pharmacy = $pharmacies->orderBy('priority', 'asc')->first();
+            $created_by = 'User';
+          }
       }else{
         $pharmacies = Pharmacy::where('area_id',$address->area_id);
-        $pharmacy = $pharmacies->orderBy('priority', 'desc')->first();
+        $pharmacy = $pharmacies->orderBy('priority', 'asc')->first();
         $created_by = 'User';
       }
 
-      if($request->items>0){
-        $total_price = 0;
-        for($i=1; $i<=$request->items ; $i++){
-          $total_price += (number_format($request->input('price'.$i)*$request->input('quantity'.$i), 2, '.', ''));
+      $prices = 0;
+      foreach (range(1, 15) as $i) {
+          if( $request->input('quantity'.$i) == null || $request->input('price'.$i) == null ){ break;}
+          $prices += (number_format($request->input('price'.$i)*$request->input('quantity'.$i), 2, '.', ''));
         }
-      }
-      // dd($address);
+        $total_price = (number_format($prices, 2, '.',''));
+
       return Order::create([
           'delivering_address' => $address ? $address->id : "user address is unavailable",
           'created_by' => $created_by,
-          'status'=> 'New',
+          'status'=> 'Processing',
           'pharmacy_id' => isset($pharmacy) ? $pharmacy->id: null,
           'user_id'=> $client->id,
           'doctor_id'=> isset($doctor) ? $doctor->id: null,
-          'total_price' => $total_price,
+          'total_price' => $total_price ? $total_price : 0,
           ]);
 }
 

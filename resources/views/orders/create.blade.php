@@ -29,12 +29,12 @@
                   <div class="input-group">
                       <select class="user form-control" name="user">
                           <option disabled selected>Select User</option>
-                          @foreach($users as $user)
-                          <option value="{{$user->name}}">{{$user->name}}</option>
+                          @foreach($clients as $client)
+                          <option value="{{$client->name}}">{{$client->name}}</option>
                           @endforeach
                       </select>
                   </div>
-                  {!! $errors->first('user_id', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
+                  {!! $errors->first('user', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
                   <hr>
                   <p><b>VisaCard Number</b></p>
                   <div class="input-group">
@@ -93,7 +93,7 @@
                     @endforeach
                 </select>
             </div>
-            {!! $errors->first('name', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
+            {!! $errors->first('medicine1', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
             <hr>
             <p><b>Type</b></p>
             <div class="input-group">
@@ -112,27 +112,25 @@
                     <option value="Injections">Inhalers</option>
                 </select>
             </div>
-            {!! $errors->first('type', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
+            {!! $errors->first('type1', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
 
             <hr>
             <p><b>Quantity</b></p>
             <div class="input-group">
                 <input type="number" class="form-control" name="quantity" id="quantity">
             </div>
+            {!! $errors->first('quantity1', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
+
             <hr>
             <p><b>Price/Medicine</b></p>
             <div class="input-group">
                 <input type="number" class="form-control" name="price" id="price">
             </div>
+            {!! $errors->first('price1', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
         </div>
         <div class="d-flex justify-content-center m-5">
             <button id="add-medicine" class="btn btn-warning shadow-lg">Add medicine to order</button>
         </div>
-    </div>
-    {!! $errors->first('price', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
-
-    <div class="d-flex justify-content-center mt-5">
-        <button id="add-medicine" class="btn btn-warning shadow-lg">Add medicine to order</button>
     </div>
 </div>
 </div>

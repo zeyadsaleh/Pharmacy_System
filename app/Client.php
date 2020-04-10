@@ -17,4 +17,9 @@ class Client extends Model
       return $this->morphOne('App\User', 'profile');
     }
 
+    public function order()
+    {
+        return $this->belongsTo('App\Order');
+    }
+
 }

@@ -37,9 +37,10 @@ class OrderResource extends JsonResource
         ];
 
 
-        // if ($user->hasRole('admin')) {
+        // if ($user->hasrole('admin')) {
         //   $datas['created_by']=$this->created_by;
         // }
+
         $datas['action']=$action;
 
          return $datas;
