@@ -14,7 +14,7 @@ class Order extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Client');
+        return $this->belongsTo('App\Client','user_id');
     }
 
     public function medicines()
@@ -24,7 +24,7 @@ class Order extends Model
 
     public function doctor()
     {
-        return $this->belongsTo('App\Doctor');
+        return $this->belongsTo('App\Doctor','doctor_id');
     }
 
 
@@ -41,7 +41,6 @@ class Order extends Model
 
     public function address()
     {
-        return $this->belongsTo('App\Address');
+        return $this->belongsTo('App\Address', 'delivering_address');
     }
-
 }

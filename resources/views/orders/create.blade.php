@@ -15,34 +15,6 @@
 <div class="container d-flex justify-content-center m-auto">
     <div style="margin-top:50px;" class="mainbox p-3 col-md-7 col-md-offset-3 col-sm-12 col-sm-offset-2 mr-5 border rounded m-2">
 
-        <form id="order" method="POST" action="{{route('orders.store')}}" enctype="multipart/form-data" class="form-horizontal" role="form">
-            @csrf
-            <div class="panel-body p-auto">
-                <h2 class="shadow-lg rounded panel-title text-center bg-primary p-2 mb-5">Order Info</h2>
-
-                <div class="panel-heading p-3 border border-dark rounded">
-                    <div class="d-flex justify-content-center">
-                        <h3 class="shadow rounded panel-title text-center bg-primary mb-3 p-auto col-7">User Info</h3>
-                    </div>
-                    <br>
-                    <p><b>UserName</b></p>
-                    <div class="input-group">
-                        <select class="user form-control" name="user">
-                            <option disabled selected>Select User</option>
-                            @foreach($users as $user)
-                            <option value="{{$user->name}}">{{$user->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    {!! $errors->first('user_id', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
-                    <hr>
-                    <p><b>VisaCard Number</b></p>
-                    <div class="input-group">
-                        <input type="password" class="form-control" name="visa" value="">
-                    </div>
-                    {!! $errors->first('visa', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
-
-<<<<<<< Updated upstream
       <form id="order" method="POST" action="{{route('orders.store')}}" enctype="multipart/form-data" class="form-horizontal" role="form">
           @csrf
           <div class="panel-body p-auto">
@@ -62,6 +34,12 @@
                           @endforeach
                       </select>
                   </div>
+                  @if($message = Session::get('danger'))
+                  <div class="alert alert-danger alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{ $message }}</strong>
+                  </div>
+                  @endif
                   {!! $errors->first('user', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
                   <hr>
                   <p><b>VisaCard Number</b></p>
@@ -71,9 +49,8 @@
                   {!! $errors->first('visa', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
 
               </div>
-=======
-                </div>
->>>>>>> Stashed changes
+
+
 
                 <div class="d-none" id="actions-buttons">
                     <div id="order-medicine" class="panel-heading p-3 mt-5 border border-dark rounded">
@@ -159,14 +136,10 @@
             </div>
             {!! $errors->first('price1', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
         </div>
-        <hr>
-        <p><b>Price/Medicine</b></p>
-        <div class="input-group">
-            <input type="number" class="form-control" name="price" id="price">
+
+        <div class="d-flex justify-content-center mt-5">
+          <button id="add-medicine" class="btn btn-warning shadow-lg">Add medicine to order</button>
         </div>
-    </div>
-    <div class="d-flex justify-content-center mt-5">
-        <button id="add-medicine" class="btn btn-warning shadow-lg">Add medicine to order</button>
     </div>
 </div>
 </div>

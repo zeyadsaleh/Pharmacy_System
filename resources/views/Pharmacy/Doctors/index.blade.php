@@ -89,7 +89,7 @@
         });
 
         function deleteDoctor(id) {
-            var form = document.querySelector(`#delete-${id}`);
+            // var form = document.querySelector(`#delete-${id}`);
 
             Swal.fire({
                 title: 'Are you sure?',
@@ -101,10 +101,25 @@
                 confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.value) {
-                        form.submit();
+                        $.ajax({
+                            type: "post",
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                                "_method": "DELETE"
+                            },
+                            url: "{{ url('') }}" + "/pharmacies/doctors/"+id,
+                            success: function (data) {
+                                var table = $('#users-table').dataTable(); 
+                                table.fnDraw(false);
+                            },
+                            error: function (data) {
+                                console.log('Error:', data);
+                            }
+                        });
+
                         Swal.fire(
                             'Deleted!',
-                            'Your file has been deleted.',
+                            'Your record has been deleted.',
                             'success'
                         )
                     }

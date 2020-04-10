@@ -4,6 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Order;
+use App\Pharmacy;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,7 +26,26 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+      $schedule->call(function () {
+          $unassigned_orders = Order::where('status','New')->get();
+          foreach($unassigned_orders as $order){
+            $pharmacies = Pharmacy::where('area_id',$order->address->area_id)->get();
+            if( empty($pharmacies->first()) ){continue;}
+            $pharmacy = $pharmacies->sortBy('priority')->first();
+
+            $order->update([
+              'pharmacy_id' => $pharmacy->id,
+              'status' => 'Processing',
+            ]);
+          }
+      })->everyminute();
+
+      $schedule->call(function () {
+          $waiting_orders = Order::where('status','WaitingForUserConfirmation')->get();
+          foreach($waiting_orders as $order){
+
+          }
+      })->everyminute();
     }
 
     /**

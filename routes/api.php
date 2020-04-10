@@ -38,6 +38,7 @@ Route::put('/orders/{order}', 'API\OrderController@update');
 Route::get('/orders/{order}', 'API\OrderController@show');
 // Route::delete('/orders/{order}', 'API\OrderController@destroy');
 
+
 ##################################ClientAddresses####################################
 Route::get('/addresses', 'API\AddressController@index')->middleware('auth:sanctum');
 Route::get('/addresses/{address}', 'API\AddressController@show')->middleware('auth:sanctum');

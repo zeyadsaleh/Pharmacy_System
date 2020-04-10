@@ -74,7 +74,7 @@ class PharmacyController extends Controller
             'name' => $validatedData['name'],
             'national_id' => $validatedData['national_id'],
             'avatar' => $validatedData['avatar'],
-            'pharmacy_id' => $validatedData['pharmacy_id']
+            'pharmacy_id' => $request->pharmacy_id ? $request->pharmacy_id : auth()->user()->profile->id
         ]);
 
         $user->assignRole('doctor');
