@@ -45,7 +45,7 @@ class OrderController extends Controller
       $client_orders = auth()->user()->order;
 
       if(isset($client_orders) ||  !empty($client_orders)){
-          $order = $Client_orders::find($request->order);
+          $order = $client_orders::find($request->order);
         }else{
           return json_encode("Your are not valid");
         }

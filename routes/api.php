@@ -46,7 +46,4 @@ Route::put('/addresses/{address}', 'API\AddressController@update')->middleware('
 Route::post('/addresses/{address}', 'API\AddressController@store')->middleware('auth:sanctum');
 Route::delete('/addresses/{address}', 'API\AddressController@delete')->middleware('auth:sanctum');
 ######################################################################################
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
