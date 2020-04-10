@@ -29,10 +29,11 @@ namespace App;
 use Cog\Contracts\Ban\Bannable as BannableContract;
 use Cog\Laravel\Ban\Traits\Bannable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Cashier\Billable;
 
 class Doctor extends Authenticatable implements BannableContract
 {
-    use Bannable;
+    use Bannable,Billable;
 
     /**
      * The attributes that should be cast to native types.
@@ -55,8 +56,8 @@ class Doctor extends Authenticatable implements BannableContract
         'name', 'email', 'password', 'national_id', 'avatar', 'pharmacy_id', 'is_ban', 'banned_at'
     ];
 
-    public function user() 
-    { 
+    public function user()
+    {
       return $this->morphOne('App\User', 'profile');
     }
 

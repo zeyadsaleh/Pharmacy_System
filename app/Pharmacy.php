@@ -2,12 +2,14 @@
 
 namespace App;
 
+use Cog\Laravel\Ban\Traits\Bannable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Cashier\Billable;
 
 class Pharmacy extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes,Billable;
     protected $guarded = [];
 
     public function user()

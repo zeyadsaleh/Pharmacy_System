@@ -61,7 +61,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="date_of_birth">Birth Date</label>
-            <input type="date" id="date_of_birth" name="date_of_birth" min="2018-01-01" max="2020-04-11">
+            <input type="date" id="date_of_birth" name="date_of_birth" min="1990-01-01" max="2020-04-11">
             </div>
             <div class="form-group col-md-4">
                 <div class="form-group col-md-12">
