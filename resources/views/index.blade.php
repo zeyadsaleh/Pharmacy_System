@@ -66,7 +66,7 @@
 @hasrole('doctor')
 <div class="container">
     <div class="card">
-        <h5 class="card-header">Pharmacy Info</h5>
+        <h5 class="card-header">Doctor Info</h5>
         <div class="card-body mx-5">
             <div class="text-center mb-5">
                 <img src="{{ url('avatars').$doctor->avatar }}" width=100 height=100>

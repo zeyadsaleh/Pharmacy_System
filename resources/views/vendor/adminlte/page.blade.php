@@ -106,7 +106,7 @@
                                 @if(config('adminlte.usermenu_image'))
                                 <img src="{{ Auth::user()->adminlte_image() }}" class="user-image img-circle elevation-2" alt="{{ Auth::user()->name }}">
                                 @endif
-                                <span @if(config('adminlte.usermenu_image'))class="d-none d-md-inline"@endif>{{ Auth::user()->name }}</span>
+                                <span @if(config('adminlte.usermenu_image'))class="d-none d-md-inline"@endif>{{ Auth::user()->profile->name }}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                                 @if(!View::hasSection('usermenu_header') && config('adminlte.usermenu_header'))
