@@ -22,7 +22,7 @@ class MedicineController extends Controller
             ->addColumn('action', function ($medicine) {
                 $button = '<a type="button" name="edit" href="medicines/' . $medicine->id . '/edit" class="edit btn btn-primary btn-sm">Edit</a>';
                 $button .= "&nbsp;&nbsp;&nbsp";
-                $button .= "<form method='POST' id='delete-$medicine->id' class='d-inline' action=".route('medicines.destroy', ['medicine' => $medicine->id])."><input type='hidden' name='_token' value='".csrf_token()."'><input type='hidden' name='_method' value='DELETE'>";
+                // $button .= "<form method='POST' id='delete-$medicine->id' class='d-inline' action=".route('medicines.destroy', ['medicine' => $medicine->id])."><input type='hidden' name='_token' value='".csrf_token()."'><input type='hidden' name='_method' value='DELETE'>";
                 $button .= "<button type='button' onclick='deleteMedicine($medicine->id)' data-id='$medicine->id' class='btn mx-1 btn-danger btn-sm'>Delete</button></form>";
                 return $button;
             })

@@ -22,8 +22,8 @@ class AreaController extends Controller
             ->addColumn('action', function ($area) {
                 $button = '<a type="button" name="edit" href="areas/' . $area->id . '/edit" class="edit btn btn-primary btn-sm">Edit</a>';
                 $button .= "&nbsp;&nbsp;&nbsp";
-                $button .= "<form method='POST' id='delete-$area->id' class='d-inline' action=".route('admin.areas.destroy', ['area' => $area->id])."><input type='hidden' name='_token' value='".csrf_token()."'><input type='hidden' name='_method' value='DELETE'>";
-                $button .= "<button type='button' onclick='deleteArea($area->id)' data-id='$area->id' class='btn mx-1 btn-danger btn-sm'>Delete</button></form>";
+                
+                $button .= "<button type='button' onclick='deleteArea($area->id)' data-id='$area->id' class='btn mx-1 btn-danger btn-sm'>Delete</button>";
                 return $button;
             })
             ->rawColumns(['action'])
