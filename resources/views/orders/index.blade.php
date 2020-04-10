@@ -57,7 +57,7 @@
                 <th>Pharmacy</th>
                 <th>Doctor Name</th>
                 <th>Creation Date</th>
-                @hasrole('admin')
+                @hasrole('super-admin')
                 <th>Creator</th>
                 @endhasrole
                 <th width="280px">Action</th>

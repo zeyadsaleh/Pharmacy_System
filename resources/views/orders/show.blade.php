@@ -59,7 +59,7 @@
               </tr>
               <tr>
                 <th width="220px" class="bg-dark h3 align-middle">Total Price</th>
-                <td class="h5 align-middle border rounded pl-4 text-left">{{$order->total_price}} $</td>
+                <td class="h5 align-middle border rounded pl-4 text-left">{{$order->total_price / 100}} $</td>
               </tr>
             </tbody>
           </table>

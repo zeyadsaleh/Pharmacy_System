@@ -17,6 +17,7 @@
 
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
+<link rel="icon" href="https://image.flaticon.com/icons/svg/2786/2786163.svg">
 @stop
 
 @section('js')

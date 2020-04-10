@@ -25,7 +25,7 @@
                        <form id="order" method="POST" action="{{route('orders.update',['order' => $order->id])}}" enctype="multipart/form-data" class="form-horizontal" role="form">
                          @method('PUT')
                          @csrf
-                         @hasrole('admin')
+                         @hasrole('super-admin')
                          <p><b>Pharmacy</b></p>
                          <div class="input-group">
                                      <select class="form-control" name="pharmacy" {{$check}}>

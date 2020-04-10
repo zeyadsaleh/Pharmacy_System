@@ -23,10 +23,19 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
+      $user = Auth::User();
 
       if ($request->ajax()) {
-          return Datatables::of(OrderResource::collection(Order::all()))->make(true);
-        }
+          if($user->hasrole('super-admin')){
+            return Datatables::of(OrderResource::collection(Order::all()))->make(true);
+          }elseif($user->hasrole('pharmacy')){
+            $pharmacy_id = $user->profile->id;
+            $orders = Order::where('pharmacy_id', $pharmacy_id)->get();
+            return Datatables::of(OrderResource::collection($orders))->make(true);
+          }
+          // $orders = Order::where('pharmacy_id', 6)->get();
+          // return Datatables::of(OrderResource::collection($orders))->make(true);
+      }
         return view('orders.index');
     }
 
@@ -73,7 +82,7 @@ class OrderController extends Controller
         return view('orders.edit',[
               'order' => Order::find($request->order), 'pharmacies' => Pharmacy::all(), 'check' => 'readonly'
             ]);
-            if($user->hasrole('admin')){
+            if($user->hasrole('super-admin')){
         }else{
           return view('orders.edit',[
               'order' => Order::find($request->order), 'check' => 'readonly'
@@ -89,9 +98,10 @@ class OrderController extends Controller
       $user = Auth::User();
 
       if(isset($user) || !empty($user)){
-        Order::find($request->order)->update([
-          'pharmacy_id' => $request->pharmacy ? $request->pharmacy : $request->order->pharmacy->id,
-          'status' => $request->status ? $request->status : $request->order->status,
+        $order = Order::find($request->order);
+        $order->update([
+          'pharmacy_id' => $request->pharmacy ? $request->pharmacy : $order->pharmacy->id,
+          'status' => $request->status ? $request->status : $order->status,
         ]);
         return redirect()->route('orders.index')->with('success','Order Updated successfully!');
       }else{
@@ -126,10 +136,10 @@ class OrderController extends Controller
       }
       $user = Auth::User();
       if(isset($user) || !empty($user)){
-          if($user->hasrole('Pharmacy')){
+          if($user->hasrole('pharmacy')){
             $pharmacy = $user->profile;
             $created_by = 'Pharmacy';
-          }else if($user->hasrole('Doctor')){
+          }else if($user->hasrole('doctor')){
             $doctor = $user->profile;
             $pharmacy = $doctor->pharmacy;
             $created_by = 'Doctor';

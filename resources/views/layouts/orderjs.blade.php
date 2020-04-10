@@ -17,12 +17,22 @@ if (!String(window.location.href).includes("orders/create")) {
         let count = 0;
         for (let colName of columnNames) {
           if(colName == 'status'){
+            let flag = true;
                 columns.push({
                   data: colName, name: colName,
                   render:function(data){
-                    if(data == 'New'){
-                      var alert = true;
-                    return '<p class="text-center text-success p-1 h6 border border-success rounded">'+data+'</P>';
+                    if(data == 'Processing'){
+                      if(flag){
+                          let html = document.getElementById('box');
+                          let box = document.createElement("div");
+                          box.style.opacity = "0.8";
+                          box.classList='alert alert-warning alert-block text-center p-2 h5';
+                          let body = `<button type="button" class="close" data-dismiss="alert">×</button><strong>Some 'New' Order is waiting to be assigned</strong>`;
+                            box.innerHTML = body;
+                            html.append(box)
+                          flag = false;
+                        }
+                      return '<p class="text-center text-success p-1 h6 border border-success rounded">'+data+'</P>';
                   }else{
                     return '<p class="text-center p-1 h6"><b>'+data+'</b></P>';
                   }
@@ -42,15 +52,6 @@ if (!String(window.location.href).includes("orders/create")) {
       }
     });
     });
-if(alert){
-  let html = document.getElementById('box');
-  let box = document.createElement("div");
-  box.style.opacity = "0.8";
-  box.classList='alert alert-warning alert-block text-center p-2 h5';
-  let body = `<button type="button" class="close" data-dismiss="alert">×</button><strong>Some 'New' Order is waiting to be assigned</strong>`;
-    box.innerHTML = body;
-    html.append(box)
-}
 }else{
   $(function () {
 
