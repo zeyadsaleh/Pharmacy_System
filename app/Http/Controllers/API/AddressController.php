@@ -78,11 +78,12 @@ class AddressController extends Controller
             return response()->json(['error'=>'404 Not Found'], 404);
         }
     }
-    public function store(CreateAddressRequest $request, Address $address)
+    public function store(CreateAddressRequest $request)
     {
         $user = auth()->user();
         if ($user->hasRole('client')) {
-        Address::create($request->all());
+        $address = Address::create($request->all());
+        // dd($address);
         return new UserAddressResource($address);
         } else {
             return response()->json(['error'=>'404 Not Found'], 404);
