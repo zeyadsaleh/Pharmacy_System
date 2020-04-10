@@ -42,7 +42,6 @@
                     </div>
                     {!! $errors->first('visa', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
 
-<<<<<<< Updated upstream
       <form id="order" method="POST" action="{{route('orders.store')}}" enctype="multipart/form-data" class="form-horizontal" role="form">
           @csrf
           <div class="panel-body p-auto">
@@ -71,9 +70,6 @@
                   {!! $errors->first('visa', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
 
               </div>
-=======
-                </div>
->>>>>>> Stashed changes
 
                 <div class="d-none" id="actions-buttons">
                     <div id="order-medicine" class="panel-heading p-3 mt-5 border border-dark rounded">

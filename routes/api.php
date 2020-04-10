@@ -38,6 +38,7 @@ Route::put('/orders/{order}', 'API\OrderController@update');
 Route::get('/orders/{order}', 'API\OrderController@show');
 // Route::delete('/orders/{order}', 'API\OrderController@destroy');
 
+
 ##################################ClientAddresses####################################
 Route::get('/addresses', 'API\AddressController@index')->middleware('auth:sanctum');
 Route::get('/addresses/{address}', 'API\AddressController@show')->middleware('auth:sanctum');
@@ -45,3 +46,7 @@ Route::put('/addresses/{address}', 'API\AddressController@update')->middleware('
 Route::post('/addresses/{address}', 'API\AddressController@store')->middleware('auth:sanctum');
 Route::delete('/addresses/{address}', 'API\AddressController@delete')->middleware('auth:sanctum');
 ######################################################################################
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes

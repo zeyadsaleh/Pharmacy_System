@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
 use App\Address;
 use App\Http\Resources\API\UserAddressResource;
 use App\Http\Requests\Address\UpdateAddressRequest;

@@ -21,10 +21,19 @@ use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
+<<<<<<< Updated upstream
     use VerifiesEmails;
 
     public function login(Request $request)
     {
+=======
+    public function login(Request $request) {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+     
+>>>>>>> Stashed changes
         $user = User::where('email', $request->email)->first();
         if ($user->email_verified_at == !NULL) {
 

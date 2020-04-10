@@ -70,6 +70,7 @@ class OrderController extends Controller
     }
 
 
+ 
     public function destroy(Request $request)
     {
       OrderMedicine::where('order_id', $request->order)->delete();

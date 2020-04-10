@@ -29,11 +29,8 @@ class AdminTableSeeder extends Seeder
             'name' => 'admin',
         ]);
         $admin_user->user()->save($admin);
+        $admin->assignRole('super-admin');
 
-        $role = Role::create(['name' => 'super-admin']);
-        $role->givePermissionTo(Permission::all());
-
-        $admin->assignRole($role);
 
     }
 }
