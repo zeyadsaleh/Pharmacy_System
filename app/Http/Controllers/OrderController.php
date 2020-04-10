@@ -170,8 +170,9 @@ class OrderController extends Controller
 
     private function storeMedicine($request, $i){
       $medicine = Medicine::where('name', $request->input('medicine'.$i))->where('type', $request->input('type'.$i))->first();
+      // dd($medicine);
 
-      if(!$medicine || $medicine == 'Select Medicine'){
+      if($medicine == null){
         return Medicine::create([
           'name' => $request->input('medicine'.$i),
           'type' => $request->input('type'.$i),

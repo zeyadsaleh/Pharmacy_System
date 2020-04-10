@@ -48,13 +48,12 @@ Route::group(['middleware' => ['auth', 'is-ban']], function () {
 
     ##################################Revenue############################################
 
-    
+
     #################################################################################
 });
 
 Route::group(['middleware' => 'auth'], function (){
     ################################Order#########################################
-    
     Route::get('/orders', 'OrderController@index')->name('orders.index');
     Route::get('/orders/create', 'OrderController@create')->name('orders.create');
     Route::post('/orders', 'OrderController@store')->name('orders.store');
@@ -62,7 +61,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::delete('/orders/{order}', 'OrderController@destroy')->name('orders.destroy');
     Route::put('/orders/{order}', 'OrderController@update')->name('orders.update');
     Route::get('/orders/{order}', 'OrderController@show')->name('orders.show');
-    
+
     Route::get('/revenues', 'RevenueController@index')->name('revenues.index');
 });
 ##################################Revenue############################################
