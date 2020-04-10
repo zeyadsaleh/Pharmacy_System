@@ -19,9 +19,4 @@ class Pharmacy extends Model
       return $this->belongsTo('App\Area');
   }
 
-    // public function area()
-    // {
-    //   return $this->belongsTo('App\Address', 'profile');
-    // }
-
 }
