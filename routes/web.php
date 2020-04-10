@@ -78,6 +78,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
+Route::get('/checkout', 'CheckoutController@stripe')->name('stripe');
+Route::post('/checkout', 'CheckoutController@pay')->name('stripe.pay');
 ####### Admin Route
 Route::group([
     'prefix'     => 'admin',

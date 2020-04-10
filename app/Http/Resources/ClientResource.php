@@ -28,7 +28,7 @@ class ClientResource extends JsonResource
             'action' => '<form method="GET" class="d-inline p-2" action="' . url("admin/clients", [$this->id, "edit"]) . '"><input type="hidden" name="_token" value="' . csrf_token() . '"><button type="submit" class="d-inline p-2 edit btn btn-primary">Edit</button></form>' . '<button type=""buttin" onclick="deleteClient('.$this->id.')" class="d-inline p-2 del btn btn-danger">Delete</button>',
         ];
 
-        if($this->token) {
+        if ($this->token) {
             $jsonData['token'] = $this->token;
         }
 
