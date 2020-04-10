@@ -17,12 +17,16 @@ class AddressController extends Controller
 
     public function index()
     {
+
         $user = auth()->user();
         if ($user->hasRole('client')) {
-            $address = Address::find($user->profile->id);
-            return new UserAddressResource($address);
+            $address = Address::where('user_id', $user->profile->id)->get();
+
+            return UserAddressResource::collection(
+                Address::where('user_id', $user->profile->id)->get()
+            );
         } else {
-            return ('404 not-found');
+            return response()->json(['error'=>'404 Not Found'], 404);
         }
     }
 
@@ -32,18 +36,20 @@ class AddressController extends Controller
         if ($user->hasRole('client')) {
             return new UserAddressResource($address);
         } else {
-            return ('404 not-found');
+            return response()->json(['error'=>'404 Not Found'], 404);
         }
     }
 
     public function update(UpdateAddressRequest $request, Address $address)
     {
+        dd($request->address);
         $user = auth()->user();
         if ($user->hasRole('client')) {
             $address->update($request->all());
+            dd($address);
             return new UserAddressResource($address);
         } else {
-            return ('404 not-found');
+            return response()->json(['error'=>'404 Not Found'], 404);
         }
     }
     public function store(CreateAddressRequest $request, Address $address)
@@ -53,7 +59,7 @@ class AddressController extends Controller
         $address->create($request->all());
         return new UserAddressResource($address);
         } else {
-            return ('404 not-found');
+            return response()->json(['error'=>'404 Not Found'], 404);
         }
     }
 
@@ -67,7 +73,7 @@ class AddressController extends Controller
         ], 204);
         return new UserAddressResource($address);
         } else {
-            return ('404 not-found');
+            return response()->json(['error'=>'404 Not Found'], 404);
         }
     }
     

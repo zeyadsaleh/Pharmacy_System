@@ -21,13 +21,12 @@ class UsrAdrsController extends Controller
     ##User Addresses
     public function index(Request $request) #####need some fixes here
     {
-        // (UsrAdrsResource::collection(Address::with('client')->get()))
+
         $addresses = DB::table('addresses')
-            ->join('clients', 'addresses.user_id', '=', 'user_id')
-            ->select('clients.name','clients.national_id','addresses.*')
-            // ->groupBy('clients.name','addresses.street_name','addresses.floor_number','addresses.flat_number','addresses.is_main')
+            ->join('clients', 'addresses.user_id', '=', 'clients.id')
+            ->select('addresses.*', 'clients.*')
             ->get();
-            // dd($addresses);
+
         if ($request->ajax()) {
             return Datatables::of(UsrAdrsResource::collection($addresses))
             ->make(true);
@@ -43,7 +42,18 @@ class UsrAdrsController extends Controller
 
     public function store(StoreUsrAdrsRequest $request)
     {
-        Address::create($request->validated());
+
+        $validatedData = $request->validated();
+
+        $address = Address::create([
+            'street_name' => $validatedData['street_name'],
+            'building_name' => $validatedData['building_name'],
+            'floor_number' => $validatedData['floor_number'],
+            'flat_number' => $validatedData['flat_number'],
+            'is_main' => $request->is_main ? true : false,
+            'user_id' => $validatedData['user_id']
+        ]);
+
         return redirect()->route('admin.userAddresses.index');
     }
 
@@ -63,6 +73,7 @@ class UsrAdrsController extends Controller
             'building_name' => $request -> building,
             'floor_number' => $request -> floor,
             'flat_number' => $request -> flat,
+            'is_main' => $request -> is_main ? true : false
         ]);
         return redirect()->route('admin.userAddresses.index');
     }

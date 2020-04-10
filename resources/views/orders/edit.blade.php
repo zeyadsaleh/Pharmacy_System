@@ -19,18 +19,20 @@
                    </div>
                    <div class="panel-body pt-3" >
                      <div class="panel-heading text-center shadow rounded border-dark ">
+                        @if($order->pharmacy)
                        <h4 class="panel-title border bg-primary mb-4 p-auto">Ph. {{$order->pharmacy->name}}</h4>
+                       @endif
                      </div>
 
                        <form id="order" method="POST" action="{{route('orders.update',['order' => $order->id])}}" enctype="multipart/form-data" class="form-horizontal" role="form">
                          @method('PUT')
                          @csrf
-                         @hasrole('admin')
+                         @hasrole('super-admin')
                          <p><b>Pharmacy</b></p>
                          <div class="input-group">
                                      <select class="form-control" name="pharmacy" {{$check}}>
                                        @foreach($pharmacies as $pharmacy)
-                                       @if($pharmacy->name == $order->pharmacy->name)
+                                       @if($order->pharmacy && $pharmacy->name == $order->pharmacy->name)
                                        <option disabled selected>{{$pharmacy->name}}</option>
                                        @continue
                                        @endif

@@ -23,11 +23,11 @@ class ClientController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            if ($request->ajax()) {
+            // if ($request->ajax()) {
                 return Datatables::of(ClientResource::collection(Client::all()))
                 ->make(true);
-            }
-            return view('userAddresses.index');
+            // }
+            // return view('userAddresses.index');
         }
         return view('clients.index');
     }
@@ -38,7 +38,7 @@ class ClientController extends Controller
 
     public function store(StoreClientRequest $request)
     {
-        Client::create($request->validated());
+        // Client::create($request->validated());
         $validatedData = $request->validated();
 
         if ($request->hasfile('avatar')) {
@@ -77,10 +77,10 @@ class ClientController extends Controller
     public function edit(Request $request)
     {
         $client = Client::find($request->client);
-        $email = User::select('email')->where('profile_id',$client->id)->first()->email;
+        $user = $client->user;
         return view('clients.edit', [
             'client' => $client,
-            'email' => $email
+            'user' => $user
         ]);
     }
     public function update(Request $request)
@@ -113,10 +113,7 @@ class ClientController extends Controller
             $client->user()->update([
                 'password' => $request->password ? Hash::make($request->password) : $client->user->password,
             ]);
-            // Client::where('id', $request->client)->update([
-            //     'name' => $request->name,
-            //     'email' => $request->email,
-            // ]);
+
              return redirect()->route('admin.cleints.index');
         }
     }

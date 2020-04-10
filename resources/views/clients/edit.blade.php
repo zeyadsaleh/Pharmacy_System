@@ -36,17 +36,17 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="email">e-mail</label>
-                <input type="email" name="email" class="form-control" id="email" value="{{$email}}"
+                <input type="email" name="email" class="form-control" id="email" value="{{$user->email}}"
                     placeholder="email">
             </div>
             <div class="form-group col-md-6">
                 <label for="password">password</label>
-                <input type="password" name="password" class="form-control" id="password" value="{{$client->password}}"
+                <input type="password" name="password" class="form-control" id="password" value="{{$user->password}}"
                     placeholder="password">
             </div>
             <div class="form-group col-md-6">
                 <label for="password_confirmation">confirm password</label>
-                <input type="password" name="password_confirmation" class="form-control" value="{{$client->password}}"
+                <input type="password" name="password_confirmation" class="form-control" value="{{$user->password}}"
                     id="password_confirmation" placeholder="Confirm Password">
             </div>
             <div class="form-group">
@@ -69,7 +69,7 @@
             <div class="form-group col-md-6">
                 <label for="date_of_birth">Birth Date</label>
                 <input type="date" id="date_of_birth" value="{{$client->date_of_birth}}" name="date_of_birth"
-                    min="2018-01-01" max="2020-04-11">
+                min="1930-01-01">
             </div>
             <div class="form-group col-md-4">
                 <div class="form-group col-md-12">
@@ -92,5 +92,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script>
         document.getElementById("{{$client->gender}}").selected = "true";
+        document.querySelector('#date_of_birth').max = new Date().toISOString().split("T")[0];
     </script>
     @stop

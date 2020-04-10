@@ -24,6 +24,7 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Avatar</th>
                 <th>National ID</th>
                 <th>Mobile Number</th>
                 <th>Gender</th>
@@ -47,6 +48,8 @@
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="/js/sweetalert2.all.min.js"></script>
 <script>
     // Create table and fetch data using ajax
         $(function() {
@@ -58,6 +61,10 @@
                     { data: 'id', name: 'id' },
                     { data: 'name', name: 'name' },
                     { data: 'email', name: 'email' },
+                    { data: 'avatar', name: 'avatar', 
+                        render: function(url) {
+                            return '<img src="{{url("avatars")}}'+url+'" width=100 height=100>';
+                    }},
                     { data: 'national_ID', name: 'national_ID' },
                     { data: 'mobile_number', name: 'mobile_number' },
                     { data: 'gender', name: 'gender' },
@@ -65,9 +72,44 @@
                 ]
             });
         });
-        function deleteArea(id) {
-                if(confirm('Do tou want to delete this area ?'))
-                    document.querySelector(`#delete-${id}`).submit();
-            }
+        function deleteClient(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        type: "post",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "_method": "DELETE"
+                        },
+                        url: "{{ url('') }}" + "/admin/clients/"+id,
+                        success: function (data) {
+                            var table = $('#clients-table').dataTable(); 
+                            table.fnDraw(false);
+                            Swal.fire(
+                                'Deleted!',
+                                'Your record has been deleted.',
+                                'success'
+                            )
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                            Swal.fire(
+                                'Not Deleted!',
+                                'Your record can\'t be deleted',
+                                'error'
+                            )
+                        }
+                    });
+                }
+            })
+        }
 </script>
 @stop

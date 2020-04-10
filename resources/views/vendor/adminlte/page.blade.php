@@ -106,7 +106,7 @@
                                 @if(config('adminlte.usermenu_image'))
                                 <img src="{{ Auth::user()->adminlte_image() }}" class="user-image img-circle elevation-2" alt="{{ Auth::user()->name }}">
                                 @endif
-                                <span @if(config('adminlte.usermenu_image'))class="d-none d-md-inline"@endif>{{ Auth::user()->name }}</span>
+                                <span @if(config('adminlte.usermenu_image'))class="d-none d-md-inline"@endif>{{ Auth::user()->profile->name }}</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                                 @if(!View::hasSection('usermenu_header') && config('adminlte.usermenu_header'))
@@ -115,7 +115,7 @@
                                     <img src="{{ Auth::user()->adminlte_image() }}" class="img-circle elevation-2" alt="{{ Auth::user()->name }}">
                                     @endif
                                     <p class="@if(!config('adminlte.usermenu_image'))mt-0 @endif">
-                                        {{ Auth::user()->name }}
+                                        {{ Auth::user()->profile->name }}
                                         @if(config('adminlte.usermenu_desc'))
                                         <small>{{ Auth::user()->adminlte_desc() }}</small>
                                         @endif
@@ -149,6 +149,12 @@
                         </li>
                         @else
                         <li class="nav-item">
+                            <p class="@if(!config('adminlte.usermenu_image'))mt-0 @endif">
+                                {{ Auth::user()->profile->name }}
+                                @if(config('adminlte.usermenu_desc'))
+                                <small>{{ Auth::user()->adminlte_desc() }}</small>
+                                @endif
+                            </p>
                             <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="fa fa-fw fa-power-off"></i>{{ __('adminlte::adminlte.log_out') }}
                             </a>

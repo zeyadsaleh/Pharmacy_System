@@ -6,6 +6,8 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Order;
 use App\Pharmacy;
+use App\Notifications\OrderNotify;
+
 
 class Kernel extends ConsoleKernel
 {
@@ -15,7 +17,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+      Commands\NotifyUserMissing::class
     ];
 
     /**
@@ -43,9 +45,13 @@ class Kernel extends ConsoleKernel
       $schedule->call(function () {
           $waiting_orders = Order::where('status','WaitingForUserConfirmation')->get();
           foreach($waiting_orders as $order){
-
+            $user = $order->user();
+            $notify = new OrderNotify();
+            $user->notify(($notify->toMail()));
           }
       })->everyminute();
+      $schedule->command('users:notify')->daily();
+
     }
 
     /**

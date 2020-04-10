@@ -38,7 +38,12 @@ class MedicineController extends Controller
 
     public function store(StoreMedicineRequest $request)
     {
-        Medicine::create($request->validated());
+        $medicine = Medicine::where('name', $request->name)
+                    ->where('type', $request->type)->get();
+
+        if(!$medicine)
+            Medicine::create($request->validated());
+            
         return redirect()->route('medicines.index');
     }
 

@@ -28,8 +28,14 @@
 @include('layouts.sidebar')
 
 @section('content')
+<div class="card m-3">
+  <div class="card-body">
+    <h2 class="card-title"><strong> Total revenues of all pharmacies </strong></h2>
+    <p class="card-text">{{$totalRevenuesInDollers}}</p>
+  </div>
+</div>
 
-<div class="container">
+<div class="container mt-3">
   <table id="revenues-table" class="table table-bordered data-table">
     <thead>
       <tr>

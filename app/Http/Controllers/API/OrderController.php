@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Http\Resources\Api\OrderResource;
 use App\Order;
 use App\Medicine;
 use App\Address;
 use App\Pharmacy;
 use App\Client;
+use App\User;
 use App\OrderMedicine;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\Api\OrderResource;
+use Illuminate\Validation\ValidationException;
 
 
 class OrderController extends Controller
@@ -20,19 +23,26 @@ class OrderController extends Controller
     public function index()
     {
       $client = auth()->user();
-      if(isset($client) && !empty($client)) {
-        return OrderResource::collection(Order::all());
-      }else{
-        return json_encode("Your are not valid");
-      }
+        return OrderResource::collection(Order::where('user_id',$client->id)->get());
     }
 
 
     public function show(Request $request)
     {
       $client = auth()->user();
+
       if(isset($client) || !empty($client)) {
-        return new OrderResource(Order::find($request->order));
+        $orders = Order::where('user_id',$client->id)->get();
+        if($orders->first() == null){
+          return json_encode("You do not have any orders");
+        }else{
+          $order = $orders->where('user_id',$client->id);
+          if($order->first() == null){
+            return json_encode("This order not available");
+          }else{
+            return new OrderResource($order);
+          }
+        }
       }else{
         return json_encode("Your are not valid");
       }

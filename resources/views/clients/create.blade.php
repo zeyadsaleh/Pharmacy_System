@@ -31,19 +31,19 @@
                 <input type="text" name="name" class="form-control" id="name" placeholder="Name">
             </div>
             <div class="form-group col-md-6">
-                <label for="email">e-mail</label>
+                <label for="email">Email</label>
                 <input type="email" name="email" class="form-control" id="email" placeholder="email">
             </div>
             <div class="form-group col-md-6">
-                <label for="password">password</label>
+                <label for="password">Password</label>
                 <input type="password" name="password" class="form-control" id="password" placeholder="password">
             </div>
             <div class="form-group col-md-6">
-                <label for="password_confirmation">confirm password</label>
+                <label for="password_confirmation">Confirm Password</label>
                 <input type="password" name="password_confirmation" class="form-control" id="password_confirmation"
                     placeholder="Confirm Password">
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label for="gender">Gender</label>
                 <select name="gender" class="form-control" id="gender">
                     <option value="Female">Female</option>
@@ -61,7 +61,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="date_of_birth">Birth Date</label>
-            <input type="date" id="date_of_birth" name="date_of_birth" min="1990-01-01" max="2020-04-11">
+                <input type="date" class="form-control" id="date_of_birth" min="1930-01-01" name="date_of_birth">
             </div>
             <div class="form-group col-md-4">
                 <div class="form-group col-md-12">
@@ -82,4 +82,7 @@
 
     @section('js')
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script>
+        document.querySelector('#date_of_birth').max = new Date().toISOString().split("T")[0];
+    </script>
     @stop

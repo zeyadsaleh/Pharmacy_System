@@ -71,7 +71,7 @@
                                 data: columnNames[i],
                                 name: columnNames[i],
                                 render: function(url) {
-                                    return '<img src="{{url("uploads/avatars")}}'+url+'" width=100 height=100>';
+                                    return '<img src="{{url("avatars")}}'+url+'" width=100 height=100>';
                                 }
                             });
                         } else
@@ -109,19 +109,23 @@
                             },
                             url: "{{ url('') }}" + "/pharmacies/doctors/"+id,
                             success: function (data) {
-                                var table = $('#users-table').dataTable(); 
+                                var table = $('#users-table').dataTable();
                                 table.fnDraw(false);
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Your record has been deleted.',
+                                    'success'
+                                )
                             },
                             error: function (data) {
                                 console.log('Error:', data);
+                                Swal.fire(
+                                    'Not Deleted!',
+                                    'Your record can\'t be deleted',
+                                    'error'
+                                )
                             }
                         });
-
-                        Swal.fire(
-                            'Deleted!',
-                            'Your record has been deleted.',
-                            'success'
-                        )
                     }
             })
         }

@@ -27,9 +27,9 @@
 <form method="POST" action="{{route('admin.userAddresses.store')}}" enctype="multipart/form-data">
     @csrf
     <div class="form-row">
-        <div class="form-group">
-            <label for="user">select user to assign this address to</label>
-            <div class="mb-1">user name : national ID </div>
+        <div class="form-group col-md-6">
+            <label for="user">User name : National ID</label>
+            <!-- <div class="mb-1">user name : national ID </div> -->
             <select name="user_id" class="form-control" id="user_id">
                 @foreach ($users as $user)
                 <option value="{{$user->id}}">{{$user->name .' : '. $user->national_id}}</option>
@@ -52,9 +52,9 @@
           <label for="flat">Flat</label>
           <input type="text" name="flat_number" class="form-control" id="flat_number" placeholder="Flat">
         </div>
-        <div class="form-group col-md-6">
-            <label for="is_main">check button if this is your permenant address</label>
-            <input type="checkbox" value="1" name="is_main" class="form-control" id="is_main">
+        <div class="form-group d-block col-md-12">
+            <input type="checkbox" value="1" name="is_main" id="is_main">
+            <label for="is_main">Main Address</label>
           </div>
       </div>
   <button type="submit" class="btn btn-primary">Add</button>

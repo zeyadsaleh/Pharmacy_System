@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-// use App\User;
+use App\User;
 // use Illuminate\Support\Facades\Hash;
 // use Illuminate\Validation\ValidationException;
 /*
@@ -30,12 +30,12 @@ Route::get('/user', function (Request $request) {
 });
 // Has to be post not put but add in body __method and value set to PUT
 Route::post('/clients/{client}', 'API\ClientController@update')->middleware('auth:sanctum');
-Route::get('/orders', 'API\OrderController@index');
+Route::get('/orders', 'API\OrderController@index')->middleware('auth:sanctum');
 ####The Field attribute of Post and Put should be: medicine1 , medicine2 .. and quantity1, quantity2 .. so on
-Route::get('/orders/create', 'API\OrderController@create');
-Route::post('/orders', 'API\OrderController@store');
-Route::put('/orders/{order}', 'API\OrderController@update');
-Route::get('/orders/{order}', 'API\OrderController@show');
+Route::get('/orders/create', 'API\OrderController@create')->middleware('auth:sanctum');
+Route::post('/orders', 'API\OrderController@store')->middleware('auth:sanctum');
+Route::put('/orders/{order}', 'API\OrderController@update')->middleware('auth:sanctum');
+Route::get('/orders/{order}', 'API\OrderController@show')->middleware('auth:sanctum');
 // Route::delete('/orders/{order}', 'API\OrderController@destroy');
 
 

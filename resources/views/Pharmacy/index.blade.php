@@ -75,7 +75,7 @@
                         { data: 'email', name: 'email' },
                         { data: 'national_id', name: 'national_id' },
                         { data: 'avatar', name:'avatar', render: function(url) {
-                            return '<img src="{{url("uploads/avatars")}}'+url+'" width=100 height=100>';
+                            return '<img src="{{url("avatars")}}'+url+'" width=100 height=100>';
                         }},
                         { data: 'area', name: 'area' },
                         { data: 'priority', name: 'priority' },
@@ -105,17 +105,21 @@
                             success: function (data) {
                                 var table = $('#pharma-table').dataTable(); 
                                 table.fnDraw(false);
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Your record has been deleted.',
+                                    'success'
+                                )
                             },
                             error: function (data) {
                                 console.log('Error:', data);
+                                Swal.fire(
+                                'Not Deleted!',
+                                'Your record can\'t be deleted',
+                                'error'
+                                )
                             }
                         });
-
-                        Swal.fire(
-                            'Deleted!',
-                            'Your record has been deleted.',
-                            'success'
-                        )
                     }
             })
             }

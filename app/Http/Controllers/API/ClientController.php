@@ -26,28 +26,32 @@ class ClientController extends Controller
     public function login(Request $request)
     {
         $user = User::where('email', $request->email)->first();
-        if ($user->email_verified_at == !NULL) {
+        if ($user) {
+            if($user->email_verified_at == !NULL){
 
-            $request->validate([
-                'email' => 'required|email',
-                'password' => 'required'
-            ]);
-
-
-            if (!$user || !Hash::check($request->password, $user->password)) {
-                throw ValidationException::withMessages([
-                    'email' => ['The provided credentials are incorrect.'],
+                $request->validate([
+                    'email' => 'required|email',
+                    'password' => 'required'
                 ]);
+
+
+                if (!$user || !Hash::check($request->password, $user->password)) {
+                    throw ValidationException::withMessages([
+                        'email' => ['The provided credentials are incorrect.'],
+                    ]);
+                }
+
+                $client = Client::find($user->profile->id);
+
+                $client['token'] = $user->createToken($request->password)->plainTextToken;
+
+                return new ClientResource($client);
             }
-
-            $client = Client::find($user->profile->id);
-
-            $client['token'] = $user->createToken($request->password)->plainTextToken;
-
-            return new ClientResource($client);
-        }
-        else {
-            return response()->json(['error'=>'Please Verify Email'], 401);
+            else {
+                return response()->json(['error'=>'Please Verify Email'], 401);
+            }
+        }else {
+            return response()->json(['error'=>'Please Register First'], 401);
         }
     }
 
@@ -96,42 +100,53 @@ class ClientController extends Controller
     public function update(UpdateClientRequest $request)
     {
 
-        if (auth()->user()->id ==  $request->client && auth()->user()->hasRole('client')) {
-            if ($request->has('email')) {
-                throw ValidationException::withMessages([
-                    'email' => ['Can\'t change email address.'],
-                ]);
+        if (auth()->user()) {
+            if(auth()->user()->email_verified_at == !NULL){
+                if (auth()->user()->profile->id ==  $request->client && auth()->user()->hasRole('client')) {
+                    if ($request->has('email')) {
+                        throw ValidationException::withMessages([
+                            'email' => ['Can\'t change email address.'],
+                        ]);
+                    }
+
+                    if ($request->hasfile('avatar')) {
+                        $file = $request->file('avatar');
+                        $originalName = $file->getClientOriginalName(); // original name of file
+                        $extension = $file->getClientOriginalExtension(); // getting image extension
+                        $filename = time() . '.' . $extension;
+                        $file->move('avatars/', $filename);
+                    }
+
+                    $client = Client::find($request->client);
+
+                    $client->update([
+                        'name' => $request->name ? $request->name : $client->name,
+                        'gender' => $request->gender ? $request->gender : $client->gender,
+                        'date_of_birth' => $request->date_of_birth ? $request->date_of_birth : $client->date_of_birth,
+                        'national_id' => $request->national_id ? $request->national_id : $client->national_id,
+                        'avatar' => $request->avatar ? '/' . $filename : $client->avatar,
+                        'avatar_file_name' => $request->avatar ? $originalName : $client->avatar_file_name,
+                        'mobile_number' => $request->mobile_number ? $request->mobile_number : $client->mobile_number,
+                    ]);
+
+                    $client->user()->update([
+                        'password' => $request->password ? Hash::make($request->password) : $client->user->password,
+                    ]);
+
+                    //update the login time for user to check and notify him if hes missing
+                    $client->update(['logged_in_at' => date('Y-m-d H:i:s')]);
+
+                    return new ClientResource($client);
+                } else {
+                    throw ValidationException::withMessages([
+                        'id' => ['You can\'t access this profile'],
+                    ]);
+                }
+            } else {
+                return response()->json(['error'=>'Please Verify Email'], 401);
             }
-
-            if ($request->hasfile('avatar')) {
-                $file = $request->file('avatar');
-                $originalName = $file->getClientOriginalName(); // original name of file
-                $extension = $file->getClientOriginalExtension(); // getting image extension
-                $filename = time() . '.' . $extension;
-                $file->move('avatars/', $filename);
-            }
-
-            $client = Client::find($request->client);
-
-            $client->update([
-                'name' => $request->name ? $request->name : $client->name,
-                'gender' => $request->gender ? $request->gender : $client->gender,
-                'date_of_birth' => $request->date_of_birth ? $request->date_of_birth : $client->date_of_birth,
-                'national_id' => $request->national_id ? $request->national_id : $client->national_id,
-                'avatar' => $request->avatar ? '/' . $filename : $client->avatar,
-                'avatar_file_name' => $request->avatar ? $originalName : $client->avatar_file_name,
-                'mobile_number' => $request->mobile_number ? $request->mobile_number : $client->mobile_number,
-            ]);
-
-            $client->user()->update([
-                'password' => $request->password ? Hash::make($request->password) : $client->user->password,
-            ]);
-
-            return new ClientResource($client);
         } else {
-            throw ValidationException::withMessages([
-                'id' => ['You can\'t access this profile'],
-            ]);
+            return response()->json(['error'=>'Please Login or Register'], 401);
         }
     }
 
