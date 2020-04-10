@@ -40,7 +40,7 @@ class WelcomeMail extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        $url='/users';
+        $url='http://127.0.0.1:8000/api/user';
         return (new MailMessage)
                     ->greeting('Welcome to our website')
                     ->line('you\'re registered successfully ')
