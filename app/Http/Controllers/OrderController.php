@@ -74,7 +74,7 @@ class OrderController extends Controller
     {
       OrderMedicine::where('order_id', $request->order)->delete();
       Order::find($request->order)->delete();
-      return redirect()->back()->with('warning','Order Deleted successfully!');;
+      return redirect()->back()->with('warning','Order Deleted successfully!');
     }
 
 
@@ -92,8 +92,7 @@ class OrderController extends Controller
       $client = Client::where('name', $request->user)->first();
       $address = Address::where('user_id', $client->id)->where('is_main', 1)->first();
       $user = Auth::User();
-
-      if(isset($user)){
+      if(isset($user) || !empty($user)){
 
           if($user->hasrole('Pharmacy')){
             $pharmacy = $user->profile;
@@ -104,12 +103,16 @@ class OrderController extends Controller
             $created_by = 'Doctor';
           }else{
             $pharmacies = Pharmacy::where('area_id',$address->area_id);
-            $pharmacy = $pharmacies->orderBy('priority', 'asc')->first();
+            if(isset($pharmacies)){
+                $pharmacy = $pharmacies->orderBy('priority', 'asc')->first();
+              }
             $created_by = 'User';
           }
       }else{
         $pharmacies = Pharmacy::where('area_id',$address->area_id);
-        $pharmacy = $pharmacies->orderBy('priority', 'asc')->first();
+        if(isset($pharmacies) || !empty($pharmacies)){
+            $pharmacy = $pharmacies->orderBy('priority', 'asc')->first();
+          }
         $created_by = 'User';
       }
 

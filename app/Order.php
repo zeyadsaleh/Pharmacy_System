@@ -33,7 +33,7 @@ class Order extends Model
         return $this->belongsTo('App\Pharmacy');
     }
 
-    public  function getPriceInDollars($cents)
+    public static function getPriceInDollars($cents)
     {
         $dollars = $cents / 100;
         return $dollars;

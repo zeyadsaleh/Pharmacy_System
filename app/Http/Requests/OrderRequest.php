@@ -39,8 +39,7 @@ class OrderRequest extends FormRequest
       'user.required' => 'The UserName field is not valide',
       'user.exists' => 'The UserName field is not exist',
       'name.required' => 'Medicine name is required.',
-      'type.required' => 'Type of medicine is required.',
-      // 'delivering_address' => 'This user has'nt main address to Deliver the order',
+      'type.required' => 'Type of medicine is required.'
     ];
   }
 }
