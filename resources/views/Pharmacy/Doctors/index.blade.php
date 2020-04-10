@@ -109,7 +109,7 @@
                             },
                             url: "{{ url('') }}" + "/pharmacies/doctors/"+id,
                             success: function (data) {
-                                var table = $('#users-table').dataTable(); 
+                                var table = $('#users-table').dataTable();
                                 table.fnDraw(false);
                                 Swal.fire(
                                     'Deleted!',

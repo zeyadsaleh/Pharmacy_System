@@ -152,7 +152,7 @@ class OrderController extends Controller
       return Order::create([
           'delivering_address' => $address ? $address->id : "user address is unavailable",
           'created_by' => $created_by,
-          'status'=> 'Processing',
+          'status'=> 'WaitingForUserConfirmation',
           'pharmacy_id' => isset($pharmacy) ? $pharmacy->id: null,
           'user_id'=> $client->id,
           'doctor_id'=> isset($doctor) ? $doctor->id: null,

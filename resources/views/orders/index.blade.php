@@ -27,7 +27,7 @@
 
   <hr>
 
-
+  <div id="box">
     @if ($message = Session::get('success'))
       <div class="alert alert-success alert-block">
         <button type="button" class="close" data-dismiss="alert">×</button>
@@ -44,9 +44,10 @@
           <strong>{{ $message }}</strong>
         </div>
     @endif
+  </div>
 
     <table id="orders-table" class="table table-bordered data-table">
-        <thead>
+        <thead class="bg-primary text-center shadow">
             <tr>
                 <th>ID</th>
                 <th>UserName</th>
@@ -60,6 +61,7 @@
                 <th>Creator</th>
                 @endhasrole
                 <th width="280px">Action</th>
+
             </tr>
         </thead>
         <tbody>

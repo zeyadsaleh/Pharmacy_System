@@ -3,31 +3,54 @@
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
-
 <script>
 
 if (!String(window.location.href).includes("orders/create")) {
 
-$(function () {
+  $(document).ready(function() {
 
   $.ajax({
       url: '{!! route('orders.index') !!}',
       success: function (data) {
         columnNames = Object.keys(data.data[0]);
         let columns = [];
+        let count = 0;
         for (let colName of columnNames) {
+          if(colName == 'status'){
+                columns.push({
+                  data: colName, name: colName,
+                  render:function(data){
+                    if(data == 'New'){
+                      var alert = true;
+                    return '<p class="text-center text-success p-1 h6 border border-success rounded">'+data+'</P>';
+                  }else{
+                    return '<p class="text-center p-1 h6"><b>'+data+'</b></P>';
+                  }
+                  }
+                });
+          }else{
                 columns.push({data: colName, name: colName});
+              }
         }
     $('#orders-table').DataTable({
           processing: true,
           serverSide: true,
           ajax: '{!! route('orders.index') !!}',
+          order: [[ 8 ]],
           columns: columns,
         })
       }
     });
     });
-
+if(alert){
+  let html = document.getElementById('box');
+  let box = document.createElement("div");
+  box.style.opacity = "0.8";
+  box.classList='alert alert-warning alert-block text-center p-2 h5';
+  let body = `<button type="button" class="close" data-dismiss="alert">×</button><strong>Some 'New' Order is waiting to be assigned</strong>`;
+    box.innerHTML = body;
+    html.append(box)
+}
 }else{
   $(function () {
 
@@ -68,7 +91,7 @@ function deleteOrder(id) {
                     },
                     url: "{{ url('') }}" + "/orders/"+id,
                     success: function (data) {
-                        var table = $('#orders-table').dataTable(); 
+                        var table = $('#orders-table').dataTable();
                         table.fnDraw(false);
                         Swal.fire(
                             'Deleted!',
