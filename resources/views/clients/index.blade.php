@@ -24,6 +24,7 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Avatar</th>
                 <th>National ID</th>
                 <th>Mobile Number</th>
                 <th>Gender</th>
@@ -58,6 +59,10 @@
                     { data: 'id', name: 'id' },
                     { data: 'name', name: 'name' },
                     { data: 'email', name: 'email' },
+                    { data: 'avatar', name: 'avatar', 
+                        render: function(url) {
+                            return '<img src="{{url("avatars")}}'+url+'" width=100 height=100>';
+                    }},
                     { data: 'national_ID', name: 'national_ID' },
                     { data: 'mobile_number', name: 'mobile_number' },
                     { data: 'gender', name: 'gender' },

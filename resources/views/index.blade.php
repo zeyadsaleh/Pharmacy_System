@@ -29,7 +29,7 @@
         <h5 class="card-header">Pharmacy Info</h5>
         <div class="card-body mx-5">
             <div class="text-center mb-5">
-                <img src="{{ url('uploads/avatars').$pharmacy->avatar }}" width=100 height=100>
+                <img src="{{ url('avatars').$pharmacy->avatar }}" width=100 height=100>
                 <h2 class="">{{ $pharmacy->name }}</h2>
             </div>
             <div class="row my-4">
@@ -69,7 +69,7 @@
         <h5 class="card-header">Pharmacy Info</h5>
         <div class="card-body mx-5">
             <div class="text-center mb-5">
-                <img src="{{ url('uploads/avatars').$doctor->avatar }}" width=100 height=100>
+                <img src="{{ url('avatars').$doctor->avatar }}" width=100 height=100>
                 <h2 class="">Dr. {{ $doctor->name }}</h2>
             </div>
             <div class="row my-4">

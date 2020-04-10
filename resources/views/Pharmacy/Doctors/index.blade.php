@@ -71,7 +71,7 @@
                                 data: columnNames[i],
                                 name: columnNames[i],
                                 render: function(url) {
-                                    return '<img src="{{url("uploads/avatars")}}'+url+'" width=100 height=100>';
+                                    return '<img src="{{url("avatars")}}'+url+'" width=100 height=100>';
                                 }
                             });
                         } else

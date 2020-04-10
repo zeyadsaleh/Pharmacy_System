@@ -25,7 +25,7 @@ $(document).ready(function () {
               {
                   data: 'avatar', name: 'avatar',
                   render : function ( url, type, full) {
-                        return '<img src="{{url("uploads")}}'+url+'" width=100 height=100>'
+                        return '<img src="{{url("avatars")}}'+url+'" width=100 height=100>'
                   }
               },
               {data: 'name', name: 'name'},

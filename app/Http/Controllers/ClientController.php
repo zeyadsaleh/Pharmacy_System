@@ -38,7 +38,7 @@ class ClientController extends Controller
 
     public function store(StoreClientRequest $request)
     {
-        Client::create($request->validated());
+        // Client::create($request->validated());
         $validatedData = $request->validated();
 
         if ($request->hasfile('avatar')) {
