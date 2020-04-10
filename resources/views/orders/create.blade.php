@@ -34,6 +34,12 @@
                           @endforeach
                       </select>
                   </div>
+                  @if($message = Session::get('danger'))
+                  <div class="alert alert-danger alert-block">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>{{ $message }}</strong>
+                  </div>
+                  @endif
                   {!! $errors->first('user', '<ul class="text-danger p-1"> * <span>:message</span></ul>') !!}
                   <hr>
                   <p><b>VisaCard Number</b></p>
