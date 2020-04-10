@@ -133,6 +133,9 @@ class ClientController extends Controller
                         'password' => $request->password ? Hash::make($request->password) : $client->user->password,
                     ]);
 
+                    //update the login time for user to check and notify him if hes missing
+                    $client->update(['logged_in_at' => date('Y-m-d H:i:s')]);
+
                     return new ClientResource($client);
                 } else {
                     throw ValidationException::withMessages([
