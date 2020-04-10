@@ -25,7 +25,7 @@ class RouteServiceProvider extends ServiceProvider
     public const ADMIN = '/admin';
     public const PHARMACY = '/pharmacies';
     public const DOCTOR = '/doctors';
-    public const USER = '/users';
+    public const CLIENT = '/users';
 
 
     /**
