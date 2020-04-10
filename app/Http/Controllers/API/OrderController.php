@@ -13,7 +13,7 @@ use App\OrderMedicine;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Resources\Api\OrderResource;
+use App\Http\Resources\API\OrderResource;
 use Illuminate\Validation\ValidationException;
 
 
@@ -29,20 +29,14 @@ class OrderController extends Controller
 
     public function show(Request $request)
     {
-      $client = auth()->user();
-
-      if(isset($client) || !empty($client)) {
-        $orders = Order::where('user_id',$client->id)->get();
-        if($orders->first() == null){
-          return json_encode("You do not have any orders");
-        }else{
-          $order = $orders->where('user_id',$client->id);
-          if($order->first() == null){
-            return json_encode("This order not available");
-          }else{
-            return new OrderResource($order);
-          }
-        }
+      $user = $this->getUser();
+      if($user){
+        $order = $this->getOrder($user, $request->order);
+        if( $order == false){
+          return json_encode("you did nt have this order");
+      }else{
+        return new OrderResource($order);
+      }
       }else{
         return json_encode("Your are not valid");
       }
@@ -51,99 +45,128 @@ class OrderController extends Controller
 
     public function update(Request $request)
     {
+      $user = $this->getUser();
+      if($user){
+        $order = $this->getOrder($user, $request->order);
+        if( $order == false){
+          return json_encode("you did nt have this order");
 
-      $client_orders = auth()->user()->order;
-
-      if(isset($client_orders) ||  !empty($client_orders)){
-          $order = $client_orders::find($request->order);
-        }else{
-          return json_encode("Your are not valid");
-        }
-      // $order = Order::find($request->order);
-      if(isset($order) ||  !empty($order)){
-          if ($request->order->status == 'New' ){
+      }else{
+        if ($order->status == 'WaitingForUserConfirmation'){
+          if($request->status == 'Canceled' || $request->status == 'Confirmed' ){
           $order->update([
-              'status' => $request->status ? $request->status : $request->order->status,
+              'status' => $request->status ? $request->status : $order->status,
           ]);
-      }
-      $count = 0;
-      foreach($order->medicines as $medicine){
-          $count++;
-          if ($request->input('name'.$count) == null){ break; }
-          $order_medicine = OrderMedicine::where('order_id', $order->id)->where('medicine_id', $medicine->id)->first();
-          $price = $order_medicine->price/$order_medicine->quantity;
-          $medicine->update([
-            'name' => $request->input('name'.$count),
-            'type' => $request->input('type'.$count),
-          ]);
-          $order_medicine->update([
-            'quantity' => input('quantity'.$count),
-            'price' => $price,
-          ]);
-      }
-        return new OrderResource(Order::find($request->order));
-      }else{
-        return json_encode("you did'nt have any order yet!");
-      }
-    }
-
-
-    public function store(Request $request)
-    {
-      $client = auth()->user();
-      // $client = 1;
-      if(isset($client) || !empty($client)) {
-
-        $order = $this->storeOrder($request);
-
-        foreach (range(1, 15) as $i) {
-
-          if( $request->input('quantity'.$i) == null ){ break;}
-
-          $medicine = $this->getMedicine($request, $i);
-
-          OrderMedicine::create([
-            'order_id' => $order->id,
-            'medicine_id' => $medicine->id,
-            'quantity' => $request->input('quantity'.$i),
-          ]);
+          return new OrderResource(Order::where('id',$request->order)->get());
         }
-        return new OrderResource(Order::find($order));
-      }else{
-        return json_encode("Your are not valid");
+          return json_encode("You can't update your status now!");
+        }
+          return json_encode("You can't update your status now!");
       }
+          return json_encode("Your are not valid");
     }
+  }
 
-    private function storeOrder($request){
+      // $count = 0;
+      //
+      // $order_medicines = OrderMedicine::where('order_id', $order->id)->get();
+      //
+      // foreach($order_medicines as $medicine){
+      //
+      //     $count++;
+      //
+      //     if ($request->input('name'.$count) == null){ break; }
+      //
+      //     dd($order_medicine);
+      //
+      //     $medicine->update([
+      //       'name' => $request->input('name'.$count),
+      //       'type' => $request->input('type'.$count),
+      //     ]);
+      //
+      //     $order_medicine->update([
+      //       'quantity' => input('quantity'.$count),
+      //     ]);
+      // }
+      public function store(Request $request)
+      {
+          $user = $this->getUser();
+          if($user){
 
-      $client = auth()->user();
-      // $client =2;
-      if(isset($client)){
-            $address = Address::where('user_id', $client->id)->first();
-            // $pharmacies = Pharmacy::where('area_id',$address->area_id)->get();
-            // if(!isset($pharmacies) || empty($pharmacies)){return json_encode("your address out of serving range!");}
-            // $pharmacy = $pharmacies->orderBy('priority', 'desc')->first();
-            $created_by = 'User';
+           $order = $this->storeOrder($request);
+           if (!$order){
+             return json_encode("Your can't create order now!");
+           }
+          foreach (range(1, ($request->number)) as $i) {
+              $medicine = $this->storeMedicine($request, $i);
+              if($medicine == false){ return json_encode("This medicine is unavailable!");}
 
-      return Order::create([
-          'delivering_address' => $address ? $address->id : "user address is unavailable",
-          'created_by' => 'User',
-          'status'=> 'New',
-          // 'pharmacy_id' => isset($pharmacy) ? $pharmacy->id: null,
-          'user_id'=> $client->id,
-          ]);
+              OrderMedicine::create([
+                'order_id' => $order->id,
+                'medicine_id' => $medicine->id,
+                'price' => 0,
+                'quantity' => $request->input('quantity'.$i),
+              ]);
+          }
+          // return new OrderResource(Order::where('id',$order->id)->get());
+          // dd($medicine->id);
         }else{
           return json_encode("Your are not valid");
         }
       }
 
-    private function getMedicine($request, $i){
-      $medicine = Medicine::where('name', $request->input('name'.$i))->where('type', $request->input('type'.$i))->first();
-      if(!isset($medicine) && empty($medicine)){
-        return json_encode("This medicine is unavailable");
+      private function storeOrder($request){
+
+        $client = $this->getUser();
+        $address = Address::where('user_id', $client->id)->where('is_main', 1)->first();
+
+        if(!isset($address) || empty($address)){
+            return false;
+        }
+
+        return Order::create([
+            'delivering_address' => $address ? $address->id : "user address is unavailable",
+            'created_by' => 'User',
+            'status'=>  'New',
+            'user_id'=> $client->id,
+            ]);
+  }
+
+
+      private function storeMedicine($request, $i){
+        $medicine = Medicine::where('name', $request->input('name'.$i))->where('type', $request->input('type'.$i))->first();
+
+        if(!$medicine){
+            return false;
+          }else{
+            return $medicine;
+          }
+        }
+
+
+      private function getUser(){
+        $client = auth()->user();
+        if(isset($client) || !empty($client)) {
+          return Client::find($client->profile_id);
         }else{
-          return $medicine;
+        return false;
         }
       }
+
+    private function getOrder($user, $order_id){
+
+      $client_orders = Order::where('user_id',$user->id)->get();
+
+      if($client_orders->first() == null){
+        return false;
+      }else{
+        $order = $client_orders->where('id',$order_id)->first();
+        if($order == null){
+          return false;
+        }else{
+          return $order;
+        }
+    }
+  }
 
   }
