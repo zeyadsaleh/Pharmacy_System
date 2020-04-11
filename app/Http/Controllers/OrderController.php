@@ -129,7 +129,6 @@ class OrderController extends Controller
 
       $client = Client::where('name', $request->user)->first();
       $address = Address::where('user_id', $client->id)->where('is_main', 1)->first();
-      // dd($address);
 
       if(!isset($address) || empty($address)){
           return false;
@@ -169,6 +168,7 @@ class OrderController extends Controller
 
     private function storeMedicine($request, $i){
       $medicine = Medicine::where('name', $request->input('medicine'.$i))->where('type', $request->input('type'.$i))->first();
+
       if($medicine == null){
         return Medicine::create([
           'name' => $request->input('medicine'.$i),
