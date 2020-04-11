@@ -40,7 +40,7 @@
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="password">Password</label>
-      <input type="password" class="form-control" name="password" id="password" placeholder="Password" value="{{$doctor->password}}">
+      <input type="password" class="form-control" name="password" id="password" placeholder="Password">
     </div>
     <div class="form-group col-md-6">
       <label for="nationalID">National ID</label>

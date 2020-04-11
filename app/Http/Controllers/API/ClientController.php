@@ -12,7 +12,7 @@ use App\Client;
 use Validator;
 use App\Http\Requests\UpdateClientRequest;
 use App\Http\Requests\StoreClientRequest;
-use App\Http\Resources\ClientResource;
+use App\Http\Resources\API\ClientResource;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Auth\VerifiesEmails;

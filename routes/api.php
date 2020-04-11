@@ -43,6 +43,6 @@ Route::get('/orders/{order}', 'API\OrderController@show')->middleware('auth:sanc
 Route::get('/addresses', 'API\AddressController@index')->middleware('auth:sanctum');
 Route::get('/addresses/{address}', 'API\AddressController@show')->middleware('auth:sanctum');
 Route::put('/addresses/{address}', 'API\AddressController@update')->middleware('auth:sanctum');
-Route::post('/addresses/{address}', 'API\AddressController@store')->middleware('auth:sanctum');
+Route::post('/addresses', 'API\AddressController@store')->middleware('auth:sanctum');
 Route::delete('/addresses/{address}', 'API\AddressController@delete')->middleware('auth:sanctum');
 ######################################################################################

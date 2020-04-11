@@ -49,7 +49,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="name">Password</label>
-                <input type="password" name="password" class="form-control" id="password" placeholder="Password" value="{{$pharmacy->password}}">
+                <input type="password" name="password" class="form-control" id="password" placeholder="Password">
             </div>
             <div class="form-group col-md-6">
                 <label for="national_id">National Id</label>

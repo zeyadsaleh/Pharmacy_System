@@ -145,10 +145,6 @@ class OrderController extends Controller
             $pharmacy = $doctor->pharmacy;
             $created_by = 'Doctor';
           }else{
-            $pharmacies = Pharmacy::where('area_id',$address->area_id);
-            if(isset($pharmacies)){
-                $pharmacy = $pharmacies->orderBy('priority')->first();
-              }
             $created_by = 'User';
       }
     }
@@ -163,7 +159,7 @@ class OrderController extends Controller
       return Order::create([
           'delivering_address' => $address ? $address->id : "user address is unavailable",
           'created_by' => $created_by,
-          'status'=> 'WaitingForUserConfirmation',
+          'status'=> isset($pharmacy) ? 'WaitingForUserConfirmation' : 'New',
           'pharmacy_id' => isset($pharmacy) ? $pharmacy->id: null,
           'user_id'=> $client->id,
           'doctor_id'=> isset($doctor) ? $doctor->id: null,
@@ -174,7 +170,9 @@ class OrderController extends Controller
 
     private function storeMedicine($request, $i){
       $medicine = Medicine::where('name', $request->input('medicine'.$i))->where('type', $request->input('type'.$i))->first();
-      if(!$medicine && $medicine != 'Select Medicine'){
+      // dd($medicine);
+
+      if($medicine == null){
         return Medicine::create([
           'name' => $request->input('medicine'.$i),
           'type' => $request->input('type'.$i),
