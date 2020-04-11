@@ -67,27 +67,6 @@ class OrderController extends Controller
     }
   }
 
-      // $count = 0;
-      //
-      // $order_medicines = OrderMedicine::where('order_id', $order->id)->get();
-      //
-      // foreach($order_medicines as $medicine){
-      //
-      //     $count++;
-      //
-      //     if ($request->input('name'.$count) == null){ break; }
-      //
-      //     dd($order_medicine);
-      //
-      //     $medicine->update([
-      //       'name' => $request->input('name'.$count),
-      //       'type' => $request->input('type'.$count),
-      //     ]);
-      //
-      //     $order_medicine->update([
-      //       'quantity' => input('quantity'.$count),
-      //     ]);
-      // }
       public function store(Request $request)
       {
           $user = $this->getUser();
@@ -108,8 +87,7 @@ class OrderController extends Controller
                 'quantity' => $request->input('quantity'.$i),
               ]);
           }
-          // return new OrderResource(Order::where('id',$order->id)->get());
-          // dd($medicine->id);
+
         }else{
           return json_encode("Your are not valid");
         }
@@ -130,11 +108,11 @@ class OrderController extends Controller
             'status'=>  'New',
             'user_id'=> $client->id,
             ]);
-  }
+        }
 
 
       private function storeMedicine($request, $i){
-        $medicine = Medicine::where('name', $request->input('name'.$i))->where('type', $request->input('type'.$i))->first();
+        $medicine = Medicine::where('name', $request->input('name'.$i))->first();
 
         if(!$medicine){
             return false;

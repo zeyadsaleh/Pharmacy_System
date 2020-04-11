@@ -33,8 +33,7 @@ class OrderController extends Controller
             $orders = Order::where('pharmacy_id', $pharmacy_id)->get();
             return Datatables::of(OrderResource::collection($orders))->make(true);
           }
-          // $orders = Order::where('pharmacy_id', 6)->get();
-          // return Datatables::of(OrderResource::collection($orders))->make(true);
+
       }
         return view('orders.index');
     }
@@ -170,8 +169,6 @@ class OrderController extends Controller
 
     private function storeMedicine($request, $i){
       $medicine = Medicine::where('name', $request->input('medicine'.$i))->where('type', $request->input('type'.$i))->first();
-      // dd($medicine);
-
       if($medicine == null){
         return Medicine::create([
           'name' => $request->input('medicine'.$i),
