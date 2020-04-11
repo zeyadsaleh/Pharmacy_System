@@ -10,6 +10,7 @@ use App\Pharmacy;
 use App\Client;
 use App\User;
 use App\OrderMedicine;
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -33,96 +34,77 @@ class OrderController extends Controller
       if($user){
         $order = $this->getOrder($user, $request->order);
         if( $order == false){
-          return json_encode("you did nt have this order");
+          return json_encode(['msg' => "you did nt have this order ".$request->order]);
       }else{
         return new OrderResource($order);
       }
       }else{
-        return json_encode("Your are not valid");
+        return json_encode(['msg' => "Your are not valid"]);
       }
     }
 
 
     public function update(Request $request)
     {
+      $request->validate([
+          'status' => 'required',
+          'prescriptions' => 'nullable|mimes:jpeg,bmp,png',
+      ]);
+      // dd($request->status);
       $user = $this->getUser();
+
       if($user){
         $order = $this->getOrder($user, $request->order);
-        if( $order == false){
-          return json_encode("you did nt have this order");
-
+      if( $order == false){
+          return json_encode("you didnt have this order ".$request->order);
       }else{
+
         if ($order->status == 'WaitingForUserConfirmation'){
           if($request->status == 'Canceled' || $request->status == 'Confirmed' ){
-          $order->update([
-              'status' => $request->status ? $request->status : $order->status,
-          ]);
-          return new OrderResource(Order::where('id',$request->order)->get());
+            $order->update([
+                'status' => $request->status ? $request->status : $order->status,
+                'prescriptions' => $request->prescriptions ? $request->prescriptions : $order->$request->prescriptions,
+            ]);
+
+            $medicine = Medicine::where('name', $request->input('name'.$i))->first();
+
+
+            return new OrderResource(Order::where('id',$request->order)->get());
         }
-          return json_encode("You can't update your status now!");
+          return json_encode(['msg' => "you can set it to Canceled or Confirmed only, you cant set it to ".$request->status]);
         }
-          return json_encode("You can't update your status now!");
+          return json_encode(['msg' => "you can set it under status WaitingForUserConfirmation only, your current status under: ".$order->status]);
       }
-          return json_encode("Your are not valid");
+          return json_encode(['msg' => "Your are not valid"]);
     }
   }
 
       public function store(Request $request)
       {
-          $user = $this->getUser();
-          if($user){
+          $client = $this->getUser();
+          if($client){
 
-           $order = $this->storeOrder($request);
-           if (!$order){
-             return json_encode("Your can't create order now!");
-           }
-          foreach (range(1, ($request->number)) as $i) {
-              $medicine = $this->storeMedicine($request, $i);
-              if($medicine == false){ return json_encode("This medicine is unavailable!");}
-
-              OrderMedicine::create([
-                'order_id' => $order->id,
-                'medicine_id' => $medicine->id,
-                'price' => 0,
-                'quantity' => $request->input('quantity'.$i),
-              ]);
-          }
-
-        }else{
-          return json_encode("You are not valid");
-        }
-      }
-
-      private function storeOrder($request){
-
-        $client = $this->getUser();
-        $address = Address::where('user_id', $client->id)->where('is_main', 1)->first();
-
-        if(!isset($address) || empty($address)){
-            return false;
-        }
-
-        return Order::create([
-            'delivering_address' => $address ? $address->id : "user address is unavailable",
-            'created_by' => 'User',
-            'status'=>  'New',
-            'user_id'=> $client->id,
+            $request->validate([
+              'prescriptions' => 'required|mimes:jpeg,bmp,png',
             ]);
+           $address = Address::where('user_id', $client->id)->where('is_main', 1)->first();
+             if(!isset($address) || empty($address)){
+               return json_encode(['msg' => "you didnt have main address yet, to deliver the order!"]);
+             }
+          $order = Order::create([
+                       'delivering_address' => $address ? $address->id : "user address is unavailable",
+                       'created_by' => 'User',
+                       'status'=>  'New',
+                       'user_id'=> $client->id,
+                       'prescriptions' => $request->prescriptions,
+                       ]);
+          return json_encode(['msg' => "order Created Successfully, you order_id  = ( ".$order->id." )"]);
+        }else{
+          return json_encode(['msg' => "Your are not valid"]);
         }
+    }
 
-
-      private function storeMedicine($request, $i){
-        $medicine = Medicine::where('name', $request->input('name'.$i))->first();
-
-        if(!$medicine){
-            return false;
-          }else{
-            return $medicine;
-          }
-        }
-
-
-      private function getUser(){
+    private function getUser(){
         $client = auth()->user();
         if(isset($client) || !empty($client)) {
           return Client::find($client->profile_id);
