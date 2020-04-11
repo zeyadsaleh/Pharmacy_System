@@ -89,7 +89,7 @@ class OrderController extends Controller
           }
 
         }else{
-          return json_encode("Your are not valid");
+          return json_encode("You are not valid");
         }
       }
 

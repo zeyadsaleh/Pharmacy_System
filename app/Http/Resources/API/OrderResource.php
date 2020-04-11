@@ -40,17 +40,18 @@ private function getMedicines($order){
   $medicines_all = OrderMedicine::where('order_id', $order)->get();
 
     if(isset($medicines_all) && !empty($medicines_all)){
+
     foreach($medicines_all as $medicine){
-      $object = (object)['name'=> Medicine::find($medicine->medicine_id)->name ,
-                         'type' => Medicine::find($medicine->medicine_id)->type,
-                         'quantity' => $medicine->quantity,
-                         'price' => $medicine->price];
-      array_push($medicines, $object);
+        $object = (object)['name'=> Medicine::find($medicine->medicine_id)->name ,
+                           'type' => Medicine::find($medicine->medicine_id)->type,
+                           'quantity' => $medicine->quantity,
+                           'price' => $medicine->price];
+        array_push($medicines, $object);
     }
-    return $medicines;
+        return $medicines;
 
     }else{
-      return null;
+        return null;
     }
   }
 

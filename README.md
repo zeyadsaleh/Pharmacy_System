@@ -1,6 +1,10 @@
 # Pharmacy System
 
 This is a team project that features an online pharmacy system with different roles (Pharmacy Owner, Doctor, Client , Admin) using Laravel. Clients can make orders using an api and orders have a cycle until it reaches the client.
+
+### Team Members:
+	Nouran Samy - Zeyad Saleh - Mohamed Alaa - Ahmed Abdelhamid
+
 ### Prerequisites
 
 You should have `node` and `composer` installed. If you don't, install node it from [here](https://nodejs.org/) and composer from [here](https://getcomposer.org/download/).
@@ -38,11 +42,15 @@ You should have `node` and `composer` installed. If you don't, install node it f
     php artisan db:seed --class=RolesAndPermissionSeeder
     php artisan db:seed --class=AdminTableSeeder
     ```
-11. Open up the server
+11. Run the Schedule
+    ```sh
+    php artisan schedule:run
+    ```
+12. Open up the server
     ```sh
     php artisan serve
     ```
-12. Open your browser on this url ``` http://localhost:8000```
+13. Open your browser on this url ``` http://localhost:8000```
 
 ### License
 MIT License
