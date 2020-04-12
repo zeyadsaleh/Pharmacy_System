@@ -18,15 +18,6 @@ Auth::routes();
 
 Route::get('password/reset/{token?}', 'Auth\ForgotPasswordController@showLinkRequestForm');
 
-// Route::get('/', 'LoginC@index')->middleware('auth');
-
-// Route::group([
-//     'prefix'     => 'doctor',
-//     'middleware' => ['role:doctor', 'auth'],
-// ], function () {
-// Route::get('/', 'DoctorController@index')->name('doctors.index');
-// });
-
 ##########################route of doctor role#################################
 ################################################################################
 Route::group(['middleware' => ['auth', 'is-ban']], function () {
@@ -46,10 +37,6 @@ Route::group(['middleware' => ['auth', 'is-ban']], function () {
     // Route to fetch data in json format from user table
     Route::get('/pharmacies-doctors-dt', 'PharmacyController@doctorsData')->name('pharmacies:doctors:dt');
 
-    ##################################Revenue############################################
-
-
-    #################################################################################
 });
 
 Route::group(['middleware' => 'auth'], function (){
@@ -69,9 +56,13 @@ Route::group(['middleware' => 'auth'], function (){
 #################################################################################
 Auth::routes();
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
-Route::get('/', function() {
-    return redirect('/login');
-});
+
+Route::get('/', function () {
+    return view('welcome');
+})->name('welcome');
+// Route::get('/', function() {
+//     return redirect('/login');
+// });
 
 Route::get('/home', 'HomeController@index')->name('home');
 

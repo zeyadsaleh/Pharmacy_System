@@ -9,6 +9,12 @@ if (!String(window.location.href).includes("orders/create")) {
 
   $(document).ready(function() {
 
+  $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+
   $.ajax({
       url: '{!! route('orders.index') !!}',
       success: function (data) {

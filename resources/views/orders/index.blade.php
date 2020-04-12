@@ -76,5 +76,4 @@
   @include('layouts.orderjs')
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   <script src="/js/sweetalert2.all.min.js"></script>
-  <script src="/js/order.js"></script>
 @stop

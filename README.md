@@ -11,7 +11,10 @@ You should have `node` and `composer` installed. If you don't, install node from
 
 ### Installing
 1. Download the zipped file and unzip it or Clone it
-2. cd inside the project 
+		```sh
+		git clone https://github.com/zeyadsaleh/Pharmacy_System.git
+		```
+2. cd inside the project
     ```sh
     cd Pharmacy_System
     ```

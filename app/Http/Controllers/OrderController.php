@@ -25,8 +25,8 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
-      $user = Auth::User();
       if ($request->ajax()) {
+        $user = Auth::User();
           if($user->hasrole('super-admin')){
             return Datatables::of(OrderResource::collection(Order::all()))->make(true);
               }else{
