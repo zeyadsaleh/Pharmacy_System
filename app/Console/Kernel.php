@@ -4,9 +4,12 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\User;
+use App\Client;
 use App\Order;
 use App\Pharmacy;
 use App\Notifications\OrderNotify;
+use Illuminate\Http\Request;
 
 
 class Kernel extends ConsoleKernel
@@ -29,6 +32,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
       $schedule->call(function () {
+
           $unassigned_orders = Order::where('status','New')->get();
           foreach($unassigned_orders as $order){
             $pharmacies = Pharmacy::where('area_id',$order->address->area_id)->get();
@@ -41,18 +45,17 @@ class Kernel extends ConsoleKernel
             ]);
           }
       })->everyminute();
-
-      $schedule->call(function () {
-          $waiting_orders = Order::where('status','WaitingForUserConfirmation')->get();
-          foreach($waiting_orders as $order){
-            $user = $order->user();
-            $notify = new OrderNotify();
-            $user->notify(($notify->toMail()));
-          }
-      })->everyminute();
-      $schedule->command('users:notify')->daily();
-
     }
+
+/**
+    //   $schedule->call(function () {
+    //       $waiting_orders = Order::where('status','WaitingForUserConfirmation')->get();
+    //       foreach($waiting_orders as $order){
+    //         $client = Client::findOrFail($order->user_id)->first();
+    //         $usr = User::where('profile_type', 'App\Client')->where('profile_id', $order->user_id)->first();
+    //         $usr->notify(new OrderNotify("A new user has visited on your application."));
+    //       }
+    //   })->hourly();
 
     /**
      * Register the commands for the application.

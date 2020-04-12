@@ -47,6 +47,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
       return $this->morphTo();
     }
+    
     public function sendApiEmailVerificationNotification()
     {
         $this->notify(new VerifyApiEmail);

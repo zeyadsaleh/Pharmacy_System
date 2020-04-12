@@ -15,6 +15,8 @@ use App\Http\Requests\OrderRequest;
 use App\Http\Resources\OrderResource;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\OrderNotify;
+
 
 
 class OrderController extends Controller
@@ -24,19 +26,21 @@ class OrderController extends Controller
     public function index(Request $request)
     {
       $user = Auth::User();
-
       if ($request->ajax()) {
           if($user->hasrole('super-admin')){
             return Datatables::of(OrderResource::collection(Order::all()))->make(true);
-          }elseif($user->hasrole('pharmacy')){
-            $pharmacy_id = $user->profile->id;
-            $orders = Order::where('pharmacy_id', $pharmacy_id)->get();
-            return Datatables::of(OrderResource::collection($orders))->make(true);
+              }else{
+                if($user->hasrole('pharmacy')){
+                $orders = Order::where('pharmacy_id', $user->profile->id)->get();
+                }else{
+                $doctor_id = $user->profile->id;
+                $orders = Order::where('pharmacy_id', $doctor_id->pharmacy_id)->get();
+                }
+                return Datatables::of(OrderResource::collection($orders))->make(true);
+              }
           }
-
+          return view('orders.index');
       }
-        return view('orders.index');
-    }
 
 
     public function create(Request $request){
@@ -78,35 +82,76 @@ class OrderController extends Controller
       $user = Auth::User();
       if(isset($user) || !empty($user)){
 
-        return view('orders.edit',[
-              'order' => Order::find($request->order), 'pharmacies' => Pharmacy::all(), 'check' => 'readonly'
+        $order = Order::find($request->order);
+        if($order->status == 'Processing'){
+          $medicines = Medicine::all();
+        }else{
+          $medicines = [];
+        }
+
+          if($user->hasrole('super-admin')){
+            return view('orders.edit',[
+              'order' => $order, 'pharmacies' => Pharmacy::all(), 'medicines' => $medicines, 'check' => 'readonly'
             ]);
-            if($user->hasrole('super-admin')){
+          }else{
+            return view('orders.edit',[
+              'order' => Order::find($request->order), 'medicines' => $medicines, 'check' => 'readonly'
+            ]);
+          }
         }else{
-          return view('orders.edit',[
-              'order' => Order::find($request->order), 'check' => 'readonly'
-          ]);
-        }
-        }else{
-          return redirect()->route('orders.index')->with('danger','Permission denied!');
-        }
+        return redirect()->route('orders.index')->with('danger','Permission denied!');
       }
+    }
 
 
     public function update(Request $request){
       $user = Auth::User();
 
       if(isset($user) || !empty($user)){
+
         $order = Order::find($request->order);
-        $order->update([
-          'pharmacy_id' => $request->pharmacy ? $request->pharmacy : $order->pharmacy->id,
-          'status' => $request->status ? $request->status : $order->status,
-        ]);
-        return redirect()->route('orders.index')->with('success','Order Updated successfully!');
+
+        if($order->status  == 'Processing'){
+
+        foreach (range(1, 15) as $i) {
+
+              if( $request->input('quantity'.$i) == null ){ break;}
+
+              $medicine = $this->storeMedicine($request, $i);
+
+              OrderMedicine::create([
+                'order_id' => $order->id,
+                'medicine_id' => $medicine->id,
+                'price' => number_format($request->input('price'.$i),2,'.',''),
+                'quantity' => $request->input('quantity'.$i),
+              ]);
+
+            }
+              $order->update([
+                'status' => 'WaitingForUserConfirmation',
+              ]);
+
+              $usr = User::where('profile_type', 'App\Client')->where('profile_id', $order->user_id)->first();
+              $usr->notify(new OrderNotify("A new user has visited on your application."));
+
+            return redirect()->route('orders.index')->with('success','Order Updated successfully!');
+
+
+        }else{
+          if($request->pharmacy || $order->pharmacy){
+            $order->update([
+              'pharmacy_id' => $request->pharmacy ? $request->pharmacy : $order->pharmacy->id,
+              'status' => $request->status ? $request->status : $order->status,
+            ]);
+            return redirect()->route('orders.index')->with('success','Order Updated successfully!');
+          }
+          return redirect()->route('orders.index')->with('danger','The Order didnt assign to pharmacy yet!');
+        }
+
       }else{
         return redirect()->route('orders.index')->with('danger','Order not allowed to Updated!');
-      }
     }
+  }
 
 
 

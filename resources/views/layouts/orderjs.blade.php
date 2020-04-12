@@ -52,26 +52,26 @@ if (!String(window.location.href).includes("orders/create")) {
       }
     });
     });
-}else{
-  $(function () {
-
-      $('.medicine').select2({
-          tags: true,
-          theme: "classic",
-          maximumSelectionLength: 5,
-      })
-
-      $('.user').select2({
-          theme: "classic",
-          maximumSelectionLength: 5,
-      })
-
-      $('.type').select2({
-          theme: "classic",
-          maximumSelectionLength: 5,
-      })
-});
 }
+
+$(function () {
+
+  $('.medicine').select2({
+    tags: true,
+    theme: "classic",
+    maximumSelectionLength: 5,
+  })
+
+  $('.user').select2({
+    theme: "classic",
+    maximumSelectionLength: 5,
+  })
+
+  $('.type').select2({
+    theme: "classic",
+    maximumSelectionLength: 5,
+  })
+});
 function deleteOrder(id) {
 
     Swal.fire({

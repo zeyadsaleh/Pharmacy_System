@@ -44,10 +44,9 @@ class OrderNotify extends Notification implements ShouldQueue
       $url='http://127.0.0.1:8000/api/user';
 
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->action('your HOME', $url)
-                    ->line('Some Orders waiting for your confirmation');
+                    ->line('Order Notification.')
+                    ->line('Some Orders waiting for your confirmation')
+                    ->line('Thank you for using our Pharmacy System');
     }
 
     /**

@@ -1,7 +1,8 @@
-if (String(window.location.href).includes("orders/create")) {
+let addHtml = document.getElementById("tbody");
+
+if (addHtml != null) {
 
     var items = 1;
-    let addHtml = document.getElementById("tbody");
     let addBtn = document.querySelector("#add-medicine");
     let rsBtn = document.querySelector("#rs-medicine");
     let rmBtn = document.querySelector("#rm-medicine");

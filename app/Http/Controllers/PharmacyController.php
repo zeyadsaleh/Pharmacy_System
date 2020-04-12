@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
-
 use App\Doctor;
 use App\User;
 use App\Http\Requests\DoctorRequest;

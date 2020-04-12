@@ -11,11 +11,14 @@ use App\Client;
 use App\User;
 use App\OrderMedicine;
 use Validator;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\API\OrderResource;
 use Illuminate\Validation\ValidationException;
+
 
 
 class OrderController extends Controller
@@ -50,7 +53,7 @@ class OrderController extends Controller
           'status' => 'required',
           'prescriptions' => 'nullable|mimes:jpeg,bmp,png',
       ]);
-      // dd($request->status);
+
       $user = $this->getUser();
 
       if($user){
@@ -61,9 +64,16 @@ class OrderController extends Controller
 
         if ($order->status == 'WaitingForUserConfirmation'){
           if($request->status == 'Canceled' || $request->status == 'Confirmed' ){
+
+            if($request->prescriptions != null){
+                $file = $request->file('prescriptions');
+                $extension = $file->getClientOriginalExtension();
+                $filename = time() . '.' . $extension;
+                $file->move('prescriptions/', $filename);
+          }
             $order->update([
-                'status' => $request->status ? $request->status : $order->status,
-                'prescriptions' => $request->prescriptions ? $request->prescriptions : $order->$request->prescriptions,
+                'status' => $request->prescriptions ?  'New' : $request->status,
+                'prescriptions' => $filename ? $filename : $order->$request->prescriptions,
             ]);
 
             $medicine = Medicine::where('name', $request->input('name'.$i))->first();
@@ -87,6 +97,13 @@ class OrderController extends Controller
             $request->validate([
               'prescriptions' => 'required|mimes:jpeg,bmp,png',
             ]);
+
+            $file = $request->file('prescriptions');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $file->move('prescriptions/', $filename);
+            // dd(time());
+
            $address = Address::where('user_id', $client->id)->where('is_main', 1)->first();
              if(!isset($address) || empty($address)){
                return json_encode(['msg' => "you didnt have main address yet, to deliver the order!"]);
@@ -96,7 +113,7 @@ class OrderController extends Controller
                        'created_by' => 'User',
                        'status'=>  'New',
                        'user_id'=> $client->id,
-                       'prescriptions' => $request->prescriptions,
+                       'prescriptions' => $filename,
                        ]);
           return json_encode(['msg' => "order Created Successfully, you order_id  = ( ".$order->id." )"]);
         }else{
