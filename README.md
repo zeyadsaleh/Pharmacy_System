@@ -7,7 +7,7 @@ This is a team project that features an online pharmacy system with different ro
 
 ### Prerequisites
 
-You should have `node` and `composer` installed. If you don't, install node it from [here](https://nodejs.org/) and composer from [here](https://getcomposer.org/download/).
+You should have `node` and `composer` installed. If you don't, install node from [here](https://nodejs.org/) and composer from [here](https://getcomposer.org/download/).
 
 ### Installing
 1. Download the zipped file and unzip it or Clone it
