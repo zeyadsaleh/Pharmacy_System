@@ -3,7 +3,7 @@
 This is a team project that features an online pharmacy system with different roles (Pharmacy Owner, Doctor, Client , Admin) using Laravel. Clients can make orders using an api and orders have a cycle until it reaches the client.
 
 ### Team Members:
-	Nouran Samy - Zeyad Saleh - Mohamed Alaa - Ahmed Abdelhamid
+	Nouran Samy - Zeyad Saleh - Muhammad Aladdin - Ahmed Abdelhamid
 
 ### Prerequisites
 
