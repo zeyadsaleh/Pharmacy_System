@@ -24,7 +24,7 @@
         </ul>
     </div>
     @endif
-    <form method="POST" action="{{route('admin.pharmacies.store')}}" enctype="multipart/form-data">
+    <form method="POST" action="{{route('pharmacies.store')}}" enctype="multipart/form-data">
         @csrf
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -69,7 +69,7 @@
                 </div>
             </div>
         </div>
-            <button type="submit" class="btn btn-primary">Add</button>
+        <button type="submit" class="btn btn-primary">Add</button>
     </form>
 </div>
 @stop

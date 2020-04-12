@@ -41,8 +41,9 @@ class UserNotify extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('We Are Missing You :(')
+                    ->line('You are missed:( Just checking on you because you havn\'t been logged in from the past month..')
                     // ->action('Notification Action', url('/'))
+                    ->line('Just checking on you because you havn\'t been logged in from the past month..')
                     ->line('Thank you for using our application!');
     }
 

@@ -1,7 +1,7 @@
 @section('sidebar')
 @hasrole('super-admin')
 <li class="nav-item">
-    <a href="{{route('admin.pharmacies.index')}}" class="nav-link">
+    <a href="{{route('pharmacies.index')}}" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
         <p>Pharmacies</p>
     </a>
@@ -19,19 +19,19 @@
 
 @hasrole('super-admin')
 <li class="nav-item">
-    <a href="{{route('admin.areas.index')}}" class="nav-link">
+    <a href="{{route('areas.index')}}" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
         <p>Areas</p>
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{route('admin.clients.index')}}" class="nav-link">
+    <a href="{{route('areas.index')}}" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
         <p>Clients</p>
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{route('admin.userAddresses.index')}}" class="nav-link">
+    <a href="{{route('userAddresses.index')}}" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
         <p>Client Addresses</p>
     </a>

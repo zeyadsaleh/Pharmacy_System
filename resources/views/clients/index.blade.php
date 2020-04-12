@@ -16,7 +16,7 @@
     <h1>Clients</h1>
 
 
-    <a href="{{route('admin.clients.create')}}" class="btn btn-success mb-3">Add client</a>
+    <a href="{{route('areas.create')}}" class="btn btn-success mb-3">Add client</a>
 
     <table id="clients-table" class="table table-striped table-bordered" style="width:100%">
         <thead>
@@ -52,64 +52,90 @@
 <script src="/js/sweetalert2.all.min.js"></script>
 <script>
     // Create table and fetch data using ajax
-        $(function() {
-            $('#clients-table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '{!! route('admin.clients.index') !!}',
-                columns: [
-                    { data: 'id', name: 'id' },
-                    { data: 'name', name: 'name' },
-                    { data: 'email', name: 'email' },
-                    { data: 'avatar', name: 'avatar', 
-                        render: function(url) {
-                            return '<img src="{{url("avatars")}}'+url+'" width=100 height=100>';
-                    }},
-                    { data: 'national_ID', name: 'national_ID' },
-                    { data: 'mobile_number', name: 'mobile_number' },
-                    { data: 'gender', name: 'gender' },
-                    { data: 'action', name: 'action', orderable:false},
-                ]
-            });
+    $(function() {
+        $('#clients-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{!! route('
+            areas.index ') !!}',
+            columns: [{
+                    data: 'id',
+                    name: 'id'
+                },
+                {
+                    data: 'name',
+                    name: 'name'
+                },
+                {
+                    data: 'email',
+                    name: 'email'
+                },
+                {
+                    data: 'avatar',
+                    name: 'avatar',
+                    render: function(url) {
+                        return '<img src="{{url("avatars")}}' + url + '" width=100 height=100>';
+                    }
+                },
+                {
+                    data: 'national_ID',
+                    name: 'national_ID'
+                },
+                {
+                    data: 'mobile_number',
+                    name: 'mobile_number'
+                },
+                {
+                    data: 'gender',
+                    name: 'gender'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false
+                },
+            ]
         });
-        function deleteClient(id) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        type: "post",
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            "_method": "DELETE"
-                        },
-                        url: "{{ url('') }}" + "/admin/clients/"+id,
-                        success: function (data) {
-                            var table = $('#clients-table').dataTable(); 
-                            table.fnDraw(false);
-                            Swal.fire(
-                                'Deleted!',
-                                'Your record has been deleted.',
-                                'success'
-                            )
-                        },
-                        error: function (data) {
-                            console.log('Error:', data);
-                            Swal.fire(
-                                'Not Deleted!',
-                                'Your record can\'t be deleted',
-                                'error'
-                            )
-                        }
-                    });
-                }
-            })
-        }
+    });
+
+    function deleteClient(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "post",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "_method": "DELETE"
+                    },
+                    url: "{{ url('') }}" + "/admin/clients/" + id,
+                    success: function(data) {
+                        var table = $('#clients-table').dataTable();
+                        table.fnDraw(false);
+                        Swal.fire(
+                            'Deleted!',
+                            'Your record has been deleted.',
+                            'success'
+                        )
+                    },
+                    error: function(data) {
+                        console.log('Error:', data);
+                        Swal.fire(
+                            'Not Deleted!',
+                            'Your record can\'t be deleted',
+                            'error'
+                        )
+                    }
+                });
+            }
+        })
+    }
 </script>
 @stop

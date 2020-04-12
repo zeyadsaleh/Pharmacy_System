@@ -41,8 +41,8 @@ class NotifyUserMissing extends Command
      */
     public function handle()
     {
-        $data = Carbon::now()->subMinute(1);
-        // dd($data);
+        $data = Carbon::now()->subDay(30);
+        dd($data);
         $users = User::where('logged_in_at' , '<' , $data)->get();
 
         foreach ($users as $user)

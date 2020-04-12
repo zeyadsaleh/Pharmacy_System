@@ -24,14 +24,14 @@ class DoctorResource extends JsonResource
             'avatar' => $this->avatar,
             'is_ban' => $this->is_ban ? 'True' : 'False',
             
-           'action' => "<div class='row px-1'><a href=".route('pharmacies.doctors.edit', ['doctor' => $this->id])." data-toggle='tooltip' data-original-title='Edit' class='edit mr-1 btn btn-primary btn-sm editProduct'>Edit</a>
+           'action' => "<div class='row px-1'><a href=".route('doctors.edit', ['doctor' => $this->id])." data-toggle='tooltip' data-original-title='Edit' class='edit mr-1 btn btn-primary btn-sm editProduct'>Edit</a>
 
            
             <button type='button' onclick='deleteDoctor($this->id)' class='btn mr-1 btn-danger btn-sm'>Delete</button>".
             
 
-           ($this->is_ban ? "<a class='btn btn-success ban btn-sm' href=".route('pharmacies.doctors.unban', ['doctor' => $this->id])."> Unban</a></div>" : 
-           "<a class='btn btn-success ban btn-sm' href=".route('pharmacies.doctors.ban', ['doctor' => $this->id])."> Ban</a></div>"),
+           ($this->is_ban ? "<a class='btn btn-success ban btn-sm' href=".route('doctors.unban', ['doctor' => $this->id])."> Unban</a></div>" : 
+           "<a class='btn btn-success ban btn-sm' href=".route('doctors.ban', ['doctor' => $this->id])."> Ban</a></div>"),
 
         ];
 

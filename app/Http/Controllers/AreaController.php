@@ -16,18 +16,18 @@ class AreaController extends Controller
 
     public function index(Request $request)
     {
-           if ($request->ajax()) {
+        if ($request->ajax()) {
             $area = Area::all();
             return DataTables::of($area)
-            ->addColumn('action', function ($area) {
-                $button = '<a type="button" name="edit" href="areas/' . $area->id . '/edit" class="edit btn btn-primary btn-sm">Edit</a>';
-                $button .= "&nbsp;&nbsp;&nbsp";
-                
-                $button .= "<button type='button' onclick='deleteArea($area->id)' data-id='$area->id' class='btn mx-1 btn-danger btn-sm'>Delete</button>";
-                return $button;
-            })
-            ->rawColumns(['action'])
-            ->make(true);
+                ->addColumn('action', function ($area) {
+                    $button = '<a type="button" name="edit" href="areas/' . $area->id . '/edit" class="edit btn btn-primary btn-sm">Edit</a>';
+                    $button .= "&nbsp;&nbsp;&nbsp";
+
+                    $button .= "<button type='button' onclick='deleteArea($area->id)' data-id='$area->id' class='btn mx-1 btn-danger btn-sm'>Delete</button>";
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
         return view('areas.index');
     }
@@ -39,25 +39,28 @@ class AreaController extends Controller
     public function store(StoreAreaRequest $request)
     {
         Area::create($request->validated());
-        return redirect()->route('admin.areas.index');
+        return redirect()->route('areas.index');
     }
 
-    public function edit(Request $request) {
+    public function edit(Request $request)
+    {
         $area = Area::find($request->area);
         return view('areas.edit', [
             'area' => $area
         ]);
     }
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
         Area::where('id', $request->area)->update([
             'name' => $request->name,
             'address' => $request->address,
         ]);
 
-        return redirect()->route('admin.areas.index');
+        return redirect()->route('areas.index');
     }
 
-    public function destroy() {
+    public function destroy()
+    {
         Area::where('id', request()->area)->delete();
         return redirect()->route('admin.areas.index');
     }

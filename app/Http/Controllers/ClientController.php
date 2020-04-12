@@ -24,7 +24,7 @@ class ClientController extends Controller
     {
         if ($request->ajax()) {
             // if ($request->ajax()) {
-                return Datatables::of(ClientResource::collection(Client::all()))
+            return Datatables::of(ClientResource::collection(Client::all()))
                 ->make(true);
             // }
             // return view('userAddresses.index');
@@ -71,7 +71,7 @@ class ClientController extends Controller
         $user->assignRole('client');
 
         $client->user()->save($user);
-        return redirect()->route('admin.clients.index');
+        return redirect()->route('areas.index');
     }
 
     public function edit(Request $request)
@@ -87,7 +87,6 @@ class ClientController extends Controller
     {
         if (auth()->user()->id ==  $request->client && auth()->user()->hasRole('client')) {
             if ($request->has('email')) {
-
             }
 
             if ($request->hasfile('avatar')) {
@@ -114,13 +113,13 @@ class ClientController extends Controller
                 'password' => $request->password ? Hash::make($request->password) : $client->user->password,
             ]);
 
-             return redirect()->route('admin.cleints.index');
+            return redirect()->route('admin.cleints.index');
         }
     }
 
     public function destroy()
     {
         Client::where('id', request()->client)->delete();
-        return redirect()->route('admin.clients.index');
+        return redirect()->route('areas.index');
     }
 }

@@ -31,7 +31,9 @@ class RevenueController extends Controller
             $totalRevenuesInDollers = Order::getPriceInDollars($totalRevenues);
             return view('revenue.index',['totalRevenuesInDollers' => $totalRevenuesInDollers] );
         }
-        return view('revenue.index');
+        else{
+            return view('layouts.404');
+        }
     }
     public function calculatePharmacyRevene()
     {

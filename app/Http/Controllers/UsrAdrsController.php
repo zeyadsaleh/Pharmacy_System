@@ -29,14 +29,14 @@ class UsrAdrsController extends Controller
 
         if ($request->ajax()) {
             return Datatables::of(UsrAdrsResource::collection($addresses))
-            ->make(true);
+                ->make(true);
         }
         return view('userAddresses.index');
     }
     public function create()
     {
-        return view('userAddresses.create',[
-            'users'=>Client::all(),
+        return view('userAddresses.create', [
+            'users' => Client::all(),
         ]);
     }
 
@@ -54,7 +54,7 @@ class UsrAdrsController extends Controller
             'user_id' => $validatedData['user_id']
         ]);
 
-        return redirect()->route('admin.userAddresses.index');
+        return redirect()->route('userAddresses.index');
     }
 
     public function edit(Request $request)
@@ -69,13 +69,13 @@ class UsrAdrsController extends Controller
     public function update(Request $request)
     {
         Address::where('id', $request->useraddress)->update([
-            'street_name' => $request -> street,
-            'building_name' => $request -> building,
-            'floor_number' => $request -> floor,
-            'flat_number' => $request -> flat,
-            'is_main' => $request -> is_main ? true : false
+            'street_name' => $request->street,
+            'building_name' => $request->building,
+            'floor_number' => $request->floor,
+            'flat_number' => $request->flat,
+            'is_main' => $request->is_main ? true : false
         ]);
-        return redirect()->route('admin.userAddresses.index');
+        return redirect()->route('userAddresses.index');
     }
 
     public function destroy()

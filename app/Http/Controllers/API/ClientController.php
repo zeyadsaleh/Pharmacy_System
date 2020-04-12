@@ -44,8 +44,12 @@ class ClientController extends Controller
                 $client = Client::find($user->profile->id);
 
                 $client['token'] = $user->createToken($request->password)->plainTextToken;
+                
+                //update the login time for user to check and notify him if hes missing
+                $user->update(['logged_in_at' => date('Y-m-d H:i:s')]);
 
                 return new ClientResource($client);
+                
             }
             else {
                 return response()->json(['error'=>'Please Verify Email'], 401);

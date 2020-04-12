@@ -95,9 +95,6 @@ class AddressController extends Controller
         $user = auth()->user();
         if ($user->hasRole('client')) {
             $address->delete($address);
-            // return response()->json([
-            //     'message' => 'address Deleted'
-            // ], 204);
             return new UserAddressResource($address);
         } else {
             return response()->json(['error'=>'404 Not Found'], 404);
