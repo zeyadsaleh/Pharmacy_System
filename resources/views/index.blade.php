@@ -53,7 +53,7 @@
                     <p class="card-text">{{ $pharmacy->area->name }}</p>
                 </div>
             </div>
-            <a href="{{route('admin.pharmacies.edit', ['pharmacy' => $pharmacy->id])}}" class="btn btn-primary">Update Info</a>
+            <a href="{{route('pharmacies.edit', ['pharmacy' => $pharmacy->id])}}" class="btn btn-primary">Update Info</a>
         </div>
     </div>
 </div>

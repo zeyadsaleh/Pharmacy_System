@@ -113,8 +113,8 @@ class ClientController extends Controller
                 'password' => $request->password ? Hash::make($request->password) : $client->user->password,
             ]);
 
-            return redirect()->route('admin.cleints.index');
         }
+        return redirect()->route('clients.index');
     }
 
     public function destroy()

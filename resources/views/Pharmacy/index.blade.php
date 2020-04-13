@@ -69,8 +69,7 @@
         $('#pharma-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{!! route('
-            pharmacies.index ') !!}',
+            ajax: '{!! route('pharmacies.index') !!}',
             columns: [{
                     data: 'name',
                     name: 'name'

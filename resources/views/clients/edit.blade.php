@@ -24,7 +24,7 @@
         </ul>
     </div>
     @endif
-    <form method="POST" action="{{route('admin.clients.update', ['client' => $client->id])}}"
+    <form method="POST" action="{{route('clients.update', ['client' => $client->id])}}"
         enctype="multipart/form-data">
         @csrf
         {{method_field('PUT')}}

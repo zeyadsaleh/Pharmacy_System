@@ -89,7 +89,7 @@ class DoctorController extends Controller
 
             $doctor->user()->save($user);
 
-            return redirect()->route('doctor.index');
+            return redirect()->route('doctors.index');
         } else {
             return view('layouts.404');
         }
@@ -125,7 +125,7 @@ class DoctorController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-            return redirect()->route('doctor.index');
+            return redirect()->route('doctors.index');
         } else {
             return view('layouts.404');
         }
@@ -140,7 +140,7 @@ class DoctorController extends Controller
             $doctor['email'] = $doctor->user->email;
             $doctor['password'] = $doctor->user->password; //@TOBECHANGED
 
-            return view('doctors.edit', [
+            return view('doctor.edit', [
                 'doctor' => $doctor
             ]);
         } else {

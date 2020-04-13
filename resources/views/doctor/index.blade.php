@@ -14,7 +14,7 @@
 
 <div class="container">
 
-<a href="{{route('pharmacies.doctors.create')}}" class="btn btn-success mb-3">Create Doctor</a>
+<a href="{{route('doctors.create')}}" class="btn btn-success mb-3">Create Doctor</a>
 
 <table id="users-table" class="table table-striped table-bordered" style="width:100%">
         <thead>
@@ -130,5 +130,5 @@
     </script>
 @stop
 @endhasrole
- 
+
 

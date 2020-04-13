@@ -52,8 +52,7 @@
         $('#users-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{!! route('
-            areas.index ') !!}',
+            ajax: '{!! route('areas.index') !!}',
             columns: [{
                     data: 'id',
                     name: 'id'

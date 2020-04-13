@@ -10,7 +10,7 @@
 
 @hasanyrole('super-admin|pharmacy')
 <li class="nav-item">
-    <a href="{{route('pharmacies.doctors.index')}}" class="nav-link">
+    <a href="{{route('doctors.index')}}" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
         <p>Doctors</p>
     </a>
@@ -25,7 +25,7 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{route('areas.index')}}" class="nav-link">
+    <a href="{{route('clients.index')}}" class="nav-link">
         <i class="far fa-circle nav-icon"></i>
         <p>Clients</p>
     </a>

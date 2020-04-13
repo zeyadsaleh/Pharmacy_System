@@ -87,6 +87,15 @@ Route::get('/', function () {
 // });
 
 Route::get('/home', 'HomeController@index')->name('home');
+## Pharmacy
+Route::get('/pharmacies', 'PharmacyController@index')->name('pharmacies.index');
+Route::get('/pharmacies/create', 'PharmacyController@create')->name('pharmacies.create');
+Route::post('/pharmacies/store', 'PharmacyController@store')->name('pharmacies.store');
+Route::get('/pharmacies/{pharmacy}/edit', 'PharmacyController@edit')->name('pharmacies.edit');
+Route::put('/pharmacies/{pharmacy}', 'PharmacyController@update')->name('pharmacies.update');
+Route::delete('/pharmacies/{pharmacy}', 'PharmacyController@destroy')->name('pharmacies.destroy');
+Route::patch('/pharmacies/{pharmacy}', 'PharmacyController@restore')->name('pharmacies.restore');
+Route::get('/pharmacies/deleted', 'PharmacyController@indexDeleted')->name('pharmacies.deleted');
 
 Auth::routes();
 
@@ -120,15 +129,6 @@ Route::group([
     Route::get('/medicines/{medicine}/edit', 'MedicineController@edit')->name('medicines.edit');
     Route::put('/medicines/{medicine}', 'MedicineController@update')->name('medicines.update');
     Route::delete('/medicines/{medicine}', 'MedicineController@destroy')->name('medicines.destroy');
-    ## Pharmacy
-    Route::get('/pharmacies', 'PharmacyController@index')->name('pharmacies.index');
-    Route::get('/pharmacies/create', 'PharmacyController@create')->name('pharmacies.create');
-    Route::post('/pharmacies/store', 'PharmacyController@store')->name('pharmacies.store');
-    Route::get('/pharmacies/{pharmacy}/edit', 'PharmacyController@edit')->name('pharmacies.edit');
-    Route::put('/pharmacies/{pharmacy}', 'PharmacyController@update')->name('pharmacies.update');
-    Route::delete('/pharmacies/{pharmacy}', 'PharmacyController@destroy')->name('pharmacies.destroy');
-    Route::patch('/pharmacies/{pharmacy}', 'PharmacyController@restore')->name('pharmacies.restore');
-    Route::get('/pharmacies/deleted', 'PharmacyController@indexDeleted')->name('pharmacies.deleted');
     ## User Addresses
     Route::get('/userAddresses', 'UsrAdrsController@index')->name('userAddresses.index');
     Route::get('/userAddresses/create', 'UsrAdrsController@create')->name('userAddresses.create');

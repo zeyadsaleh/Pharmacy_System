@@ -23,7 +23,7 @@
         </ul>
     </div>
 @endif
-<form method="POST" action="{{route('pharmacies.doctors.update', ['doctor' => $doctor->id])}}" enctype="multipart/form-data">
+<form method="POST" action="{{route('doctors.update', ['doctor' => $doctor->id])}}" enctype="multipart/form-data">
     @csrf
     {{method_field('PATCH')}}
   <div class="form-row">
