@@ -5,6 +5,7 @@
     <!--- Basic Page Needs  -->
     <meta charset="utf-8">
     <title>Pharmacy Online</title>
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Mobile Specific Meta  -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
