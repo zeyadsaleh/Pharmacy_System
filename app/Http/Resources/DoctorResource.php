@@ -18,7 +18,7 @@ class DoctorResource extends JsonResource
         $data = [
             'id' => $this->id,
             'name' => $this->name,
-            'email' => $this->user->email,
+            'email' => is_null($this->user) ? '':$this->user->email,
             'created_at' => $this->created_at->format('Y-m-d'),
             'national_id' => $this->national_id,
             'avatar' => $this->avatar,
