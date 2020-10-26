@@ -8,9 +8,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Mobile Specific Meta  -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <!-- CSS -->
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/jquery.min.js') }}" defer></script>
+    
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    
+    <!-- Styles -->
     <link href="{{ asset('css/wel/homestyle.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/wel/responsive.css') }}">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/hover-min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/animate.min.css') }}" rel="stylesheet">
 
 </head>
 
@@ -28,10 +39,10 @@
                 <div class="col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
                     <div class="crumbs-header">
                         <h2 class="cd-headline letters rotate-3">
-                            <span class="cd-words-wrapper">
+                        <a href="{{ route('welcome') }}"><span class="cd-words-wrapper">
                                 <b class="is-visible">Pharmacy</b>
                                 <b>Welcome </b>
-                            </span>
+                            </span></a>
                         </h2>
                         <p>This Project Created By: NOR.ABD.ZEY.ALA </p>
                         <div class="btn-area h2">
