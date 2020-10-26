@@ -11,6 +11,6 @@ class OrderMedicineTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(App\OrderMedicine::class,100)->create();
     }
 }

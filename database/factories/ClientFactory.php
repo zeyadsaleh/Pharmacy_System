@@ -11,6 +11,5 @@ $factory->define(Client::class, function (Faker $faker) {
       'gender' => rand(0,1) ? 'Male':'Female',
       'national_id' => Str::random(10),
       'is_insured' => rand(0,1) ? true : false,
-      'created_at' => now(),
     ];
 });

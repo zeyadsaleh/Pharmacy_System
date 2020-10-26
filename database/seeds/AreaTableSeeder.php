@@ -11,6 +11,6 @@ class AreaTableSeeder extends Seeder
      */
     public function run()
     {
-      factory(App\Area::class,50)->create();
+      factory(App\Area::class,10)->create();
     }
 }

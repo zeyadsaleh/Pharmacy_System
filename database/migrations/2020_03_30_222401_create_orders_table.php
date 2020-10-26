@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->foreign('delivering_address')->references('id')->on('addresses');
             $table->enum('created_by', ['Pharmacy', 'Doctor', 'User']);
             $table->enum('status', ['New', 'Processing', 'WaitingForUserConfirmation', 'Canceled', 'Confirmed', 'Delivered']);
-            $table->float('total_price', 10, 2)->nullable();
+            $table->float('total_price', 12, 2)->nullable();
             $table->timestamps();
             $table->unsignedBigInteger('pharmacy_id')->nullable();
             $table->foreign('pharmacy_id')->references('id')->on('pharmacies');

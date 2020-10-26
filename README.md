@@ -42,8 +42,7 @@ You should have `node` and `composer` installed. If you don't, install node from
     ```
 10. Seed the database
     ```sh
-    php artisan db:seed --class=RolesAndPermissionSeeder
-    php artisan db:seed --class=AdminTableSeeder
+    php artisan db:seed
     ```
 11. Run the Schedule
     ```sh

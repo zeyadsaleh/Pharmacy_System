@@ -9,6 +9,5 @@ $factory->define(Area::class, function (Faker $faker) {
     return [
         'name' => $faker->streetName,
         'address' => $faker->address,
-        'created_at' => now()
     ];
 });
