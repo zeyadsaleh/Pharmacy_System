@@ -10890,13 +10890,13 @@ a.text-dark:focus {
 }
 
 *::-webkit-scrollbar {
-  width: 12px;
+  width: 10px;
   background-color: #F5F5F5;
 }
 
 *::-webkit-scrollbar-thumb {
   border-radius: 3px;
-  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.4, rgb(122, 153, 217)), color-stop(0.7, rgb(49, 112, 190)), color-stop(0.8, rgb(28, 58, 148)));
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.4, rgb(201, 122, 217)), color-stop(0.7, rgb(145, 49, 190)), color-stop(0.8, rgb(104, 28, 148)));
 }
 
 .border-3 {

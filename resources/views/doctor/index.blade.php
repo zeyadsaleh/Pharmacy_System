@@ -3,7 +3,7 @@
 @section('title', 'Doctors')
 
 @section('content_header')
-    <h1>Doctors</h1>
+<h1>Doctors</h1>
 @stop
 
 
@@ -14,48 +14,49 @@
 
 <div class="container">
 
-<a href="{{route('doctors.create')}}" class="btn btn-success mb-3">Create Doctor</a>
+    <a href="{{route('doctors.create')}}" class="btn btn-success mb-3">Create Doctor</a>
+    <div class="table-responsive">
+        <table id="users-table" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Created At</th>
+                    <th>National ID</th>
+                    <th>Avatar</th>
+                    @hasrole('super-admin')
+                    <th>Pharmacy</th>
+                    @endhasrole
+                    <th>Banned</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
 
-<table id="users-table" class="table table-striped table-bordered" style="width:100%">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Created At</th>
-                <th>National ID</th>
-                <th>Avatar</th>
-                @hasrole('super-admin')
-                <th>Pharmacy</th>
-                @endhasrole
-                <th>Banned</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
-    <!-- <link rel="stylesheet" href="sweetalert2.min.css"> -->
+<link rel="stylesheet" href="/css/admin_custom.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+<!-- <link rel="stylesheet" href="sweetalert2.min.css"> -->
 @stop
 
 @section('js')
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <script src="/js/sweetalert2.all.min.js"></script>
-    <!-- <script src="sweetalert2.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="/js/sweetalert2.all.min.js"></script>
+<!-- <script src="sweetalert2.min.js"></script> -->
 
-    <script>
-        // Create table and fetch data using ajax
+<script>
+    // Create table and fetch data using ajax
         $(function() {
 
             $.ajax({
@@ -127,8 +128,6 @@
                     }
             })
         }
-    </script>
+</script>
 @stop
 @endhasrole
-
-

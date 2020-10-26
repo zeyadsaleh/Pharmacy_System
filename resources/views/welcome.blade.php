@@ -20,7 +20,6 @@
     <!-- Styles -->
     <link href="{{ asset('css/wel/homestyle.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/wel/responsive.css') }}">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/hover-min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/animate.min.css') }}" rel="stylesheet">
 
@@ -47,7 +46,7 @@
                         </h2>
                         <p>This Project Created By: NOR.ABD.ZEY.ALA </p>
                         <div class="btn-area h2">
-                          <a class="h2" href="{{ route('login') }}" style="width:120px;   font-size: large;
+                          <a class="h2 btn btn-dark hvr-grow-shadow" href="{{ route('login') }}" style="width:120px;   font-size: large;
 "><b>Login</b></a>
                         </div>
                     </div>
@@ -65,7 +64,7 @@
                     <h2>Helping you any time !</h2>
 
                     <p class="copy-right text-white"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This Project is made with by <a href="https://github.com/zeyadsaleh/Pharmacy_System" class="btn bg-white btn-white btn-sm hvr-grow-shadow" target="_blank" style="color: aliceblue;">Pharmacy System</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                 </div>
             </div>

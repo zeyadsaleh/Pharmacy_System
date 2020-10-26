@@ -17,7 +17,7 @@
 
 
     <a href="{{route('areas.create')}}" class="btn btn-success mb-3">Add client</a>
-
+    <div class="table-responsive">
     <table id="clients-table" class="table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
@@ -34,6 +34,7 @@
         <tbody>
         </tbody>
     </table>
+    </div>
 </div>
 @stop
 

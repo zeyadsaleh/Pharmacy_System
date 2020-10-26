@@ -34,23 +34,25 @@
 
     <a href="{{route('pharmacies.create')}}" class="btn btn-success mb-3">Add Pharmacy</a>
     <a href="{{route('pharmacies.deleted')}}" class="btn btn-danger mb-3">Show deleted Pharmacies</a>
-
-    <table id="pharma-table" class="table table-striped table-bordered" style="width:100%">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>email</th>
-                <th>National ID</th>
-                <th>Image</th>
-                <th>Area</th>
-                <th>Priority</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-</div>@stop
+    <div class="table-responsive">
+        <table id="pharma-table" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>email</th>
+                    <th>National ID</th>
+                    <th>Image</th>
+                    <th>Area</th>
+                    <th>Priority</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+@stop
 
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">

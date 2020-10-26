@@ -17,7 +17,8 @@
     <h3 class="card-title">Name: {{$pharmacy -> name}}</h3>
     <p class="card-text"> Total Revenue: {{$revenue}}</p>
     @if($pharmacy->avatar)
-    <img class="card-img-top img-fluid" src="{{url('avatars'.$pharmacy->avatar)}}" alt="image" style="height: 200px; width:200px">
+    <img class="card-img-top img-fluid" src="{{url('avatars'.$pharmacy->avatar)}}" alt="image"
+      style="height: 200px; width:200px">
     @endif
   </div>
 </div>
@@ -36,18 +37,20 @@
 </div>
 
 <div class="container mt-3">
-  <table id="revenues-table" class="table table-bordered data-table">
-    <thead>
-      <tr>
-        <th>Pharmacy Avatar</th>
-        <th>Pharmacy Name</th>
-        <th>Total Orders</th>
-        <th>Total Price</th>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table id="revenues-table" class="table table-bordered data-table">
+      <thead>
+        <tr>
+          <th>Pharmacy Avatar</th>
+          <th>Pharmacy Name</th>
+          <th>Total Orders</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
 </div>
 @stop
 @section('js')

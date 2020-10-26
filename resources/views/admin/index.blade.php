@@ -1,4 +1,3 @@
-
 {{-- resources/views/admin/dashboard.blade.php --}}
 
 @extends('adminlte::page')
@@ -12,7 +11,18 @@
 @stop
 
 @section('content')
-<p>Welcome to this beautiful admin panel.</p>
+<div class="row justift-content-center">
+	<div class="col-lg-12 col-md-12 text-center">
+		<div class="full-image">
+			<img src="pic/admin.png" alt="admin" height="350">
+		</div>
+	</div>
+</div>
+<div class="row justift-content-center">
+	<div class="col-lg-12 col-md-12">
+		<p>Welcome to this beautiful admin panel.</p>
+	</div>
+</div>
 @stop
 
 @section('css')
